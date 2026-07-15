@@ -12,6 +12,7 @@ struct tekaraApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+            //cihuy
         }
     }
 }
