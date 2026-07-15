@@ -1,0 +1,105 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.100.6)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["SkyDome", "terrain", "Water", "WaterMaterial"]
+    def "SkyDome" (
+        active = true
+        references = @SkyDome.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "terrain" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (4.7123885, 0, 0)
+        }
+        references = @terrain.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 1.0207214, -0.00000166893)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "Water" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Root/WaterMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double size = 1
+        float3 xformOp:scale = (16, 2, 13)
+        float3 xformOp:translate = (5.4965334, 1.4937098, -2.9997962)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:surface.connect = </Root/Water/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+    }
+
+    def Material "WaterMaterial"
+    {
+        token cullMode = "back" (
+            allowedTokens = ["unspecified", "none", "front", "back"]
+        )
+        token outputs:mtlx:surface.connect = </Root/WaterMaterial/PBRSurface.outputs:out>
+        token outputs:realitykit:vertex
+        token outputs:surface.connect = </Root/WaterMaterial/UsdPreviewSurface.outputs:surface>
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 10
+
+        def Shader "UsdPreviewSurface" (
+            active = false
+        )
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            color3f inputs:diffuseColor = (0.12497152, 0.34128797, 0.46135616) (
+                colorSpace = "srgb_displayp3"
+            )
+            float inputs:opacity = 0
+            token outputs:surface
+        }
+
+        def Shader "PBRSurface"
+        {
+            uniform token info:id = "ND_realitykit_pbr_surfaceshader"
+            float inputs:ambientOcclusion = 0.5
+            color3f inputs:baseColor = (0.12211475, 0.40496218, 0.5) (
+                colorSpace = "srgb_displayp3"
+            )
+            bool inputs:hasPremultipliedAlpha = 1
+            float inputs:opacity = 0.6
+            float inputs:opacityThreshold
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (-151.80786, 104.669556)
+            int ui:nodegraph:node:stackingOrder = 22
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out"]
+        }
+    }
+}
+
