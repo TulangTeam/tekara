@@ -1,9 +1,11 @@
 {
   "pathsToIds" : {
-    "\/TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Scene.usda" : "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A"
+    "\/TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Scene.usda" : "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+    "TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Scene.usda" : "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6"
   },
   "projectID" : -6762619143483881795,
   "uuidToIntID" : {
-    "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A" : 369166468034212660
+    "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A" : 369166468034212660,
+    "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6" : 3939300810228535352
   }
 }
