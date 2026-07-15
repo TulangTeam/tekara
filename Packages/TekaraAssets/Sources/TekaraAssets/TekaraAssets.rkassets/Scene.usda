@@ -41,5 +41,19 @@ def Xform "Root"
             int ui:nodegraph:node:stackingOrder = 5
         }
     }
+
+    def "terrain" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (4.7123885, 0, 0)
+        }
+        prepend references = @terrain.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 1.2, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
 }
 

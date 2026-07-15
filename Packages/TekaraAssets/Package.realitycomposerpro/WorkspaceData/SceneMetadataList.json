@@ -29,5 +29,17 @@
         "isLocked" : false
       }
     ]
+  },
+  "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6" : {
+    "objectMetadataList" : [
+      [
+        "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
   }
 }
