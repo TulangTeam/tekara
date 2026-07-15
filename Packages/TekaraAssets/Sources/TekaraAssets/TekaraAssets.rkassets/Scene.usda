@@ -1,0 +1,45 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.100.6)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["SkyDome", "SkyMaterial"]
+    def "SkyDome" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        references = @SkyDome.usdz@
+    )
+    {
+        rel material:binding = </Root/SkyMaterial> (
+            bindMaterialAs = "strongerThanDescendants"
+        )
+        float3 xformOp:scale = (1, 1, 1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Material "SkyMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SkyMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            color3f inputs:diffuseColor = (0.7713373, 0.9811809, 1) (
+                colorSpace = "srgb_texture"
+            )
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 5
+        }
+    }
+}
+

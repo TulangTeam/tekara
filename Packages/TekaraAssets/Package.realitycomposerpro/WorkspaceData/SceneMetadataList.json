@@ -1,0 +1,33 @@
+{
+  "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A" : {
+    "objectMetadataList" : [
+      [
+        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root",
+        "SkyDome"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root",
+        "SkyMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  }
+}
