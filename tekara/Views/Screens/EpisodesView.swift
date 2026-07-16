@@ -9,6 +9,9 @@ import SwiftUI
 
 struct EpisodesView: View {
     @ObservedObject var viewModel: GameViewModel
+    @State private var titleScale: CGFloat = 0
+    @State private var listScale: CGFloat = 0
+    @State private var bubbleOffset: CGFloat = 200
 
     var body: some View {
         GeometryReader { geometry in
@@ -31,12 +34,29 @@ struct EpisodesView: View {
                     Spacer()
                 }
 
-                Text("Episodes View")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
+                VStack(spacing: 72){
+                    Image("episodetitle")
+                        .scaleEffect(titleScale)
+                    EpisodeListView()
+                        .scaleEffect(listScale)
+                    Image("episodebubble")
+                        .padding(.bottom, 20)
+                        .offset(y: bubbleOffset)
+                }
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
+                titleScale = 1
+            }
+            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.3)) {
+                listScale = 1
+            }
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0).delay(0.2)) {
+                bubbleOffset = 0
+            }
+        }
     }
 }
 

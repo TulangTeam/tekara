@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChapterView: View {
     @ObservedObject var viewModel: GameViewModel
+    @State private var titleScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200
 
     var body: some View {
@@ -34,10 +35,8 @@ struct ChapterView: View {
                     Spacer()
                 }
                 VStack {
-
-                    NavTitle()
-                        .scaleEffect(1.4)
-                        .offset(y: -110)
+                    Image("chaptertitle")
+                        .scaleEffect(titleScale)
                     Spacer()
                 }
 
@@ -56,7 +55,10 @@ struct ChapterView: View {
         }
         .ignoresSafeArea()
         .onAppear {
-            withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0)) {
+            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
+                titleScale = 1
+            }
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0).delay(0.2)) {
                 bubbleOffset = 0
             }
         }
