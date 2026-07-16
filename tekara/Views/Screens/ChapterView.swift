@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChapterView: View {
     @ObservedObject var viewModel: GameViewModel
+    @State private var bubbleOffset: CGFloat = 200
 
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +22,7 @@ struct ChapterView: View {
                 MapSelect(onMapSelected: {
                     viewModel.navigateTo(.episodes)
                 })
-                VStack() {
+                VStack {
                     HStack {
                         BackButton(action: {
                             viewModel.navigateTo(.welcome)
@@ -32,20 +33,21 @@ struct ChapterView: View {
                     .padding(.top, 50)
                     Spacer()
                 }
-                VStack() {
-                    
+                VStack {
+
                     NavTitle()
                         .scaleEffect(1.4)
                         .offset(y: -110)
                     Spacer()
                 }
 
-                VStack() {
+                VStack {
                     Spacer()
-                    HStack{
+                    HStack {
                         Spacer()
                         Image("chapterbubble")
                             .padding(.bottom, 20)
+                            .offset(y: bubbleOffset)
                         Spacer()
                     }
                 }
@@ -53,6 +55,11 @@ struct ChapterView: View {
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0)) {
+                bubbleOffset = 0
+            }
+        }
     }
 }
 
