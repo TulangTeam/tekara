@@ -1,0 +1,78 @@
+__type: "tm_mesh_descriptor"
+__uuid: "90575027-31c2-599a-942b-9b8f343ad9ed"
+vertex_count: 8
+face_vertex_counts: {
+	__uuid: "fc352a01-76d5-8965-e794-7a56d212dcda"
+	data: "6df1abae-f5e0-4f01-21a9-1f320b3a17f9"
+	format: 83886112
+	value_count: 6
+}
+indices: {
+	__uuid: "a83e3a18-57eb-f0b5-1285-d74c2d072ff7"
+	data: "dd29406c-8a35-76d0-2b58-8043350e39ae"
+	format: 83886112
+	value_count: 24
+}
+attributes: [
+	{
+		__uuid: "5c786132-cfe2-5605-68ae-dacf9fd54206"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "60d52908-3558-5fcb-6d48-4c1c20ac8bcc"
+			data: "a6f02afa-dc13-56b5-542a-8fe703a46a44"
+			format: 16910368
+			value_count: 8
+		}
+	}
+	{
+		__uuid: "122f918b-dc6b-c9ef-93cf-d7387fe60315"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "b6b139ae-8807-2a57-4285-79c233e9aa20"
+			data: "a925d8a8-21f9-6274-0299-3554457f29ac"
+			format: 16779296
+			value_count: 16
+		}
+		indices: {
+			__uuid: "91c76525-1b2c-8be4-4fa7-a319d0da6002"
+			data: "67859eab-1541-88d6-e203-d83380301909"
+			format: 83886112
+			value_count: 24
+		}
+	}
+	{
+		__uuid: "78e31ac8-f8de-890f-867e-fed5410c2ed2"
+		name: "primvars:UVMap"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "39b0d1b5-db1a-1df1-fe99-f56d7964b1f9"
+			data: "d3fdcb0a-fd36-dc2d-d609-e40860e80cd5"
+			format: 16779296
+			value_count: 14
+		}
+		indices: {
+			__uuid: "740fec03-4a8b-b95c-60f5-40ed47d30c72"
+			data: "ae11b912-7886-d3c8-4054-59c9470484b9"
+			format: 83886112
+			value_count: 24
+		}
+	}
+	{
+		__uuid: "d12c51b6-8861-9aa8-02b5-c4aa9708d38e"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "25fb0fa3-1254-140c-bffc-37c7bfa3bdea"
+			data: "54bbc407-6e94-da0c-58c5-068e589ee801"
+			format: 16910368
+			value_count: 24
+		}
+	}
+]
+__asset_uuid: "d9070ae9-c498-e130-79bd-6894dfdfa812"

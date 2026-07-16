@@ -1,0 +1,81 @@
+__type: "tm_mesh_descriptor"
+__uuid: "130730eb-539b-e7a7-4cb5-2f4728dac69f"
+vertex_count: 628
+face_vertex_counts: {
+	__uuid: "85e0c4d7-0dd5-6a5a-513e-0a05ae539e72"
+	data: "114ba90e-b4cc-4503-7661-95304e31077f"
+	format: 83886112
+	value_count: 312
+}
+indices: {
+	__uuid: "d1a2987e-db4c-ca55-c7da-25ae381e9df7"
+	data: "7eecbf13-402a-25c5-4cdc-3ec9307ff7cf"
+	format: 83886112
+	value_count: 936
+}
+attributes: [
+	{
+		__uuid: "20245ef0-9230-7fd0-24a7-d6b54f7fa509"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "1642fec7-f8fe-5362-9828-4cfce825cbf5"
+			data: "fd57a964-1400-385c-45d3-a25f96746098"
+			format: 16910368
+			value_count: 628
+		}
+	}
+	{
+		__uuid: "f2722c84-8197-0440-9b6d-eda8e91935c2"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "eb752c19-669a-9a26-3ac6-c2019881583c"
+			data: "44f458fa-d81c-bda5-2ada-27e180ec1791"
+			format: 16779296
+			value_count: 628
+		}
+		indices: {
+			__uuid: "20a14d90-8907-a957-c300-cd77ba6f0881"
+			data: "d6167d57-9bda-524a-32ac-4d4261c73a8f"
+			format: 83886112
+			value_count: 936
+		}
+	}
+	{
+		__uuid: "f9792f4d-519d-1051-1076-987c3f356e73"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "98517401-ed0e-9b5c-1bf9-98ec7975d8f6"
+			data: "46347e89-6f1a-6927-c177-7dc6ecdab0e2"
+			format: 16910368
+			value_count: 936
+		}
+	}
+]
+skinning_data: {
+	__uuid: "2b46b9b3-f110-061c-5b79-1d3e8dedd567"
+	vertex_count: 628
+	influence_count_per_vertex: 4
+	indices: "f83bc0af-120a-f72e-8aa2-d27722d00d1b"
+	weights: "a42e2e0d-40f4-8323-8a9d-793fde6589c8"
+	bind_transform: {
+		__uuid: "ecb24772-ef66-f6c7-ed1c-4c858a5fecf6"
+		xx: 0.99999994039535523
+		xy: 1.0831806044290014e-17
+		xz: 1.5948465726496001e-16
+		yx: 1.083178205605225e-17
+		yy: 0.99999994039535523
+		zx: -1.5948463079518041e-16
+		zy: 2.6469779601696886e-23
+		zz: 0.99999988079071045
+		wx: -3.5527136788005009e-15
+		wy: -3.5762786865234375e-07
+		wz: -8.2802671386161819e-09
+	}
+}
+__asset_uuid: "d3c967fb-dc2c-20da-ec7e-8adbe0c38f4a"

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		819F2D7930075A9F009A2A70 /* TekaraAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 819F2D7830075A9F009A2A70 /* TekaraAssets */; };
 		819F2D9430076B5E009A2A70 /* ControllerInput in Frameworks */ = {isa = PBXBuildFile; productRef = 819F2D9330076B5E009A2A70 /* ControllerInput */; };
 		819F2D9630076B5E009A2A70 /* HapticUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 819F2D9530076B5E009A2A70 /* HapticUtility */; };
 		819F2D9830076B5E009A2A70 /* ThumbStickView in Frameworks */ = {isa = PBXBuildFile; productRef = 819F2D9730076B5E009A2A70 /* ThumbStickView */; };
 		819F2D9A30076B5E009A2A70 /* WASDInput in Frameworks */ = {isa = PBXBuildFile; productRef = 819F2D9930076B5E009A2A70 /* WASDInput */; };
+		81A825B3300916DF004F3569 /* TekaraAssets in Frameworks */ = {isa = PBXBuildFile; productRef = 81A825B2300916DF004F3569 /* TekaraAssets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,8 +37,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				819F2D9630076B5E009A2A70 /* HapticUtility in Frameworks */,
+				81A825B3300916DF004F3569 /* TekaraAssets in Frameworks */,
 				819F2D9A30076B5E009A2A70 /* WASDInput in Frameworks */,
-				819F2D7930075A9F009A2A70 /* TekaraAssets in Frameworks */,
 				819F2D9430076B5E009A2A70 /* ControllerInput in Frameworks */,
 				819F2D9830076B5E009A2A70 /* ThumbStickView in Frameworks */,
 			);
@@ -93,11 +93,11 @@
 			);
 			name = tekara;
 			packageProductDependencies = (
-				819F2D7830075A9F009A2A70 /* TekaraAssets */,
 				819F2D9330076B5E009A2A70 /* ControllerInput */,
 				819F2D9530076B5E009A2A70 /* HapticUtility */,
 				819F2D9730076B5E009A2A70 /* ThumbStickView */,
 				819F2D9930076B5E009A2A70 /* WASDInput */,
+				81A825B2300916DF004F3569 /* TekaraAssets */,
 			);
 			productName = tekara;
 			productReference = 819F2D66300759A7009A2A70 /* tekara.app */;
@@ -386,10 +386,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		819F2D7830075A9F009A2A70 /* TekaraAssets */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TekaraAssets;
-		};
 		819F2D9330076B5E009A2A70 /* ControllerInput */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ControllerInput;
@@ -405,6 +401,10 @@
 		819F2D9930076B5E009A2A70 /* WASDInput */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WASDInput;
+		};
+		81A825B2300916DF004F3569 /* TekaraAssets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TekaraAssets;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

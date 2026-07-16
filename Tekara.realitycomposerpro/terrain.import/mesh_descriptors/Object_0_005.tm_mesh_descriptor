@@ -1,0 +1,94 @@
+__type: "tm_mesh_descriptor"
+__uuid: "bdb2ac62-0f15-6711-351b-366c1c5a3add"
+vertex_count: 1470
+face_vertex_counts: {
+	__uuid: "d13ca7bd-3f0e-3d3c-8031-b7f3a720793a"
+	data: "c35caabd-5b65-a10c-93a7-109551a34d65"
+	format: 83886112
+	value_count: 737
+}
+indices: {
+	__uuid: "baa20073-dbf4-ad43-71a0-51670a8ba35a"
+	data: "1d2268b5-8828-4baf-f917-de3975dccc2b"
+	format: 83886112
+	value_count: 2211
+}
+attributes: [
+	{
+		__uuid: "bedca80d-3f3f-3844-a93b-0cd5b5b2bb99"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "f089768a-1d85-80e4-ef17-9ad9446a6cb2"
+			data: "505f05bd-20ef-4f8f-dcc9-03c94140cd61"
+			format: 16910368
+			value_count: 1470
+		}
+	}
+	{
+		__uuid: "11dfe98a-396a-8a4e-911a-50f253fe0274"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "c61279a1-d4d9-5233-b2fe-851aad331b45"
+			data: "21879094-2800-afc1-bbdc-42dbc734ab88"
+			format: 16779296
+			value_count: 1470
+		}
+		indices: {
+			__uuid: "8ee2ef31-e195-0c99-93cc-47ead5e49547"
+			data: "4d1fcfb0-2449-8be6-f0af-d6f0686e6425"
+			format: 83886112
+			value_count: 2211
+		}
+	}
+	{
+		__uuid: "7949e787-4a53-2314-c576-cc9b2aa00aa4"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "33828485-5129-01bf-b68c-0d9621e6eddc"
+			data: "e1e08a9b-627d-ae04-a8ee-5cbe6fbf8e52"
+			format: 16910368
+			value_count: 2211
+		}
+	}
+]
+subsets: [
+	{
+		__uuid: "16e066ed-6304-f516-4a11-4dd76326cfc3"
+		name: "/root/Sketchfab_model_014/root_006/GLTF_SceneRootNode_006/TurtleArmature_17/GLTF_created_0_002/Object_7_004/Object_0_005/Turtle"
+		face_indices: "ef6ce652-6a23-c0d1-fe44-204f65b43726"
+		face_count: 601
+	}
+	{
+		__uuid: "63ddf15d-fde1-da73-8784-7c424020afbe"
+		name: "/root/Sketchfab_model_014/root_006/GLTF_SceneRootNode_006/TurtleArmature_17/GLTF_created_0_002/Object_7_004/Object_0_005/TurtleShell"
+		index: 1
+		face_indices: "df38384e-d791-0582-ac0c-2a2004f5d73f"
+		face_count: 136
+	}
+]
+skinning_data: {
+	__uuid: "7a771d54-7f54-085c-e70c-6283df59896a"
+	vertex_count: 1470
+	influence_count_per_vertex: 4
+	indices: "c2b6c2af-1688-64de-df6b-6af2bc7f8407"
+	weights: "3fbf6a3f-3a02-b734-675d-4762be761bd0"
+	bind_transform: {
+		__uuid: "44594f36-4197-1b5e-327e-c3f5b5bd7d9b"
+		xx: 1.0000001192092896
+		xy: -3.259628567064965e-09
+		xz: -2.1857515797307769e-16
+		yx: 3.2596281229757551e-09
+		zx: 2.2204460492503131e-16
+		zy: 2.7755575615628914e-17
+		wx: 1.9073486328125e-06
+		wy: 6.0493431091308594
+		wz: -9.5367431640625e-07
+	}
+}
+__asset_uuid: "9c5da9e6-17d1-bb0c-7882-99648f15e551"

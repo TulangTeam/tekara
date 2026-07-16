@@ -1,0 +1,31 @@
+__type: "tm_texture"
+__uuid: "0c23bc0b-7827-bda8-fa99-b903314d5001"
+source_filename: "../Packages/TekaraAssets/Sources/TekaraAssets/TekaraAssets.rkassets/terrain.usdz[textures/Image_4.002.png]"
+source_texture: "4cce4250-77cb-8188-e9eb-169a8f5e1cdc"
+transform: "dbdb0d4a0b9144f5"
+transform_settings: {
+	__uuid: "2b618fbc-7d80-6514-1560-115011e5e6bf"
+	__prototype_type: "tm_creation_graph"
+	__prototype_uuid: "9eee8001-52a4-671e-193e-13b33cb6c233"
+	graph: {
+		__uuid: "dc51830c-1a92-9b7c-a6aa-5a2004a0fc5b"
+		__prototype_type: "tm_graph"
+		__prototype_uuid: "311e84c2-053c-4beb-0569-d8aac8083cd2"
+		interface: {
+			__uuid: "2ee7cf0a-9e84-d7d0-ae4d-12b97982be1a"
+			__prototype_type: "tm_graph_interface"
+			__prototype_uuid: "80ed42b0-003f-1504-072c-3ea14241dccf"
+		}
+	}
+}
+color_space: {
+	__uuid: "7b4d0794-215c-425d-5492-929f75622692"
+	transfer_function: 1
+}
+__asset_uuid: "83e98218-51dd-22f0-1e86-e042fd68c22b"
+__asset_labels: [
+	"e4bec38d8f73f423"
+]
+__asset_thumbnail: {
+	__uuid: "e958eb22-d1d9-fbae-145e-0e54dceb3f97"
+}

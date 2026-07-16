@@ -1,0 +1,22 @@
+__type: "tm_mesh_resource"
+__uuid: "d244a19c-b225-9d94-d4b4-913112d9748e"
+models: [
+	{
+		__uuid: "1e2e9b50-db14-f4a8-1f6a-aaf80d9ab021"
+		name: "Icosphere_013"
+		geometry: "90d269fa-dadf-5081-6dcc-8e7c19ec96b3"
+		bounds_min: {
+			__uuid: "13fdd304-34ba-1e51-6d82-102f9683281a"
+			x: -1.9325771331787109
+			y: -1.7835440635681152
+			z: -1.5868654251098633
+		}
+		bounds_max: {
+			__uuid: "81a3497f-07f3-4bf5-ef1a-74540894bb88"
+			x: 2.5851659774780273
+			y: 1.8464065790176392
+			z: 1.4136579036712646
+		}
+	}
+]
+__asset_uuid: "edf75c81-8dc3-9fb1-b629-079f59c49173"

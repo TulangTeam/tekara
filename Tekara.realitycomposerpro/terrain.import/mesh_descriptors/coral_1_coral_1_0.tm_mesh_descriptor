@@ -1,0 +1,114 @@
+__type: "tm_mesh_descriptor"
+__uuid: "e0f2ebed-4c7b-f64f-118f-5af2d4628896"
+vertex_count: 27200
+face_vertex_counts: {
+	__uuid: "32b19920-0b3f-4b50-43a4-75ebd7b33061"
+	data: "fd7075d3-1758-b76e-df69-26c274bfe1fa"
+	format: 83886112
+	value_count: 42281
+}
+indices: {
+	__uuid: "f5a17ece-b3b0-9bc5-d7db-89570673a98e"
+	data: "3743b0f8-d111-52a1-4342-f3c7ffe66e99"
+	format: 83886112
+	value_count: 126843
+}
+attributes: [
+	{
+		__uuid: "83aca578-7f5e-9ce0-0f06-2dd4420e0eea"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "37b79fe4-a8cd-793f-ddcb-2b56e723f794"
+			data: "bca8a7be-daa4-1a95-f78e-e3861299b875"
+			format: 16910368
+			value_count: 27200
+		}
+	}
+	{
+		__uuid: "ecc3a78d-4514-c01d-0ed3-b5113669eaa0"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "db9e9391-a04a-89a9-0b89-09402417585c"
+			data: "56d7c746-163b-92aa-ff9b-4186883e3754"
+			format: 16779296
+			value_count: 27200
+		}
+		indices: {
+			__uuid: "b8cbf99d-4c80-e50a-01c0-1720214e053a"
+			data: "fb7735a7-e001-ad0f-b4f8-91684794118f"
+			format: 83886112
+			value_count: 126843
+		}
+	}
+	{
+		__uuid: "9b2cb1c5-a168-9ad9-861d-79fedcd2f967"
+		name: "primvars:UVMap_001"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "248c23ad-e763-2354-a3c1-9b74d0cffa90"
+			data: "48c1aee5-1888-2eee-c3c1-1268651c2cf3"
+			format: 16779296
+			value_count: 27200
+		}
+		indices: {
+			__uuid: "160a58ef-ca39-0b08-5f18-240a56dbd7dd"
+			data: "50a15eea-7766-00d7-2236-e7274b66af72"
+			format: 83886112
+			value_count: 126843
+		}
+	}
+	{
+		__uuid: "9e3f734a-dc72-ce7c-44c9-e0580e005837"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "292b3373-7d4e-fe03-a824-0c2b58900b26"
+			data: "388a2be9-7f41-d799-57d1-12343a494e9c"
+			format: 16910368
+			value_count: 126843
+		}
+	}
+]
+subsets: [
+	{
+		__uuid: "a5cb83e4-a612-d037-28f7-6f6ea76f4da9"
+		name: "/root/Sketchfab_model_007/fa5f3c6bbbb644999a1bdb9be79f51cb_fbx/RootNode_004/coral_1/coral_1_coral_1_0/coral_1_coral_1_0/coral_1"
+		face_indices: "fa201e8f-6aa8-185d-c52d-79cf6332adea"
+		face_count: 8904
+	}
+	{
+		__uuid: "18f46c81-37fd-d587-71a4-2d860aff493c"
+		name: "/root/Sketchfab_model_007/fa5f3c6bbbb644999a1bdb9be79f51cb_fbx/RootNode_004/coral_1/coral_1_coral_1_0/coral_1_coral_1_0/coral_4_shell"
+		index: 1
+		face_indices: "2b408189-91eb-b9e8-025a-c44ea91ab3a9"
+		face_count: 13872
+	}
+	{
+		__uuid: "4eae1ce5-3c16-ed79-2bcc-d86ee8351fcb"
+		name: "/root/Sketchfab_model_007/fa5f3c6bbbb644999a1bdb9be79f51cb_fbx/RootNode_004/coral_1/coral_1_coral_1_0/coral_1_coral_1_0/coral_4_inner"
+		index: 2
+		face_indices: "cb057e77-fb56-9492-696b-e168e94b153e"
+		face_count: 1667
+	}
+	{
+		__uuid: "5325c9e2-a16d-bbd3-f472-0f686271d3d1"
+		name: "/root/Sketchfab_model_007/fa5f3c6bbbb644999a1bdb9be79f51cb_fbx/RootNode_004/coral_1/coral_1_coral_1_0/coral_1_coral_1_0/coral_2"
+		index: 3
+		face_indices: "e9fc198e-e7f1-f639-59e6-785f56879767"
+		face_count: 10158
+	}
+	{
+		__uuid: "66bad6fc-78b9-7dd3-f940-ded2a42a9524"
+		name: "/root/Sketchfab_model_007/fa5f3c6bbbb644999a1bdb9be79f51cb_fbx/RootNode_004/coral_1/coral_1_coral_1_0/coral_1_coral_1_0/coral_3"
+		index: 4
+		face_indices: "17fe1ad3-0d92-7499-84bc-7cb4dc547f3e"
+		face_count: 7680
+	}
+]
+__asset_uuid: "40276737-4bf5-89fa-c78f-3ada20814205"

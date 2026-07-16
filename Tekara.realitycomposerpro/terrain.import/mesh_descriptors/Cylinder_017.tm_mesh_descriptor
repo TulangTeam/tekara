@@ -1,0 +1,96 @@
+__type: "tm_mesh_descriptor"
+__uuid: "61c5b3ef-5374-b902-cf48-f167732095e4"
+vertex_count: 1339
+face_vertex_counts: {
+	__uuid: "523ad052-8531-45c6-7b25-7ed373b981ae"
+	data: "979f4c3a-aed4-66f4-962b-a721fc830998"
+	format: 83886112
+	value_count: 672
+}
+indices: {
+	__uuid: "b94fdb9c-edbe-0cfe-7113-3311daa8f23a"
+	data: "42727be7-03ba-4427-573c-6846aa99f3d6"
+	format: 83886112
+	value_count: 2016
+}
+attributes: [
+	{
+		__uuid: "308b9684-0969-ab52-bb40-6977f6b40c00"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "9c161cbd-7b4a-26fc-8c7b-b2f5224bd8ce"
+			data: "64b09ad6-e34f-7ae3-0157-5fe8d602dac2"
+			format: 16910368
+			value_count: 1339
+		}
+	}
+	{
+		__uuid: "43aa9e62-3dc5-3478-f46a-c7cddf5dd1ce"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "f90ecdcf-a682-9c94-3385-e05596afc733"
+			data: "99624510-ec16-9fdc-afcd-3da6c902b5f0"
+			format: 16779296
+			value_count: 1339
+		}
+		indices: {
+			__uuid: "9759380c-6fdb-13f2-fa58-44cbf55283b8"
+			data: "73ed08ba-93e4-6f4c-ba5e-d49eea42e077"
+			format: 83886112
+			value_count: 2016
+		}
+	}
+	{
+		__uuid: "5c1c65cb-ee66-0f5f-456c-7b46f841691c"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "3d18549e-24b6-ee24-93f4-11ad09ef4966"
+			data: "59a7baab-6806-be5b-b27e-0441d3c6d388"
+			format: 16910368
+			value_count: 2016
+		}
+	}
+]
+subsets: [
+	{
+		__uuid: "53e2dfec-975d-ebd2-f302-28d5aceaf9b2"
+		name: "/root/Cylinder_039/Cylinder_017/wood_1_001"
+		face_indices: "0b9d758e-24f3-5107-6beb-65cfc2028064"
+		face_count: 232
+	}
+	{
+		__uuid: "1cbe314c-4d92-a81e-ed04-1bab6b2aa11c"
+		name: "/root/Cylinder_039/Cylinder_017/wood_3_001"
+		index: 1
+		face_indices: "797b121c-30c9-c2bb-634f-3c5a01bf4f7f"
+		face_count: 80
+	}
+	{
+		__uuid: "f7a88858-d722-ee78-d12f-a50ecce9241a"
+		name: "/root/Cylinder_039/Cylinder_017/sand_001"
+		index: 2
+		face_indices: "913ae7bd-4aa3-e62e-9784-bb3ddefed653"
+		face_count: 248
+	}
+	{
+		__uuid: "e39ceda6-747f-1c8c-d92f-da3fe2d91e76"
+		name: "/root/Cylinder_039/Cylinder_017/wood_support_001"
+		index: 3
+		face_indices: "9a9f2dbd-18a1-19f3-d0f5-4b047c29c4ad"
+		face_count: 82
+	}
+	{
+		__uuid: "94bb6b60-aa8c-05f8-c2eb-52b2a5c4725d"
+		name: "/root/Cylinder_039/Cylinder_017/Rum_bottle_paper_001"
+		index: 4
+		face_indices: "77fb6279-0186-ca45-df1d-5cb6085a77b4"
+		face_count: 30
+	}
+]
+__asset_uuid: "d95930f2-03de-b733-9989-8daad621ffaa"

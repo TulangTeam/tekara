@@ -1,0 +1,288 @@
+__type: "tm_geometry"
+__uuid: "c161084f-04ad-08c1-ec09-9d747f14b30a"
+name: "Cube_075"
+input_geometry: {
+	__uuid: "4e71cb68-242b-2d3f-30cb-e8613664531f"
+	buffers: [
+		{
+			__uuid: "199cb6aa-cec4-1615-4d63-af22114e793e"
+			buffer: "34e21fe5-8823-c7a3-4a0b-eb5748dab790"
+		}
+		{
+			__uuid: "51d78da8-7822-3282-9a2c-dcafe438da04"
+			index: 1
+			buffer: "c98133e4-4c04-510d-319c-f9d8b34f6744"
+		}
+	]
+	channels: [
+		{
+			__uuid: "ec488abf-2a38-b0c6-fc8a-225b3d7a5081"
+			semantic: 1
+			count: 24
+			buffer: "199cb6aa-cec4-1615-4d63-af22114e793e"
+			stride: 12
+			format: 16910368
+			primvar_name: "points"
+		}
+		{
+			__uuid: "3e715dc5-4d14-819b-5678-cc743908edb3"
+			semantic: 5
+			count: 24
+			buffer: "199cb6aa-cec4-1615-4d63-af22114e793e"
+			offset: 288
+			stride: 8
+			format: 16779296
+			primvar_name: "st"
+		}
+		{
+			__uuid: "f3971fca-07ca-b605-3ea2-896065ab0769"
+			semantic: 5
+			set: 1
+			count: 24
+			buffer: "199cb6aa-cec4-1615-4d63-af22114e793e"
+			offset: 480
+			stride: 8
+			format: 16779296
+			primvar_name: "UVMap"
+		}
+		{
+			__uuid: "780d09df-ffa5-4eb5-84c8-692f70adf111"
+			semantic: 2
+			count: 24
+			buffer: "199cb6aa-cec4-1615-4d63-af22114e793e"
+			offset: 672
+			stride: 12
+			format: 16910368
+			primvar_name: "normals"
+		}
+	]
+	indices: {
+		__uuid: "669ddd4c-29c7-1780-803b-6c606b214581"
+		semantic: 9
+		count: 36
+		buffer: "51d78da8-7822-3282-9a2c-dcafe438da04"
+		stride: 2
+		format: 67108880
+	}
+}
+transform: "3865a2eea51b6038"
+transform_settings: {
+	__uuid: "00abb6f1-2049-f419-8cdc-2365db5e80c0"
+	graph: {
+		__uuid: "d1d3d3f3-9687-45d2-5afd-470cb1e69ea2"
+		interface: {
+			__uuid: "4dabb46d-0eef-0f89-5b35-7b96df217e33"
+			inputs: [
+				{
+					__uuid: "8f0a6c22-757e-8341-1762-c183f2f96d2c"
+					name: "Weld Vertices"
+					id: "weld_vertices"
+					value: {
+						__type: "tm_bool"
+						__uuid: "5c7121b2-e83f-cecc-7b45-58a4a921018c"
+						bool: true
+					}
+					public: true
+				}
+				{
+					__uuid: "0b1aa90e-55d6-f116-f32b-e7fcb420ae0b"
+					name: "Generate Normals"
+					id: "generate_normals"
+					value: {
+						__type: "tm_bool"
+						__uuid: "8e62c8e0-067f-2bbc-3ef6-9941337e02b1"
+						bool: true
+					}
+					public: true
+					order: 1
+				}
+				{
+					__uuid: "cd3ad466-8066-e681-efdb-5f88a27925cc"
+					name: "Generate Tangents"
+					id: "generate_tangents"
+					value: {
+						__type: "tm_bool"
+						__uuid: "910bde05-bfaa-9811-5644-156d3a4ff02c"
+						bool: true
+					}
+					public: true
+					order: 2.0999999046325684
+				}
+				{
+					__uuid: "a447088c-c0d3-c040-612c-01077b3c0ef8"
+					name: "Lightmap Settings"
+					id: "lightmap_settings"
+					value: {
+						__type: "tm_lightmap_geometry_settings"
+						__uuid: "f5b26f6f-f12e-27dd-3974-e933576fa48a"
+						source_uvs: 1
+						resolution_scale: 1
+					}
+					public: true
+					order: 3
+				}
+				{
+					__uuid: "c93a0d69-65be-c280-9206-97f26485b8ce"
+					name: "Replace Existing Normals"
+					id: "replace_existing_normals"
+					value: {
+						__type: "tm_bool"
+						__uuid: "af2e93bc-21c2-d7ff-300b-adbe5a36e298"
+					}
+					public: true
+					order: 2
+				}
+				{
+					__uuid: "e9f17cb4-a1c7-b9a2-7a4b-f4b20ee0c26c"
+					name: "Optimize Vertex Cache"
+					id: "optimize_vertex_cache"
+					value: {
+						__type: "tm_bool"
+						__uuid: "edea0ddd-8f83-03c8-9b4b-2a8dcea157de"
+						bool: true
+					}
+					public: true
+					order: 2.0999999046325684
+				}
+				{
+					__uuid: "24e3f804-35aa-ae75-b405-a6230942c0ae"
+					name: "Primvar Filter"
+					id: "primvar_filters"
+					value: {
+						__type: "tm_primvar_filter_set"
+						__uuid: "068f2771-4b38-7282-b42d-ff8dc43839be"
+					}
+					public: true
+					order: 5
+				}
+				{
+					__uuid: "770d6d57-2844-b378-d1be-93a8d8ad1920"
+					name: "Primvars"
+					id: "primvar_settings"
+					value: {
+						__type: "tm_primvar_settings_set"
+						__uuid: "f2e23b4c-7225-e7cc-f1ed-51b169ce898c"
+						set: [
+							{
+								__uuid: "7782081c-8776-7518-fca3-8d5e927c8dfc"
+								channel: "ec488abf-2a38-b0c6-fc8a-225b3d7a5081"
+							}
+							{
+								__uuid: "ab350653-f7f9-ca47-194c-3b56ca0497df"
+								channel: "3e715dc5-4d14-819b-5678-cc743908edb3"
+							}
+							{
+								__uuid: "fadc1a0b-3c65-936d-d2e0-62da53ea41c1"
+								channel: "f3971fca-07ca-b605-3ea2-896065ab0769"
+							}
+							{
+								__uuid: "b864c3b4-f901-9648-6387-3adb25ffa27a"
+								channel: "780d09df-ffa5-4eb5-84c8-692f70adf111"
+							}
+						]
+					}
+					public: true
+					order: 6
+				}
+				{
+					__uuid: "80455b85-4ab8-992f-9c4e-887c4d4f5fdb"
+					name: "Retain Original Mesh"
+					id: "retain_original_mesh"
+					value: {
+						__type: "tm_mesh_descriptor_reference"
+						__uuid: "d3c9d9bf-e416-2cea-8b7e-5e25d00cb269"
+						mesh_descriptor: "94290c3c-1d23-1dc3-8eec-22371765cdc7"
+					}
+				}
+			]
+		}
+	}
+}
+output_geometry: {
+	__uuid: "4c974674-138f-200c-493d-3e7df91ae3bd"
+	buffers: [
+		{
+			__uuid: "f429f00a-324e-6afa-e7b0-cb96a2c47140"
+		}
+		{
+			__uuid: "fd2137b4-197b-7520-8ade-271084cebca3"
+			index: 1
+		}
+		{
+			__uuid: "da42c053-a56e-69ae-4ea1-9989fc4a3ebf"
+			index: 2
+		}
+		{
+			__uuid: "5e94af66-b7fd-39aa-3ffe-f75aacb38c0b"
+			index: 3
+		}
+	]
+	channels: [
+		{
+			__uuid: "9fc2669f-4c85-6c38-1cb2-f2293d4109e4"
+			semantic: 1
+			count: 24
+			buffer: "f429f00a-324e-6afa-e7b0-cb96a2c47140"
+			stride: 12
+			format: 16910368
+			primvar_name: "points"
+		}
+		{
+			__uuid: "b477113d-9f67-f52b-4eef-c92fa735d488"
+			semantic: 5
+			count: 24
+			buffer: "f429f00a-324e-6afa-e7b0-cb96a2c47140"
+			offset: 288
+			stride: 8
+			format: 16779296
+			primvar_name: "st"
+		}
+		{
+			__uuid: "6cb01337-2a75-9448-169c-da417e53f3f7"
+			semantic: 5
+			set: 1
+			count: 24
+			buffer: "f429f00a-324e-6afa-e7b0-cb96a2c47140"
+			offset: 480
+			stride: 8
+			format: 16779296
+			primvar_name: "UVMap"
+		}
+		{
+			__uuid: "18f2b108-d035-e1c3-7986-287686f8835a"
+			semantic: 2
+			count: 24
+			buffer: "f429f00a-324e-6afa-e7b0-cb96a2c47140"
+			offset: 672
+			stride: 12
+			format: 16910368
+			primvar_name: "normals"
+		}
+		{
+			__uuid: "2b50fa94-2165-18f8-160b-30c97b7f4ad2"
+			semantic: 3
+			count: 24
+			buffer: "da42c053-a56e-69ae-4ea1-9989fc4a3ebf"
+			stride: 16
+			format: 25298976
+		}
+		{
+			__uuid: "782cd9fc-4503-2cec-2c6e-dcad7f952a4d"
+			semantic: 4
+			count: 24
+			buffer: "5e94af66-b7fd-39aa-3ffe-f75aacb38c0b"
+			stride: 12
+			format: 16910368
+		}
+	]
+	indices: {
+		__uuid: "b68b3d86-06ec-8aba-f531-8696a2cad1c0"
+		semantic: 9
+		count: 36
+		buffer: "fd2137b4-197b-7520-8ade-271084cebca3"
+		stride: 2
+		format: 67108880
+	}
+}
+validity_hash: "d0c552062c3e0250"
+__asset_uuid: "cde18a74-6c7c-b44e-b89a-bcd36f376dae"

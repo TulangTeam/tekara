@@ -1,0 +1,22 @@
+__type: "tm_mesh_resource"
+__uuid: "91816abc-f013-9d4c-b7b6-e20eb49d1430"
+models: [
+	{
+		__uuid: "0cca6b31-7823-a908-1903-8c6238fd1fad"
+		name: "Cube_031"
+		geometry: "99474fda-4fff-f1fe-5b4e-49923d43ec23"
+		bounds_min: {
+			__uuid: "c2ecfde1-d392-fb74-4522-771e0b80e5b8"
+			x: -1
+			y: -1
+			z: -1
+		}
+		bounds_max: {
+			__uuid: "63b3dcad-c4ba-24de-2703-aebda93aa4df"
+			x: 1
+			y: 1
+			z: 1
+		}
+	}
+]
+__asset_uuid: "0038a5b3-3729-662c-48af-16d2653d726a"

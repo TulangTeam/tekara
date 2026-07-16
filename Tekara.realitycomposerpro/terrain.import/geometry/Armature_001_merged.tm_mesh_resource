@@ -1,0 +1,213 @@
+__type: "tm_mesh_resource"
+__uuid: "74f86c84-ba67-6588-c29f-43180faf23ae"
+instances: [
+	{
+		__uuid: "4e2c42ae-b434-4d3b-bcd0-2d7c323273d5"
+		model: "764eeba6-9add-bc21-1804-d4356b5ea65b"
+		transform: {
+			__uuid: "395592e2-0c52-6c7c-c9db-8e73d39e0e98"
+			position: {
+				__uuid: "bfdf548e-9d87-7ea1-1360-9e31f6492f97"
+			}
+			rotation: {
+				__uuid: "10432740-c6ab-2453-8f87-95c2540f41e1"
+			}
+			scale: {
+				__uuid: "dcf8e3e6-fa43-f91a-c2c8-0a7b59074a8c"
+			}
+		}
+	}
+	{
+		__uuid: "b941d989-b39a-f782-3833-71016eb020b5"
+		model: "317e2a53-0341-27e8-0ee8-4c8e2edca52f"
+		transform: {
+			__uuid: "a7c47b96-6965-69d1-f239-a5711e5bcfde"
+			position: {
+				__uuid: "b04b9908-8463-6ef3-ddee-93ce5c699c45"
+			}
+			rotation: {
+				__uuid: "61141f07-e54c-24fe-aee0-3402f6553e4c"
+			}
+			scale: {
+				__uuid: "46bf5abe-5554-d61c-a061-5dfddbe2c5ef"
+			}
+		}
+	}
+]
+models: [
+	{
+		__uuid: "764eeba6-9add-bc21-1804-d4356b5ea65b"
+		name: "Object_1"
+		geometry: "0631cb2b-41ca-cfc3-580a-2ae6836d6e58"
+		skinning_data: {
+			__uuid: "82fb8487-a8a2-0c1b-c5d8-21e6ac3356fa"
+			skelton_name: "root/Sketchfab_model_009/root_002/GLTF_SceneRootNode_002/Armature_18/GLTF_created_0_001/Armature_001"
+			bones: [
+				{
+					__uuid: "2f8e5334-b018-91d9-dd04-d42a31bd71ef"
+					name: "GLTF_created_0_rootJoint"
+				}
+				{
+					__uuid: "e8c3a78b-72cf-3872-d046-6bab7620494c"
+					bone_idx: 1
+					name: "GLTF_created_0_rootJoint/Bone_11"
+				}
+				{
+					__uuid: "e1f5d9f0-9a9c-bc6e-56ec-b1d20c6d7350"
+					bone_idx: 2
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_004_4"
+				}
+				{
+					__uuid: "1fa1ff92-7871-73ad-7f79-9e86bc21dae7"
+					bone_idx: 3
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_004_4/Bone_005_3"
+				}
+				{
+					__uuid: "2c8a9f47-226c-8229-c399-80bec422946c"
+					bone_idx: 4
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_008_7"
+				}
+				{
+					__uuid: "22483274-69a4-57d6-74be-303a1027d5c0"
+					bone_idx: 5
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_008_7/Bone_009_6"
+				}
+				{
+					__uuid: "eccdea5b-804a-a744-c680-b21e19993b6f"
+					bone_idx: 6
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_008_7/Bone_009_6/Bone_010_5"
+				}
+				{
+					__uuid: "0058814f-7d1c-203e-3091-11f104a863f9"
+					bone_idx: 7
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_011_10"
+				}
+				{
+					__uuid: "b3856289-12fa-08a9-1ed0-9577830fbbb4"
+					bone_idx: 8
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_011_10/Bone_012_9"
+				}
+				{
+					__uuid: "bfd0dd52-c10c-c26f-f320-fab904e06750"
+					bone_idx: 9
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_011_10/Bone_012_9/Bone_013_8"
+				}
+				{
+					__uuid: "4f33bb94-2344-74a2-3a8c-68ef59dbcc82"
+					bone_idx: 10
+					name: "GLTF_created_0_rootJoint/Bone_001_16"
+				}
+				{
+					__uuid: "f261e3a3-4918-4d62-ba96-75871919360c"
+					bone_idx: 11
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15"
+				}
+				{
+					__uuid: "7f5ca867-f5da-4f3d-9ef6-bcd52622913f"
+					bone_idx: 12
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15/Bone_003_14"
+				}
+				{
+					__uuid: "8b33d4fe-366f-859c-e18a-8da40d33a5d6"
+					bone_idx: 13
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15/Bone_003_14/Bone_006_12"
+				}
+				{
+					__uuid: "8ed769c2-4b15-b8f6-a08c-5cc9ff977be7"
+					bone_idx: 14
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15/Bone_003_14/Bone_007_13"
+				}
+			]
+		}
+	}
+	{
+		__uuid: "317e2a53-0341-27e8-0ee8-4c8e2edca52f"
+		name: "Object_0_001"
+		geometry: "9fea9922-2f24-3bb3-a618-4ba65c58424a"
+		material_index: 1
+		skinning_data: {
+			__uuid: "ab3aa416-5809-ee57-1c09-77dd3a09afd0"
+			skelton_name: "root/Sketchfab_model_009/root_002/GLTF_SceneRootNode_002/Armature_18/GLTF_created_0_001/Armature_001"
+			bones: [
+				{
+					__uuid: "a13df2ff-b83c-ffa0-0a2c-3cb01c98ff5c"
+					name: "GLTF_created_0_rootJoint"
+				}
+				{
+					__uuid: "0dd151c2-ec90-72c6-f16e-e1b53a184769"
+					bone_idx: 1
+					name: "GLTF_created_0_rootJoint/Bone_11"
+				}
+				{
+					__uuid: "e941447f-dc10-879b-e299-d68a472a2a00"
+					bone_idx: 2
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_004_4"
+				}
+				{
+					__uuid: "a97fb0bd-ddca-29a0-13af-4f520502f3dd"
+					bone_idx: 3
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_004_4/Bone_005_3"
+				}
+				{
+					__uuid: "470d0023-05a1-a01c-f875-b6874db4a78c"
+					bone_idx: 4
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_008_7"
+				}
+				{
+					__uuid: "32dfadde-8120-cb9f-b43e-42a283db824f"
+					bone_idx: 5
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_008_7/Bone_009_6"
+				}
+				{
+					__uuid: "2ddad1bd-d4ab-d641-88dc-069178e2b0b3"
+					bone_idx: 6
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_008_7/Bone_009_6/Bone_010_5"
+				}
+				{
+					__uuid: "4e4863bb-de67-13a8-72b7-d3afece21113"
+					bone_idx: 7
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_011_10"
+				}
+				{
+					__uuid: "48ecfbfd-64a1-6e88-42fa-c8c4cf0addac"
+					bone_idx: 8
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_011_10/Bone_012_9"
+				}
+				{
+					__uuid: "9b824eee-c035-d098-f9df-34f072e1ce86"
+					bone_idx: 9
+					name: "GLTF_created_0_rootJoint/Bone_11/Bone_011_10/Bone_012_9/Bone_013_8"
+				}
+				{
+					__uuid: "996abb5e-f945-8d5f-4e4a-70c1d94bbdc3"
+					bone_idx: 10
+					name: "GLTF_created_0_rootJoint/Bone_001_16"
+				}
+				{
+					__uuid: "381985d8-be0b-889a-6fdf-d3ce8b809a5b"
+					bone_idx: 11
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15"
+				}
+				{
+					__uuid: "db78c4ab-b615-fa87-7ab6-3b486daf7975"
+					bone_idx: 12
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15/Bone_003_14"
+				}
+				{
+					__uuid: "9e0e02ec-9b0b-de76-07e6-a213beab2c3d"
+					bone_idx: 13
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15/Bone_003_14/Bone_006_12"
+				}
+				{
+					__uuid: "f0a7f3d8-8252-1fc3-487a-f7937f4e3fa6"
+					bone_idx: 14
+					name: "GLTF_created_0_rootJoint/Bone_001_16/Bone_002_15/Bone_003_14/Bone_007_13"
+				}
+			]
+		}
+	}
+]
+skeletons: [
+	"5f23370c-d773-9ff2-8225-d03470968dc6"
+]
+__asset_uuid: "4dda1a59-ba2d-8bf7-9939-3c05093d2065"

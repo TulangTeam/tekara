@@ -1,0 +1,31 @@
+__type: "tm_texture"
+__uuid: "ae85c86a-a561-b4e6-45c5-f9d80c34ff12"
+source_filename: "../../../../../Downloads/sandblock.usdz[textures/sand beach_Metallic.jpg]"
+source_texture: "51f0e49d-43fb-e7b1-908d-09e0501cc846"
+transform: "dbdb0d4a0b9144f5"
+transform_settings: {
+	__uuid: "a5fc9d27-c54a-0578-913a-7079ed08f582"
+	__prototype_type: "tm_creation_graph"
+	__prototype_uuid: "9eee8001-52a4-671e-193e-13b33cb6c233"
+	graph: {
+		__uuid: "33e08da3-5894-ac4a-2c6a-b4e80d047d61"
+		__prototype_type: "tm_graph"
+		__prototype_uuid: "311e84c2-053c-4beb-0569-d8aac8083cd2"
+		interface: {
+			__uuid: "052e5fea-14cb-d60f-fa9a-d15adfce370c"
+			__prototype_type: "tm_graph_interface"
+			__prototype_uuid: "80ed42b0-003f-1504-072c-3ea14241dccf"
+		}
+	}
+}
+color_space: {
+	__uuid: "c498df3f-80f8-5294-a6ce-10465e63f6e7"
+	transfer_function: 1
+}
+__asset_uuid: "4af9f894-8b1e-8ebd-30f6-7b6798c46eb6"
+__asset_labels: [
+	"e4bec38d8f73f423"
+]
+__asset_thumbnail: {
+	__uuid: "f8378e84-ae7e-7fcf-5bfc-029aa0317983"
+}

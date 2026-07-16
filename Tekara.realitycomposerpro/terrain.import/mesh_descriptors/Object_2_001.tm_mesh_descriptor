@@ -1,0 +1,80 @@
+__type: "tm_mesh_descriptor"
+__uuid: "1bbbe38f-d306-2478-9add-1b5a7e1b4934"
+vertex_count: 1299
+face_vertex_counts: {
+	__uuid: "02e2c4b2-cd9a-586d-d966-1718b3b98c07"
+	data: "39ffe23b-6a51-dd8d-b8f3-8b37e96bfbc3"
+	format: 83886112
+	value_count: 682
+}
+indices: {
+	__uuid: "1a8ee8f1-fba6-eb94-ea07-e484cc1ad8da"
+	data: "1d11de8f-dd0d-1437-3b64-4215bba67f52"
+	format: 83886112
+	value_count: 2046
+}
+attributes: [
+	{
+		__uuid: "50a15ea5-1452-539f-01d9-0af934b7e496"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "e5b2c0d7-919c-cf67-62e1-6bee694d5321"
+			data: "f980c8ec-a04c-5f8c-368f-d8855eaf85be"
+			format: 16910368
+			value_count: 1299
+		}
+	}
+	{
+		__uuid: "aca68ef0-770f-3e52-1207-f5f63b4e0761"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "9e66b173-f4d9-83a4-25e2-25daaf0080b6"
+			data: "6bcb21d1-4cf9-5f30-c375-baa475f3f788"
+			format: 16779296
+			value_count: 1299
+		}
+		indices: {
+			__uuid: "82f4988e-52bc-e983-a923-40eaf3b37f0f"
+			data: "614d4a8a-a242-cd9e-b1b5-7ab45f214379"
+			format: 83886112
+			value_count: 2046
+		}
+	}
+	{
+		__uuid: "26902fa8-7e37-2f17-d2ab-7b786f717761"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "f72775ac-88f7-41f0-7e84-b23469302f9c"
+			data: "28eaf89c-eb60-bf1f-53d2-06fd6bcc67ff"
+			format: 16910368
+			value_count: 2046
+		}
+	}
+]
+skinning_data: {
+	__uuid: "f91c4d13-5435-355e-2ea1-9f09a9c9a673"
+	vertex_count: 1299
+	influence_count_per_vertex: 4
+	indices: "754a8cb9-d7d9-a991-b96d-24fc67733cf3"
+	weights: "0d8c07b4-cdfd-8484-2bf8-2d583b6ff9f8"
+	bind_transform: {
+		__uuid: "a4970443-0e86-9cba-9090-e8d9dbe47d08"
+		xy: -1.4348189303348136e-08
+		xz: 2.3283064365386963e-09
+		yx: 1.4348189303348136e-08
+		yz: 7.4505814851022478e-09
+		zx: -2.3283064365386963e-09
+		zy: -7.4505814851022478e-09
+		zz: 0.99999994039535523
+		wx: 7.62939453125e-06
+		wy: 7.1054273576010019e-15
+		wz: -1.7763568394002505e-15
+	}
+}
+__asset_uuid: "a2533550-a9bd-a600-7157-f82da7a36e8b"

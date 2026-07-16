@@ -1,0 +1,22 @@
+__type: "tm_mesh_resource"
+__uuid: "c0158877-5cbe-81af-e52e-3c3482c39bdc"
+models: [
+	{
+		__uuid: "6d12c35f-cb41-96d6-0a50-8d4775763a26"
+		name: "tronco_Material_0"
+		geometry: "40d1ba9d-29ad-2038-cf39-f633c96e26f1"
+		bounds_min: {
+			__uuid: "e3bf8c08-b281-1896-980a-a4ea86db0aa7"
+			x: -17.693016052246094
+			y: -56.145179748535156
+			z: -18.623235702514649
+		}
+		bounds_max: {
+			__uuid: "dcac337c-0a78-4fca-9258-0d477f1db113"
+			x: 19.818264007568359
+			y: 0.081142619252204895
+			z: 20.28819465637207
+		}
+	}
+]
+__asset_uuid: "9ac8ceac-8a56-e45c-e21a-afe0e50b0e84"

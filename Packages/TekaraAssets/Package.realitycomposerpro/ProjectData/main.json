@@ -3,13 +3,21 @@
     "\/TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Arc1Chap1_Scene.usda" : "E81FE3C9-0034-4DAD-99BB-08CED0B1529E",
     "\/TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/RootScene.usda" : "7918801B-AE52-4864-9D80-0E6EE3D503D1",
     "\/TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Scene.usda" : "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-    "TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Scene.usda" : "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6"
+    "\/TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Untitled%20Scene.usda" : "9871D513-ED16-43C5-B879-4B8D4672CB87",
+    "TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Arc1Chap1_Scene.usda" : "07AED656-500D-4D5A-9EE4-781B8C2DF2AE",
+    "TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/RootScene.usda" : "ABF117E8-429F-46FF-8F7C-5AA1DE2CDB70",
+    "TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/Scene.usda" : "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6",
+    "TekaraAssets\/Sources\/TekaraAssets\/TekaraAssets.rkassets\/_WORLD1_CHAP1.usda" : "29CE4316-3263-449E-922C-FD471FCE2895"
   },
   "projectID" : -6762619143483881795,
   "uuidToIntID" : {
+    "07AED656-500D-4D5A-9EE4-781B8C2DF2AE" : 7459757409223540113,
+    "29CE4316-3263-449E-922C-FD471FCE2895" : -5915744718876593580,
     "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A" : 369166468034212660,
     "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6" : 3939300810228535352,
     "7918801B-AE52-4864-9D80-0E6EE3D503D1" : 8247079458230684114,
+    "9871D513-ED16-43C5-B879-4B8D4672CB87" : -5023988879819365622,
+    "ABF117E8-429F-46FF-8F7C-5AA1DE2CDB70" : 3753284294334708493,
     "E81FE3C9-0034-4DAD-99BB-08CED0B1529E" : -1427463832786317013
   }
 }

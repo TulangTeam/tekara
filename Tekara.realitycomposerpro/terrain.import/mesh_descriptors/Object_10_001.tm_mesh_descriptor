@@ -1,0 +1,142 @@
+__type: "tm_mesh_descriptor"
+__uuid: "91a34034-0bbc-2c3c-0e22-8074179d5be8"
+vertex_count: 48233
+face_vertex_counts: {
+	__uuid: "9fa7fcd6-369e-892a-47d2-44551088eeb0"
+	data: "791a630e-67c2-37fa-8468-3c856e2f49e7"
+	format: 83886112
+	value_count: 82632
+}
+indices: {
+	__uuid: "bd625414-5bd3-5a92-26c9-9ad86d245013"
+	data: "80453186-d357-2026-d996-d11dedb56085"
+	format: 83886112
+	value_count: 247896
+}
+attributes: [
+	{
+		__uuid: "f016dd31-2416-dbf9-c132-ed31833ce7dd"
+		name: "points"
+		interpolation: 2
+		semantic: 1
+		values: {
+			__uuid: "189dc4a0-a52d-b27c-23fb-32bff28a8f48"
+			data: "1fc99082-27a3-5d1e-59d6-71739f31209b"
+			format: 16910368
+			value_count: 48233
+		}
+	}
+	{
+		__uuid: "2aac4951-d0e0-6b22-f8be-af6294a54541"
+		name: "primvars:Color"
+		interpolation: 3
+		values: {
+			__uuid: "5bb91f99-93ea-d82e-179e-d1ccddcffe7d"
+			data: "09ddd2a9-7aad-68bb-8839-dd0c189def6b"
+			format: 25298976
+			value_count: 247896
+		}
+	}
+	{
+		__uuid: "75f1d5b1-05a5-bcf3-5714-134c3b3a91f4"
+		name: "primvars:st"
+		interpolation: 3
+		semantic: 5
+		values: {
+			__uuid: "69a214ce-4d61-b3f3-9729-157a7a2d0406"
+			data: "84b0b409-8676-4de5-3d96-b966da6c3a16"
+			format: 16779296
+			value_count: 48233
+		}
+		indices: {
+			__uuid: "0920d0ca-3749-a080-b017-00247f8cf2de"
+			data: "a9e04e5e-1bec-1324-40b5-93f9cdd0b404"
+			format: 83886112
+			value_count: 247896
+		}
+	}
+	{
+		__uuid: "65ffdb05-75e5-2cdd-ce3d-a44271a89dd4"
+		name: "normals"
+		interpolation: 3
+		semantic: 2
+		values: {
+			__uuid: "66c13d8d-4d32-f9cd-5924-c2dd570389ad"
+			data: "608a84e9-a834-0685-ac5a-754a5a4a392c"
+			format: 16910368
+			value_count: 247896
+		}
+	}
+]
+subsets: [
+	{
+		__uuid: "35601c55-850a-f77b-4df9-6fdc97b9ce13"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Sphere"
+		face_indices: "6e7c3519-9bc2-447a-6683-01da9a160b9d"
+		face_count: 49096
+	}
+	{
+		__uuid: "abfaa9b8-41d9-72dc-8114-aef64ed452da"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Sphere_2"
+		index: 1
+		face_indices: "6647e47b-3e77-2b61-473f-db2e3b15e5be"
+		face_count: 768
+	}
+	{
+		__uuid: "2ef3a9c2-5af1-69f7-fbaa-cc61ea948f3b"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Sphere_2_1"
+		index: 2
+		face_indices: "e55787c5-7900-8e3d-198c-5687a92d81fd"
+		face_count: 768
+	}
+	{
+		__uuid: "3def9665-d764-2cf0-248e-04a5cb145e94"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Torus"
+		index: 3
+		face_indices: "c63c9f41-d3f0-3a2b-d92b-de224d604bc6"
+		face_count: 240
+	}
+	{
+		__uuid: "583c9f92-a95f-5459-c46e-2d215e8097a2"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Torus_1"
+		index: 4
+		face_indices: "0342c31e-81a9-da9c-4c03-c0c1ac79b90e"
+		face_count: 240
+	}
+	{
+		__uuid: "27bef065-2492-dfda-49f9-6b3bd5821471"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Mesh"
+		index: 5
+		face_indices: "4293da95-f19d-deec-db4c-57f6d8de71a4"
+		face_count: 4560
+	}
+	{
+		__uuid: "2cb16580-589c-759b-ae3c-a82ba2b04924"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Mesh_1"
+		index: 6
+		face_indices: "189b4863-8593-8ea8-9cd0-5882650de3d1"
+		face_count: 5700
+	}
+	{
+		__uuid: "19349542-43ac-5ebb-a572-d5e9d93a28f2"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Mesh_12"
+		index: 7
+		face_indices: "234f6e6d-321c-a503-2d38-a5ed1543c49b"
+		face_count: 3856
+	}
+	{
+		__uuid: "bc1c159c-3cff-fa26-26a2-5e845bb94195"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Mesh_2"
+		index: 8
+		face_indices: "b38de62c-cd28-0a11-ae4b-8666680ac94c"
+		face_count: 5112
+	}
+	{
+		__uuid: "a1ce67e8-e473-4dc3-6185-8fdf2a99e86b"
+		name: "/root/Sketchfab_model_005/Project_16_obj_cleaner_materialmerger_gles/Object_12_001/Object_10_001/Sphere_1"
+		index: 9
+		face_indices: "cab61d55-ed9d-1882-9442-614d99287ce6"
+		face_count: 12292
+	}
+]
+__asset_uuid: "91cc032e-aad5-6b1c-1d22-6b5a064fff44"

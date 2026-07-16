@@ -1,0 +1,33 @@
+__type: "tm_texture"
+__uuid: "02fa92f6-1e85-174d-2ee8-511c7c760f03"
+source_filename: "../../../../../Downloads/sandblock.usdz[textures/sand beach_BaseColor.jpg]"
+source_texture: "c775b49a-b312-27ff-903a-db9ef373c3af"
+transform: "6b5fd8e4eec2cf5b"
+transform_settings: {
+	__uuid: "1d7b1e2c-3502-1cb6-216c-f7b688924863"
+	__prototype_type: "tm_creation_graph"
+	__prototype_uuid: "565f9a46-b719-d76a-7eaa-36e7faaddc5f"
+	graph: {
+		__uuid: "c9ee2372-6710-015b-b2cb-3fda20e21019"
+		__prototype_type: "tm_graph"
+		__prototype_uuid: "31ddc72a-62d2-0d6e-83b1-392db7f56278"
+		interface: {
+			__uuid: "683dfe27-3735-c783-6228-00f2b9dd3f46"
+			__prototype_type: "tm_graph_interface"
+			__prototype_uuid: "fafb8c6f-264f-0609-fc29-68fbe0d040c1"
+		}
+	}
+}
+color_space: {
+	__uuid: "729e84db-de3c-ac65-8294-d19ab2eafbe8"
+	color_primary: 1
+	transfer_function: 2
+	color_model: 1
+}
+__asset_uuid: "37505232-d05e-410b-1ebd-2688af6e07fb"
+__asset_labels: [
+	"e4bec38d8f73f423"
+]
+__asset_thumbnail: {
+	__uuid: "7d00ae87-5d4b-2550-7f40-7932d3d9b9e5"
+}

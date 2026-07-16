@@ -1,0 +1,70 @@
+__type: "tm_usd_asset"
+__uuid: "6025a741-4da6-530c-3dd9-0d926204cac1"
+source_path: "../Packages/TekaraAssets/Sources/TekaraAssets/TekaraAssets.rkassets/terrain.usdz"
+settings: [
+	{
+		__type: "tm_scene_optimizer"
+		__uuid: "f4d8db08-ef2e-f07a-1a72-79229dba3202"
+		settings: {
+			__uuid: "b6aa0a4b-a62b-785d-2dcd-2a62f679a4fc"
+			graph: {
+				__uuid: "f1ceba1a-22a1-6805-48da-4f9f4f14ffdd"
+				interface: {
+					__uuid: "4b24876c-4aae-9eae-2415-db8d7d76be2d"
+					inputs: [
+						{
+							__uuid: "2c3e9a88-74a4-6527-e7b6-0a6b0c93f927"
+							name: "Merging Mode"
+							id: "scene_optimizer_settings__merging_mode"
+							value: {
+								__type: "tm_scene_optimizer_merging_mode"
+								__uuid: "5b097600-0c19-fbc0-96d8-e35bceb03669"
+							}
+							public: true
+						}
+						{
+							__uuid: "0386e4af-5ee8-3c51-d748-6bd817d34c06"
+							name: "Entities to Keep"
+							id: "scene_optimizer_settings__keep_entities_list"
+							value: {
+								__type: "tm_scene_optimizer_keep_entities_list"
+								__uuid: "2e6d4d47-f4ca-e7ca-a135-9c76946c37fe"
+							}
+							public: true
+						}
+					]
+				}
+			}
+		}
+		output: "a9e482ff-9abe-5d37-d317-86804eff0d99"
+	}
+	{
+		__type: "tm_lod_generator"
+		__uuid: "87bc8695-500b-5c00-e687-77680259fc9a"
+	}
+	{
+		__type: "tm_usd_animation_settings"
+		__uuid: "ca0b5307-f0d1-cc07-cb65-e02c12b2acad"
+	}
+]
+pro_settings: [
+	{
+		__type: "tm_usd_purpose_settings"
+		__uuid: "441e1e6e-ff3f-6182-405f-3173c7f25116"
+	}
+	{
+		__type: "tm_usd_dev_settings"
+		__uuid: "7d01b5d2-0158-22f0-ea58-d81fcf861cf3"
+		mesh_creation_graph: "feefd623-b26a-6155-97b0-2dd807e0e1c3"
+	}
+]
+variants: [
+	{
+		__uuid: "d127ff24-4114-7d8c-8d37-d8428573cda9"
+		name: "Default"
+		root_entity: "521fee61-26c6-f5ab-4666-e2a131d610aa"
+		proxy_entity: "782b2621-bc44-b1ec-5c2d-6d3b8ed6a91d"
+		session: "b2d1b18d-7a9a-17f1-5077-4520f672737b"
+	}
+]
+__asset_uuid: "19a28975-1ff9-d823-9dbe-99e0ce07187a"

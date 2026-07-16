@@ -1,0 +1,31 @@
+__type: "tm_texture"
+__uuid: "8031adf0-eb65-bac7-bb02-d6ab855e33b9"
+source_filename: "../Packages/TekaraAssets/Sources/TekaraAssets/TekaraAssets.rkassets/terrain.usdz[textures/sand beach_Normal.jpg]"
+source_texture: "001094eb-3b58-f60d-dba5-99ee5d002c1d"
+transform: "f964a6200d2621e6"
+transform_settings: {
+	__uuid: "9f9b415f-3a95-8fe2-b256-a445832f64e5"
+	__prototype_type: "tm_creation_graph"
+	__prototype_uuid: "6de37682-e96f-d4e9-4bdf-a9f8c9653985"
+	graph: {
+		__uuid: "540a54a0-378a-e4cd-6c2a-516cc97b84ce"
+		__prototype_type: "tm_graph"
+		__prototype_uuid: "a2059374-2cf7-1cbe-3796-cc8ee2675a9d"
+		interface: {
+			__uuid: "8a8a7cec-f7aa-828a-1f38-bda258c4c1c1"
+			__prototype_type: "tm_graph_interface"
+			__prototype_uuid: "92007456-5a32-a930-d8a5-fa6960fb19dc"
+		}
+	}
+}
+color_space: {
+	__uuid: "ea4455fd-b3de-a228-a306-5c4963241fa3"
+	transfer_function: 1
+}
+__asset_uuid: "a7af2cd7-dcf3-7bd7-c3f1-af08b39f1f6b"
+__asset_labels: [
+	"e4bec38d8f73f423"
+]
+__asset_thumbnail: {
+	__uuid: "57361d23-e844-0a15-8b39-e768d9ba46ed"
+}
