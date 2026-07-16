@@ -8,11 +8,61 @@
 import SwiftUI
 
 struct EpisodeCard: View {
+    var episodeNumber: String = "1"
+    var title: String = "CLEAN UP THE\nSEASHORE"
+    var isCompleted: Bool = true
+
+    let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
+    let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
+    let badgeGreen = Color(red: 0.18, green: 0.73, blue: 0.16)
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text(episodeNumber)
+                .font(.custom("Baloo 2", size: 22))
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .frame(width: 60, height: 60)
+                .background(Circle().fill(themeBlue))
+                .padding(.top, 30)
+            
+            // Pushes the circle to the top and text to the bottom
+            Spacer()
+
+            Text(title)
+                .font(.custom("Baloo 2", size: 16))
+                .fontWeight(.heavy)
+                .foregroundColor(themeBlue)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 10)
+                .padding(.bottom, 12)
+            
+            Text(isCompleted ? "Completed" : "Locked")
+                .font(.custom("Baloo 2", size: 16))
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity)
+                .background(
+                    Capsule().fill(isCompleted ? badgeGreen : Color.gray)
+                )
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+        }
+        .frame(width: 160, height: 340)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(cardBackground)
+        )
     }
 }
 
 #Preview {
-    EpisodeCard()
+    ZStack {
+        Color.black.opacity(0.8).ignoresSafeArea()
+
+        HStack(spacing: 20) {
+            EpisodeCard()
+        }
+    }
 }

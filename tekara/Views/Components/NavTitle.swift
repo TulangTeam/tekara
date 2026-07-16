@@ -19,7 +19,7 @@ struct NavTitle: View {
                 .font(.custom("Baloo 2", size: 32, relativeTo: .title))
                 .bold()
                 .foregroundColor(.white)
-                .padding(.top,)
+                .padding(.top,20)
         }
     }
 }
