@@ -11,28 +11,32 @@ struct EpisodesView: View {
     @ObservedObject var viewModel: GameViewModel
 
     var body: some View {
-        ZStack {
-            Image("bgocean")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        GeometryReader { geometry in
+            ZStack {
+                Image("bgocean")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .blur(radius: 4)
 
-            VStack {
-                HStack {
-                    BackButton(action: {
-                        viewModel.navigateTo(.chapter)
-                    })
+                VStack {
+                    HStack {
+                        BackButton(action: {
+                            viewModel.navigateTo(.chapter)
+                        })
+                        Spacer()
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, 50)
                     Spacer()
                 }
-                .padding(.leading, 20)
-                .padding(.top, 50)
-                Spacer()
-            }
 
-            Text("Episodes View")
-                .font(.largeTitle)
-                .foregroundColor(.white)
+                Text("Episodes View")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+            }
         }
+        .ignoresSafeArea()
     }
 }
 
