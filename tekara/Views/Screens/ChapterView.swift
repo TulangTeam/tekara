@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ChapterView: View {
     @ObservedObject var viewModel: GameViewModel
-    @State private var showEpisodes = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -20,10 +19,21 @@ struct ChapterView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .blur(radius: 4)
                 MapSelect(onMapSelected: {
-                    showEpisodes = true
+                    viewModel.navigateTo(.episodes)
                 })
-
                 VStack() {
+                    HStack {
+                        BackButton(action: {
+                            viewModel.navigateTo(.welcome)
+                        })
+                        Spacer()
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, 50)
+                    Spacer()
+                }
+                VStack() {
+                    
                     NavTitle()
                         .scaleEffect(1.4)
                         .offset(y: -110)
@@ -43,9 +53,6 @@ struct ChapterView: View {
             }
         }
         .ignoresSafeArea()
-        .fullScreenCover(isPresented: $showEpisodes) {
-            EpisodesView()
-        }
     }
 }
 

@@ -10,4 +10,5 @@ import Foundation
 enum AppScreen: Equatable {
     case welcome
     case chapter
+    case episodes
 }

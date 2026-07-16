@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct EpisodesView: View {
+    @ObservedObject var viewModel: GameViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Image("bgocean")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+
+            VStack {
+                HStack {
+                    BackButton(action: {
+                        viewModel.navigateTo(.chapter)
+                    })
+                    Spacer()
+                }
+                .padding(.leading, 20)
+                .padding(.top, 50)
+                Spacer()
+            }
+
+            Text("Episodes View")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+        }
     }
 }
 
 #Preview {
-    EpisodesView()
+    EpisodesView(viewModel: GameViewModel())
 }

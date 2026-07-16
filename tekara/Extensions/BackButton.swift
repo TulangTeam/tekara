@@ -8,11 +8,32 @@
 import SwiftUI
 
 struct BackButton: View {
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action) {
+            Image(systemName: "chevron.left")
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.white)
+                .frame(width: 54, height: 54)
+                .background(Color(red: 0.27, green: 0.17, blue: 0.13))
+                .clipShape(Circle())
+                .overlay(
+                    Circle()
+                        .stroke(Color.white, lineWidth: 4)
+                )
+                .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
+        }
     }
 }
 
 #Preview {
-    BackButton()
+    ZStack {
+        Color.gray.opacity(0.2)
+            .ignoresSafeArea()
+        
+        BackButton(action: {
+            print("Back button tapped!")
+        })
+    }
 }
