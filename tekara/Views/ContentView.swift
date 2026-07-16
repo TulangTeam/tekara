@@ -2,20 +2,30 @@
 //  ContentView.swift
 //  tekara
 //
-//  Created by Shandika David Ardiansyah on 15/07/26.
+//  Created by DIMAS DAFFA ERNANDA on 16/07/26.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = GameViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            switch viewModel.gameState.currentScreen {
+            case .welcome:
+                WelcomeView(viewModel: viewModel)
+
+            case .chapterSelect:
+                ChapterSelectView(viewModel: viewModel)
+
+            case .playing(let chapterId):
+                PlayingView(viewModel: viewModel, chapterId: chapterId)
+
+            case .settings:
+                SettingsView(viewModel: viewModel)
+            }
         }
-        .padding()
     }
 }
 
