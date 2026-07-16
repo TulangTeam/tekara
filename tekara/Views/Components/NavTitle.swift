@@ -16,7 +16,7 @@ struct NavTitle: View {
                 .scaledToFit()
                 .frame(width: 300, height: 400)
             Text("OCEAN MAP")
-                .font(.custom("SourGummy-Black", size: 32, relativeTo: .title))
+                .font(.custom("Baloo 2", size: 32, relativeTo: .title))
                 .bold()
                 .foregroundColor(.white)
                 .padding(.top,)

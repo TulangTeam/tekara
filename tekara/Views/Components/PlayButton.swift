@@ -18,7 +18,7 @@ struct PlayButton: View {
                     .scaledToFit()
                     .frame(width: 300)
                 Text("PLAY")
-                    .font(.custom("SourGummy-Black", size: 28, relativeTo: .title))
+                    .font(.custom("Baloo 2", size: 28, relativeTo: .title))
                     .bold()
                     .foregroundColor(.white)
                     .padding(.bottom, 5)
