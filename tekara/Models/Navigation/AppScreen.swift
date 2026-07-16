@@ -9,7 +9,5 @@ import Foundation
 
 enum AppScreen: Equatable {
     case welcome
-    case chapterSelect
-    case playing(chapterId: String)
-    case settings
+    case chapter
 }

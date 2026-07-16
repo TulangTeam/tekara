@@ -8,11 +8,29 @@
 import SwiftUI
 
 struct PlayButton: View {
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action) {
+            ZStack {
+                Image("labelgreen")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 300)
+                Text("PLAY")
+                    .font(.custom("SourGummy-Black", size: 28, relativeTo: .title))
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding(.bottom, 5)
+            }
+        }
+        .buttonStyle(ScaleButtonStyle())
     }
 }
 
 #Preview {
-    PlayButton()
+    ZStack {
+        Color.blue
+        PlayButton(action: {})
+    }
 }

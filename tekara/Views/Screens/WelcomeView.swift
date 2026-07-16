@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @ObservedObject var viewModel: GameViewModel
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -17,62 +17,49 @@ struct WelcomeView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .clipped()
-
-                OceanShineEffect()
-
-                VStack(spacing: 0) {
+                
+                VStack(spacing: -10) {
                     Spacer()
-
-                    VStack(spacing: -30) {
+                    
+                    VStack() {
                         Image("logo")
                             .resizable()
                             .scaledToFit()
                             .frame(height: geometry.size.height * 0.22)
-
-                        Image("label")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: geometry.size.height * 0.08)
                     }
                     .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
-
-                    Spacer().frame(height: geometry.size.height * 0.08)
-
-                    HStack(spacing: 0) {
-                        Image("chapterbubble")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geometry.size.width * 0.15)
-
-                        Spacer()
-
-                        PlayButton {
-                            viewModel.navigateTo(.chapterSelect)
-                        }
-
-                        Spacer()
-
-                        Image("chapterbubble")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geometry.size.width * 0.15)
-                            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-                    }
-                    .padding(.horizontal, geometry.size.width * 0.08)
-
-                    Spacer().frame(height: geometry.size.height * 0.12)
-
-                    BottomToolbar(
-                        onSettings: { viewModel.navigateTo(.settings) },
-                        onSoundToggle: { viewModel.toggleSound() },
-                        isSoundEnabled: viewModel.gameState.isSoundEnabled,
-                        onHome: { viewModel.navigateTo(.welcome) }
-                    )
+                    
+                    Spacer()
+                        .frame(height: geometry.size.height * 0.08)
+                    PlayButton(action: {
+                        viewModel.navigateTo(.chapter)
+                    })
+                    Spacer()
                 }
-                .padding(.bottom, geometry.safeAreaInsets.bottom + 20)
+                .frame(width: geometry.size.width * 0.6)
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        LeftToolbar(
+                            onMusicToggle: {},
+                            onSoundToggle: { viewModel.toggleSound() },
+                            isSoundEnabled: viewModel.gameState.isSoundEnabled,
+                            onHelp: {},
+                            onGear: {}
+                        )
+                        .padding(.leading, 32)
+                        .padding(.bottom, geometry.safeAreaInsets.bottom )
+                        
+                        Spacer()
+                    }
+                }
             }
             .ignoresSafeArea()
         }
     }
+}
+
+#Preview {
+    WelcomeView(viewModel: GameViewModel())
 }

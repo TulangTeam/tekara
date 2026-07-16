@@ -10,5 +10,4 @@ import Foundation
 struct GameState {
     var currentScreen: AppScreen = .welcome
     var isSoundEnabled: Bool = true
-    var unlockedChapters: Set<String> = ["seashore"]
 }

@@ -16,15 +16,11 @@ final class GameViewModel: ObservableObject {
         self.gameState = gameState
     }
 
-    func navigateTo(_ screen: AppScreen) {
-        gameState.currentScreen = screen
-    }
-
     func toggleSound() {
         gameState.isSoundEnabled.toggle()
     }
 
-    func isChapterUnlocked(_ chapterId: String) -> Bool {
-        gameState.unlockedChapters.contains(chapterId)
+    func navigateTo(_ screen: AppScreen) {
+        gameState.currentScreen = screen
     }
 }

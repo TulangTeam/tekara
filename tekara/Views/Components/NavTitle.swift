@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct NavTitle: View {
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Image("label")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 300, height: 400)
+            Text("OCEAN MAP")
+                .font(.custom("SourGummy-Black", size: 32, relativeTo: .title))
+                .bold()
+                .foregroundColor(.white)
+                .padding(.top,)
+        }
     }
 }
 

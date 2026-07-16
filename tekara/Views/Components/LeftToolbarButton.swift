@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct LeftToolbarButton: View {
+    let iconName: String
+    let action: () -> Void
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action) {
+            Image(systemName: iconName)
+                .font(.system(size: 34, weight: .medium))
+                .foregroundColor(.white)
+                .bold()
+                .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
+        }
+        .buttonStyle(ScaleButtonStyle())
     }
 }
 
 #Preview {
-    LeftToolbarButton()
+    ZStack {
+        Color.blue
+        LeftToolbarButton(iconName: "gearshape.fill", action: {})
+    }
 }

@@ -11,22 +11,15 @@ struct ContentView: View {
     @StateObject private var viewModel = GameViewModel()
 
     var body: some View {
-        ZStack {
-            switch viewModel.gameState.currentScreen {
-            case .welcome:
-                WelcomeView(viewModel: viewModel)
-
-            case .chapterSelect:
-                ChapterSelectView(viewModel: viewModel)
-
-            case .playing(let chapterId):
-                PlayingView(viewModel: viewModel, chapterId: chapterId)
-
-            case .settings:
-                SettingsView(viewModel: viewModel)
-            }
-        }
-    }
+           ZStack {
+               switch viewModel.gameState.currentScreen {
+               case .welcome:
+                   WelcomeView(viewModel: viewModel)
+               case .chapter:
+                   ChapterView(viewModel: viewModel)
+               }
+           }
+       }
 }
 
 #Preview {
