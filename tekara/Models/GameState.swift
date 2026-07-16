@@ -7,13 +7,6 @@
 
 import Foundation
 
-enum AppScreen: Equatable {
-    case welcome
-    case chapterSelect
-    case playing(chapterId: String)
-    case settings
-}
-
 struct GameState {
     var currentScreen: AppScreen = .welcome
     var isSoundEnabled: Bool = true
