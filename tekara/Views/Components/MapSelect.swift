@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MapSelect: View {
+    var onMapSelected: (() -> Void)? = nil
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -16,22 +18,22 @@ struct MapSelect: View {
                     .scaledToFit()
                     .frame(width: 200)
                     .position(x: geometry.size.width * 0.25, y: geometry.size.height * 0.45)
-                
+
                 Image("arrow2")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 210)
                     .position(x: geometry.size.width * 0.52, y: geometry.size.height * 0.5)
-                
+
                 Image("arrow3")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 350)
                     .position(x: geometry.size.width * 0.80, y: geometry.size.height * 0.65)
-                
+
                 Button(action: {
                     print("Seashore map selected!")
-                    // Trigger your navigation or view model logic here
+                    onMapSelected?()
                 }) {
                     Image("seashore")
                         .resizable()

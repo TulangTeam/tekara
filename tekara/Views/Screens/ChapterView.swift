@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ChapterView: View {
     @ObservedObject var viewModel: GameViewModel
-    
+    @State private var showEpisodes = false
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -18,28 +19,33 @@ struct ChapterView: View {
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .blur(radius: 4)
-                MapSelect()
-                
+                MapSelect(onMapSelected: {
+                    showEpisodes = true
+                })
+
                 VStack() {
                     NavTitle()
                         .scaleEffect(1.4)
                         .offset(y: -110)
                     Spacer()
                 }
-                
+
                 VStack() {
                     Spacer()
                     HStack{
+                        Spacer()
                         Image("chapterbubble")
-                            .padding(.leading, 30)
-                            .padding(.bottom, 30)
+                            .padding(.bottom, 20)
                         Spacer()
                     }
                 }
-                
+
             }
         }
         .ignoresSafeArea()
+        .fullScreenCover(isPresented: $showEpisodes) {
+            EpisodesView()
+        }
     }
 }
 
