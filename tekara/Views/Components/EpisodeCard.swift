@@ -7,14 +7,35 @@
 
 import SwiftUI
 
+enum EpisodeStatus {
+    case begin
+    case completed
+    case locked
+
+    var text: String {
+        switch self {
+        case .begin: return "Begin"
+        case .completed: return "Completed"
+        case .locked: return "Locked"
+        }
+    }
+
+    var backgroundColor: Color {
+        switch self {
+        case .begin: return Color.orange
+        case .completed: return Color(red: 0.18, green: 0.73, blue: 0.16)
+        case .locked: return Color.gray
+        }
+    }
+}
+
 struct EpisodeCard: View {
     var episodeNumber: String = "1"
     var title: String = "CLEAN UP THE\nSEASHORE"
-    var isCompleted: Bool = true
+    var status: EpisodeStatus = .completed
 
     let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
     let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
-    let badgeGreen = Color(red: 0.18, green: 0.73, blue: 0.16)
 
     var body: some View {
         VStack {
@@ -25,8 +46,7 @@ struct EpisodeCard: View {
                 .frame(width: 60, height: 60)
                 .background(Circle().fill(themeBlue))
                 .padding(.top, 30)
-            
-            // Pushes the circle to the top and text to the bottom
+
             Spacer()
 
             Text(title)
@@ -36,16 +56,14 @@ struct EpisodeCard: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
                 .padding(.bottom, 12)
-            
-            Text(isCompleted ? "Completed" : "Locked")
+
+            Text(status.text)
                 .font(.custom("Baloo 2", size: 16))
                 .fontWeight(.bold)
                 .foregroundColor(.white)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity)
-                .background(
-                    Capsule().fill(isCompleted ? badgeGreen : Color.gray)
-                )
+                .background(Capsule().fill(status.backgroundColor))
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
         }
