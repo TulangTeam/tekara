@@ -60,6 +60,10 @@ struct StoryScreenView: View {
         content.stages[currentStageIndex].stageName
     }
 
+    var currentBackgroundImage: String {
+        content.stages[currentStageIndex].backgroundImage
+    }
+
     var buttonText: String {
         if isLastDialogue {
             return "Start Game"
@@ -81,7 +85,7 @@ struct StoryScreenView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Image("bgocean")
+                Image(currentBackgroundImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
@@ -89,9 +93,11 @@ struct StoryScreenView: View {
 
                 VStack {
                     HStack {
-                        BackButton(action: {
-                            viewModel.navigateTo(.episodes)
-                        })
+                        if isFirstDialogue {
+                            BackButton(action: {
+                                viewModel.navigateTo(.episodes)
+                            })
+                        }
                         Spacer()
                     }
                     .padding(.leading, 20)

@@ -34,7 +34,7 @@ struct StoryData {
                 stages: [
                     StoryStage(
                         stageName: "Prologue",
-                        backgroundImage: "bgocean",
+                        backgroundImage: "prologue1",
                         dialogues: [
                             DialogueItem(speaker: "Narrator", text: "One sunny morning, Kai visits the beach with their class for a field trip. While everyone is excited to play, Kai notices something unusual. The beach is covered with plastic bottles, food wrappers, and fishing lines. The waves gently carry more trash toward the sea.")
                         ]

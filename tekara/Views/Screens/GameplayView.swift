@@ -47,16 +47,19 @@ public class GroundingSystem: RealityKit.System {
 // ==========================================
 struct GameplayView: View {
     var episodeId: Int
+    var onExit: (() -> Void)?
 
     private let isometricAngleX: Float = -35.264
     private let isometricAngleY: Float = 45.0
     private let cameraZoom: Float = 4.5
 
     @State private var joystickValue: CGPoint = .zero
+    @State private var showExitConfirmation = false
     private let moveSpeed: Float = 0.0008
 
-    init(episodeId: Int) {
+    init(episodeId: Int, onExit: (() -> Void)? = nil) {
         self.episodeId = episodeId
+        self.onExit = onExit
         GroundingComponent.registerComponent()
         GroundingSystem.registerSystem()
     }
@@ -169,6 +172,27 @@ struct GameplayView: View {
 
             // LAYER 2: UI Overlay
             VStack {
+                HStack {
+                    // Exit Button
+                    Button(action: {
+                        showExitConfirmation = true
+                    }) {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
+                            .background(Circle().fill(Color.red))
+                            .overlay(
+                                Circle().stroke(Color.white, lineWidth: 3)
+                            )
+                            .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 3)
+                    }
+                    .buttonStyle(ScaleButtonStyle())
+                    .padding(.leading, 20)
+                    .padding(.top, 50)
+
+                    Spacer()
+                }
                 Spacer()
                 HStack {
                     ThumbStickView(updatingValue: $joystickValue, radius: 60)
@@ -179,6 +203,14 @@ struct GameplayView: View {
                     Spacer()
                 }
             }
+        }
+        .alert("Leave Game?", isPresented: $showExitConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Leave", role: .destructive) {
+                onExit?()
+            }
+        } message: {
+            Text("Your progress will not be saved.")
         }
     }
 }

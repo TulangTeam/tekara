@@ -28,7 +28,12 @@ struct ContentView: View {
                     content: viewModel.getStoryContent(for: episodeId)
                 )
             case .gameplay(let episodeId):
-                GameplayView(episodeId: episodeId)
+                GameplayView(
+                    episodeId: episodeId,
+                    onExit: {
+                        viewModel.navigateTo(.episodes)
+                    }
+                )
             }
         }
     }
