@@ -14,20 +14,38 @@ Views observe `GameViewModel` via `@ObservedObject` and call methods to update s
 
 ### Navigation Pattern
 - **GameViewModel** (in `ViewModels/`) is the central state manager
-- **AppScreen** enum (in `Models/Navigation/`) defines screens: `.welcome`, `.chapter`, `.episodes`
+- **AppScreen** enum (in `Models/Navigation/`) defines screens: `.welcome`, `.chapter`, `.episodes`, `.story(episodeId:)`, `.gameplay(episodeId:)`
 - **ContentView** switches between screens based on `viewModel.gameState.currentScreen`
 
 ### Screen Hierarchy
 ```
-WelcomeView → ChapterView → EpisodesView
+WelcomeView → ChapterView → EpisodesView → StoryScreenView → GameplayView (3D)
+```
+
+### AppScreen Enum
+Located in `Models/Navigation/AppScreen.swift`:
+```swift
+case welcome
+case chapter
+case episodes
+case story(episodeId: Int)
+case gameplay(episodeId: Int)
 ```
 
 ### GameState
 Located in `Models/GameState.swift`:
 - `currentScreen: AppScreen` - current navigation state
+- `currentEpisodeId: Int` - current episode being played
 - `isSoundEnabled: Bool` - sound toggle state
 
-### Animation Patterns
+### StoryContent Model
+Located in `Models/StoryContent.swift`:
+- `DialogueItem` - speaker name and dialogue text
+- `StoryStage` - stage name, background image, dialogues array
+- `StoryContent` - episode info with array of stages
+- `StoryData.getContent(for:)` - returns story content per episode
+
+## Animation Patterns
 
 **Popup animations** (scaleEffect 0→1):
 ```swift
@@ -56,3 +74,54 @@ Timer.scheduledTimer(withTimeInterval: 0.7, repeats: true) { _ in
 - **EpisodeCard**: Reusable card with `EpisodeStatus` enum (`.begin`, `.completed`, `.locked`)
 - **MapSelect**: Map selection with popup animations and arrow indicators
 - **LeftToolbar**: Bottom toolbar with sound/help/settings buttons
+- **StoryScreenView**: Story/dialogue screen with stages and navigation
+- **GameplayView**: 3D RealityKit gameplay view
+
+## File Structure
+
+```
+tekara/
+├── Models/
+│   ├── GameState.swift
+│   ├── StoryContent.swift
+│   └── Navigation/
+│       └── AppScreen.swift
+├── ViewModels/
+│   └── GameViewModel.swift
+├── Views/
+│   ├── ContentView.swift
+│   ├── Screens/
+│   │   ├── WelcomeView.swift
+│   │   ├── ChapterView.swift
+│   │   ├── EpisodesView.swift
+│   │   ├── StoryScreenView.swift
+│   │   └── GameplayView.swift
+│   └── Components/
+│       ├── EpisodeCard.swift
+│       ├── EpisodeList.swift
+│       ├── MapSelect.swift
+│       ├── PlayButton.swift
+│       ├── LeftToolbar.swift
+│       └── BackButton.swift
+└── Extensions/
+    ├── ScaleButtonStyle.swift
+    └── Color+Hex.swift
+```
+
+## Testing
+
+**For full app navigation:**
+```swift
+// in tekaraApp.swift
+WindowGroup {
+    ContentView()
+}
+```
+
+**For testing 3D gameplay only:**
+```swift
+// in tekaraApp.swift
+WindowGroup {
+    GameplayView(episodeId: 1)
+}
+```

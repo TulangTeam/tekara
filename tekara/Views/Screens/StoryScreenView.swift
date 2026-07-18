@@ -116,7 +116,7 @@ struct StoryScreenView: View {
 
                         if isLastDialogue {
                             Button(action: {
-                                viewModel.navigateTo(.episodes)
+                                viewModel.navigateTo(.gameplay(episodeId: content.episodeId))
                             }) {
                                 Text("Start Game")
                                     .font(.custom("Baloo 2", size: 18))
