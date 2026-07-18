@@ -47,6 +47,11 @@ struct StoryScreenView: View {
     }
 
     var currentDialogueItem: DialogueItem {
+        guard !content.stages.isEmpty,
+              !content.stages[0].dialogues.isEmpty else {
+            return DialogueItem(speaker: "", text: "")
+        }
+
         var remaining = dialogueIndex
         for stage in content.stages {
             if remaining < stage.dialogues.count {
@@ -150,6 +155,9 @@ struct StoryScreenView: View {
     }
 
     private func nextDialogue() {
+        let totalDialogues = content.stages.reduce(0) { $0 + $1.dialogues.count }
+        guard dialogueIndex < totalDialogues - 1 else { return }
+
         withAnimation(.easeOut(duration: 0.2)) {
             textOpacity = 0
         }
@@ -163,6 +171,8 @@ struct StoryScreenView: View {
     }
 
     private func previousDialogue() {
+        guard dialogueIndex > 0 else { return }
+
         withAnimation(.easeOut(duration: 0.2)) {
             textOpacity = 0
         }
