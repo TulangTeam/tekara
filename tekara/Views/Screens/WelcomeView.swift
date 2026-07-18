@@ -46,7 +46,7 @@ struct WelcomeView: View {
                         .frame(height: geometry.size.height * 0.08)
                     PlayButton(action: {
                         viewModel.navigateTo(.chapter)
-                    })
+                    }, audioManager: audioManager)
                     .scaleEffect(buttonScale)
                     Spacer()
                 }
@@ -56,16 +56,13 @@ struct WelcomeView: View {
                     Spacer()
                     HStack {
                         LeftToolbar(
-                            onMusicToggle: { audioManager.toggleMute() },
-                            onSoundToggle: { viewModel.toggleSound() },
-                            isSoundEnabled: viewModel.gameState.isSoundEnabled,
                             onHelp: {},
                             onGear: {},
                             audioManager: audioManager
                         )
                         .padding(.leading, 32)
                         .padding(.bottom, geometry.safeAreaInsets.bottom )
-                        
+
                         Spacer()
                     }
                 }

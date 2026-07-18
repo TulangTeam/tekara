@@ -102,7 +102,7 @@ struct StoryScreenView: View {
                         if isFirstDialogue {
                             BackButton(action: {
                                 viewModel.navigateTo(.episodes)
-                            })
+                            }, audioManager: audioManager)
                         }
                         Spacer()
                     }
@@ -123,7 +123,8 @@ struct StoryScreenView: View {
                         },
                         onBackTapped: !isFirstDialogue ? {
                             previousDialogue()
-                        } : nil
+                        } : nil,
+                        audioManager: audioManager
                     )
                     .padding(.bottom,44)
                 }

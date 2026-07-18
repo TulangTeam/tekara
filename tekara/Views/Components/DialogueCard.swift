@@ -13,6 +13,7 @@ struct DialogueCard: View {
     var buttonText: String = "Next"
     var onButtonTapped: () -> Void
     var onBackTapped: (() -> Void)? = nil
+    var audioManager: AudioManager?
 
     let cardBackground = Color(red: 0.93, green: 0.89, blue: 0.80)
     let textBrown = Color(red: 0.35, green: 0.24, blue: 0.16)
@@ -31,7 +32,10 @@ struct DialogueCard: View {
 
                 HStack {
                     if onBackTapped != nil {
-                        Button(action: { onBackTapped?() }) {
+                        Button(action: {
+                            audioManager?.playSFX(named: "bubblesound.mp3")
+                            onBackTapped?()
+                        }) {
                             Text("Back")
                                 .font(.custom("Baloo 2", size: 18).bold())
                                 .foregroundColor(.white)
@@ -48,7 +52,10 @@ struct DialogueCard: View {
 
                     Spacer()
 
-                    Button(action: onButtonTapped) {
+                    Button(action: {
+                        audioManager?.playSFX(named: "bubblesound.mp3")
+                        onButtonTapped()
+                    }) {
                         Text(buttonText)
                             .font(.custom("Baloo 2", size: 18).bold())
                             .foregroundColor(.white)

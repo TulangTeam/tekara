@@ -23,12 +23,12 @@ struct ChapterView: View {
                     .blur(radius: 4)
                 MapSelect(onMapSelected: {
                     viewModel.navigateTo(.episodes)
-                })
+                }, audioManager: audioManager)
                 VStack {
                     HStack {
                         BackButton(action: {
                             viewModel.navigateTo(.welcome)
-                        })
+                        }, audioManager: audioManager)
                         Spacer()
                     }
                     .padding(.leading, 20)
@@ -48,6 +48,19 @@ struct ChapterView: View {
                         Image("chapterbubble")
                             .padding(.bottom, 20)
                             .offset(y: bubbleOffset)
+                        Spacer()
+                    }
+                }
+
+                VStack {
+                    Spacer()
+                    HStack {
+                        LeftToolbar(
+                            onHelp: {},
+                            onGear: {},
+                            audioManager: audioManager
+                        )
+                        .padding(.leading, 32)
                         Spacer()
                     }
                 }

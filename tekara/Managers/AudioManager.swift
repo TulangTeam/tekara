@@ -13,19 +13,30 @@ class AudioManager {
 
     private var backgroundMusicPlayer: AVAudioPlayer?
     private var currentSong: String?
-    var isMuted: Bool = false {
+    var isMusicMuted: Bool = false {
         didSet {
-            if isMuted {
+            if isMusicMuted {
                 backgroundMusicPlayer?.volume = 0
             } else {
                 backgroundMusicPlayer?.volume = 0.5
             }
-            UserDefaults.standard.set(isMuted, forKey: "isMuted")
+            UserDefaults.standard.set(isMusicMuted, forKey: "isMusicMuted")
+        }
+    }
+    var isSFXMuted: Bool = false {
+        didSet {
+            UserDefaults.standard.set(isSFXMuted, forKey: "isSFXMuted")
         }
     }
 
+    var isMuted: Bool {
+        get { isMusicMuted }
+        set { isMusicMuted = newValue }
+    }
+
     private init() {
-        isMuted = UserDefaults.standard.bool(forKey: "isMuted")
+        isMusicMuted = UserDefaults.standard.bool(forKey: "isMusicMuted")
+        isSFXMuted = UserDefaults.standard.bool(forKey: "isSFXMuted")
         setupAudioSession()
     }
 
@@ -52,7 +63,7 @@ class AudioManager {
         do {
             backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url)
             backgroundMusicPlayer?.numberOfLoops = -1
-            backgroundMusicPlayer?.volume = isMuted ? 0 : 0.5
+            backgroundMusicPlayer?.volume = isMusicMuted ? 0 : 0.5
             backgroundMusicPlayer?.prepareToPlay()
             backgroundMusicPlayer?.play()
             currentSong = filename
@@ -72,12 +83,46 @@ class AudioManager {
     }
 
     func resumeBackgroundMusic() {
-        if !isMuted {
+        if !isMusicMuted {
             backgroundMusicPlayer?.play()
         }
     }
 
-    func toggleMute() {
-        isMuted.toggle()
+    func toggleMusicMute() {
+        isMusicMuted.toggle()
+    }
+
+    func toggleSFXMute() {
+        isSFXMuted.toggle()
+    }
+
+    // MARK: - Sound Effects
+
+    private var sfxPlayers: [String: AVAudioPlayer] = [:]
+
+    func playSFX(named filename: String) {
+        guard !isSFXMuted else { return }
+
+        // Reuse existing player if available
+        if let existingPlayer = sfxPlayers[filename] {
+            existingPlayer.currentTime = 0
+            existingPlayer.play()
+            return
+        }
+
+        guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else {
+            print("SFX file not found: \(filename)")
+            return
+        }
+
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.volume = 0.5
+            player.prepareToPlay()
+            player.play()
+            sfxPlayers[filename] = player
+        } catch {
+            print("Failed to play SFX: \(error)")
+        }
     }
 }

@@ -27,7 +27,7 @@ struct EpisodesView: View {
                     HStack {
                         BackButton(action: {
                             viewModel.navigateTo(.chapter)
-                        })
+                        }, audioManager: audioManager)
                         Spacer()
                     }
                     .padding(.leading, 20)
@@ -47,6 +47,19 @@ struct EpisodesView: View {
                     Image("episodebubble")
                         .padding(.bottom, 20)
                         .offset(y: bubbleOffset)
+                }
+
+                VStack {
+                    Spacer()
+                    HStack {
+                        LeftToolbar(
+                            onHelp: {},
+                            onGear: {},
+                            audioManager: audioManager
+                        )
+                        .padding(.leading, 32)
+                        Spacer()
+                    }
                 }
             }
         }
