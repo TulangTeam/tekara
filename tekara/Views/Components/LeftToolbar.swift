@@ -13,11 +13,15 @@ struct LeftToolbar: View {
     let isSoundEnabled: Bool
     let onHelp: () -> Void
     let onGear: () -> Void
+    @Bindable var audioManager: AudioManager
 
     var body: some View {
         HStack(spacing: 20) {
             LeftToolbarButton(iconName: "gearshape.fill", action: onGear)
-            LeftToolbarButton(iconName: "music.note.slash", action: onMusicToggle)
+            LeftToolbarButton(
+                iconName: audioManager.isMuted ? "music.note.slash" : "music.note",
+                action: onMusicToggle
+            )
             LeftToolbarButton(iconName: isSoundEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill", action: onSoundToggle)
             LeftToolbarButton(iconName: "questionmark.circle.fill", action: onHelp)
         }
@@ -34,7 +38,8 @@ struct LeftToolbar: View {
             onSoundToggle: {},
             isSoundEnabled: true,
             onHelp: {},
-            onGear: {}
+            onGear: {},
+            audioManager: AudioManager.shared
         )
     }
 }

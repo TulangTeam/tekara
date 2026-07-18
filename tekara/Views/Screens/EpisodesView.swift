@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EpisodesView: View {
     @ObservedObject var viewModel: GameViewModel
+    private let audioManager = AudioManager.shared
     @State private var titleScale: CGFloat = 0
     @State private var listScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200
@@ -51,6 +52,7 @@ struct EpisodesView: View {
         }
         .ignoresSafeArea()
         .onAppear {
+            audioManager.playBackgroundMusic(named: "beachtrack.mp3")
             withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
                 titleScale = 1
             }

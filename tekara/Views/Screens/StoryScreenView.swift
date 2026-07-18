@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StoryScreenView: View {
     @ObservedObject var viewModel: GameViewModel
+    private let audioManager = AudioManager.shared
     var content: StoryContent
 
     @State private var dialogueIndex: Int = 0
@@ -125,6 +126,7 @@ struct StoryScreenView: View {
         }
         .ignoresSafeArea()
         .onAppear {
+            audioManager.playBackgroundMusic(named: "beachtrack.mp3")
             animateIn()
         }
     }
