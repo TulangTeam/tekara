@@ -15,7 +15,97 @@
     "objectMetadataList" : [
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Sand_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Sand"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Sand",
+        "sand_layer2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "SkyDome"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Supassets"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Dome_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Water_Shader"
       ],
       {
         "isExpanded" : true,
@@ -27,12 +117,10 @@
     "objectMetadataList" : [
       [
         "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-        "Root",
-        "SkyDome"
+        "Root"
       ],
       {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
+        "isExpanded" : true,
         "isLocked" : false
       },
       [
@@ -46,10 +134,12 @@
       },
       [
         "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-        "Root"
+        "Root",
+        "SkyDome"
       ],
       {
-        "isExpanded" : true,
+        "disallowsFraming" : true,
+        "isExpanded" : false,
         "isLocked" : false
       }
     ]
@@ -83,7 +173,7 @@
       [
         "9871D513-ED16-43C5-B879-4B8D4672CB87",
         "Root",
-        "sand_layer2"
+        "Water_Shader"
       ],
       {
         "isExpanded" : true,
@@ -92,7 +182,7 @@
       [
         "9871D513-ED16-43C5-B879-4B8D4672CB87",
         "Root",
-        "Water_Shader"
+        "sand_layer2"
       ],
       {
         "isExpanded" : true,
