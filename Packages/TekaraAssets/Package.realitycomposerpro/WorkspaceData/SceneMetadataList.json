@@ -1,14 +1,126 @@
 {
-  "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A" : {
+  "07AED656-500D-4D5A-9EE4-781B8C2DF2AE" : {
     "objectMetadataList" : [
       [
-        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "07AED656-500D-4D5A-9EE4-781B8C2DF2AE",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "29CE4316-3263-449E-922C-FD471FCE2895" : {
+    "objectMetadataList" : [
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Sand_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Sand"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Sand",
+        "sand_layer2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root",
         "SkyDome"
       ],
       {
         "disallowsFraming" : true,
         "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Supassets"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Dome_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Water_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A" : {
+    "objectMetadataList" : [
+      [
+        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
         "isLocked" : false
       },
       [
@@ -22,6 +134,83 @@
       },
       [
         "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root",
+        "SkyDome"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      }
+    ]
+  },
+  "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6" : {
+    "objectMetadataList" : [
+      [
+        "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "7918801B-AE52-4864-9D80-0E6EE3D503D1" : {
+    "objectMetadataList" : [
+      [
+        "7918801B-AE52-4864-9D80-0E6EE3D503D1",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "9871D513-ED16-43C5-B879-4B8D4672CB87" : {
+    "objectMetadataList" : [
+      [
+        "9871D513-ED16-43C5-B879-4B8D4672CB87",
+        "Root",
+        "Water_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9871D513-ED16-43C5-B879-4B8D4672CB87",
+        "Root",
+        "sand_layer2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "9871D513-ED16-43C5-B879-4B8D4672CB87",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "E81FE3C9-0034-4DAD-99BB-08CED0B1529E" : {
+    "objectMetadataList" : [
+      [
+        "E81FE3C9-0034-4DAD-99BB-08CED0B1529E",
+        "Root",
+        "WaterMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "E81FE3C9-0034-4DAD-99BB-08CED0B1529E",
         "Root"
       ],
       {
