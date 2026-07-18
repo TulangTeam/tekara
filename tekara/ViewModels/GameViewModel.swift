@@ -23,4 +23,25 @@ final class GameViewModel: ObservableObject {
     func navigateTo(_ screen: AppScreen) {
         gameState.currentScreen = screen
     }
+
+    func navigateToStory(episodeId: Int) {
+        gameState.currentScreen = .story(episodeId: episodeId)
+    }
+
+    func getStoryContent(for episodeId: Int) -> StoryContent {
+        return StoryData.getContent(for: episodeId)
+    }
+
+    func navigateToNextScreen() {
+        switch gameState.currentScreen {
+        case .story(let episodeId):
+            if episodeId < 6 {
+                navigateToStory(episodeId: episodeId + 1)
+            } else {
+                navigateTo(.episodes)
+            }
+        default:
+            break
+        }
+    }
 }

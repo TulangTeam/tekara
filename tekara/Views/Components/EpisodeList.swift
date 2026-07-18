@@ -8,50 +8,61 @@
 import SwiftUI
 
 struct EpisodeListView: View {
+    var onEpisodeSelected: ((Int) -> Void)?
+
     var body: some View {
-
-
         HStack(spacing: 20) {
 
             EpisodeCard(
                 episodeNumber: "1",
                 title: "CLEAN UP THE\nSEASHORE",
-                status: .completed
+                status: .begin,
+                episodeId: 1,
+                onTap: { onEpisodeSelected?(1) }
             )
 
             EpisodeCard(
                 episodeNumber: "2",
                 title: "SAVE THE\nTURTLES",
-                status: .begin
+                status: .locked,
+                episodeId: 2,
+                onTap: {}
             )
 
             EpisodeCard(
                 episodeNumber: "3",
                 title: "LOST LITTLE\nFISH",
-                status: .locked
+                status: .locked,
+                episodeId: 3,
+                onTap: {}
             )
 
             EpisodeCard(
                 episodeNumber: "4",
                 title: "SAVE THE\nCORAL",
-                status: .locked
+                status: .locked,
+                episodeId: 4,
+                onTap: {}
             )
-
+            
             EpisodeCard(
                 episodeNumber: "5",
                 title: "WELCOME\nHOME",
-                status: .locked
+                status: .locked,
+                episodeId: 5,
+                onTap: {}
             )
-
+            
             EpisodeCard(
                 episodeNumber: "6",
                 title: "BE THE\nOCEAN HERO!",
-                status: .locked
+                status: .locked,
+                episodeId: 6,
+                onTap: {}
             )
 
         }
         .padding(.horizontal, 40)
-
     }
 }
 

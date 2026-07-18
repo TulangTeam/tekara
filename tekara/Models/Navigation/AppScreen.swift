@@ -11,4 +11,5 @@ enum AppScreen: Equatable {
     case welcome
     case chapter
     case episodes
+    case story(episodeId: Int)
 }

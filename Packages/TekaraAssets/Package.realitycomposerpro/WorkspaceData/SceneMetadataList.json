@@ -13,8 +13,7 @@
       },
       [
         "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-        "Root",
-        "SkyMaterial"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -22,7 +21,8 @@
       },
       [
         "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-        "Root"
+        "Root",
+        "SkyMaterial"
       ],
       {
         "isExpanded" : true,

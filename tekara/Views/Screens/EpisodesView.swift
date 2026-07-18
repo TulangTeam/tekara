@@ -37,8 +37,12 @@ struct EpisodesView: View {
                 VStack(spacing: 72){
                     Image("episodetitle")
                         .scaleEffect(titleScale)
-                    EpisodeListView()
-                        .scaleEffect(listScale)
+                    EpisodeListView(
+                        onEpisodeSelected: { episodeId in
+                            viewModel.navigateToStory(episodeId: episodeId)
+                        }
+                    )
+                    .scaleEffect(listScale)
                     Image("episodebubble")
                         .padding(.bottom, 20)
                         .offset(y: bubbleOffset)

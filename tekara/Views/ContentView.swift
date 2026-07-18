@@ -19,6 +19,11 @@ struct ContentView: View {
                 ChapterView(viewModel: viewModel)
             case .episodes:
                 EpisodesView(viewModel: viewModel)
+            case .story(let episodeId):
+                StoryScreenView(
+                    viewModel: viewModel,
+                    content: viewModel.getStoryContent(for: episodeId)
+                )
             }
         }
     }

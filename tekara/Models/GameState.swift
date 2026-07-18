@@ -9,5 +9,6 @@ import Foundation
 
 struct GameState {
     var currentScreen: AppScreen = .welcome
+    var currentEpisodeId: Int = 1
     var isSoundEnabled: Bool = true
 }

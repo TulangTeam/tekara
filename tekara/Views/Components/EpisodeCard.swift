@@ -33,6 +33,8 @@ struct EpisodeCard: View {
     var episodeNumber: String = "1"
     var title: String = "CLEAN UP THE\nSEASHORE"
     var status: EpisodeStatus = .completed
+    var episodeId: Int = 1
+    var onTap: (() -> Void)? = nil
 
     let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
     let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
@@ -72,6 +74,12 @@ struct EpisodeCard: View {
             RoundedRectangle(cornerRadius: 24)
                 .fill(cardBackground)
         )
+        .opacity(status == .locked ? 0.6 : 1.0)
+        .onTapGesture {
+            if status == .begin {
+                onTap?()
+            }
+        }
     }
 }
 
