@@ -55,12 +55,6 @@ struct ChapterView: View {
                 VStack {
                     Spacer()
                     HStack {
-                        LeftToolbar(
-                            onHelp: {},
-                            onGear: {},
-                            audioManager: audioManager
-                        )
-                        .padding(.leading, 32)
                         Spacer()
                     }
                 }

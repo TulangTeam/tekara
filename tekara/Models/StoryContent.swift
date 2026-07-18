@@ -41,7 +41,7 @@ struct StoryData {
                     ),
                     StoryStage(
                         stageName: "Prologue",
-                        backgroundImage: "bgocean2",
+                        backgroundImage: "prologue2",
                         dialogues: [
                             DialogueItem(speaker: "Narrator", text: "Suddenly, a tiny sea turtle named Tori appears. Tori explains that the nearby coral reef is becoming polluted, and many sea creatures are losing their home.")
                         ]
