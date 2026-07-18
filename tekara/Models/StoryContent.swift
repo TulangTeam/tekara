@@ -40,21 +40,21 @@ struct StoryData {
                         ]
                     ),
                     StoryStage(
-                        stageName: "Prologue 2.0",
+                        stageName: "Prologue",
                         backgroundImage: "bgocean2",
                         dialogues: [
                             DialogueItem(speaker: "Narrator", text: "Suddenly, a tiny sea turtle named Tori appears. Tori explains that the nearby coral reef is becoming polluted, and many sea creatures are losing their home.")
                         ]
                     ),
                     StoryStage(
-                        stageName: "In Game - Story",
+                        stageName: "Story",
                         backgroundImage: "bgocean",
                         dialogues: [
                             DialogueItem(speaker: "Narrator", text: "Kai arrives at the beach, excited to play by the sea. But something feels... strange. Plastic bottles are floating near the shore. The sand is messy, and the water doesn't look as blue as it should. Just then, a tiny sea turtle waddles over.")
                         ]
                     ),
                     StoryStage(
-                        stageName: "In Game - Story 2.0",
+                        stageName: "Story",
                         backgroundImage: "bgocean2",
                         dialogues: [
                             DialogueItem(speaker: "Tori", text: "Hi there! I'm Tori, a sea turtle. I'm so glad you're here! This beach used to be so clean and beautiful... Now, every day, more and more trash washes up on shore. My friends and I are losing our home because of all this pollution."),
