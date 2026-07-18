@@ -106,7 +106,26 @@ tekara/
 └── Extensions/
     ├── ScaleButtonStyle.swift
     └── Color+Hex.swift
+├── Managers/
+│   └── AudioManager.swift
+└── Resources/
+    └── Audio/ (soundtrack files)
 ```
+
+## Audio & Soundtrack
+
+The game features a **tropical beach / under-the-sea** theme with playful, cheerful music for children. Audio is managed by `AudioManager.swift`.
+
+### Soundtrack Prompts
+
+**Main Theme**
+```
+"[Instrumental] [Sound Effects: Ocean waves and seagulls]  Cheerful Caribbean Calypso instrumental for a children's game. Bouncy, syncopated percussion featuring steel drums, bright marimbas, congas, bongos, and a guiro. Joyful, bustling beach celebration. Rhythmic ocean surf and playful seagulls blending perfectly into the tropical beat.
+BPM: 105 (The exact sweet spot for that bouncy Calypso groove)
+Tonality: C Major or Bb Major
+Chord Progression: C, F, G, C"
+```
+
 
 ## Testing
 
