@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-// ==========================================
-// MAIN VIEW (Navigation)
-// ==========================================
 struct ContentView: View {
     @StateObject private var viewModel = GameViewModel()
 
@@ -28,7 +25,7 @@ struct ContentView: View {
                     content: viewModel.getStoryContent(for: episodeId)
                 )
             case .gameplay(let episodeId):
-                GameplayView(episodeId: episodeId)
+                GameplayView(episodeId: episodeId, viewModel: viewModel)
             }
         }
     }
