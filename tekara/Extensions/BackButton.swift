@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct BackButton: View {
-    let action: () -> Void
-    
+    var action: () -> Void
+    var audioManager: AudioManager?
+
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            audioManager?.playSFX(named: "bubblesound.mp3")
+            action()
+        }) {
             Image(systemName: "chevron.left")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)

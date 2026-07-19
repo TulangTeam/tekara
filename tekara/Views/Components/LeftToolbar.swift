@@ -8,21 +8,60 @@
 import SwiftUI
 
 struct LeftToolbar: View {
-    let onMusicToggle: () -> Void
-    let onSoundToggle: () -> Void
-    let isSoundEnabled: Bool
-    let onHelp: () -> Void
-    let onGear: () -> Void
+    var onHelp: () -> Void
+    var onGear: () -> Void
+    @Bindable var audioManager: AudioManager
 
     var body: some View {
         HStack(spacing: 20) {
-            LeftToolbarButton(iconName: "gearshape.fill", action: onGear)
-            LeftToolbarButton(iconName: "music.note.slash", action: onMusicToggle)
-            LeftToolbarButton(iconName: isSoundEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill", action: onSoundToggle)
-            LeftToolbarButton(iconName: "questionmark.circle.fill", action: onHelp)
+            LeftToolbarButton(iconName: "gearshape.fill") {
+                audioManager.playSFX(named: "bubblesound.mp3")
+                onGear()
+            }
+            LeftToolbarButton(iconName: audioManager.isMusicMuted ? "music.note.slash" : "music.note") {
+                audioManager.playSFX(named: "bubblesound.mp3")
+                audioManager.toggleMusicMute()
+            }
+            SpeakerButton(audioManager: audioManager)
+            LeftToolbarButton(iconName: "questionmark.circle.fill") {
+                audioManager.playSFX(named: "bubblesound.mp3")
+                onHelp()
+            }
         }
         .padding(.vertical, 20)
         .padding(.horizontal, 12)
+    }
+}
+
+struct SpeakerButton: View {
+    @Bindable var audioManager: AudioManager
+    @State private var offsetX: CGFloat = 0
+
+    var body: some View {
+        Button(action: {
+            // SFX plays when unmuting (not when muting)
+            if audioManager.isSFXMuted {
+                audioManager.playSFX(named: "bubblesound.mp3")
+            }
+
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                offsetX = audioManager.isSFXMuted ? 3 : -3
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                    offsetX = 0
+                }
+                audioManager.toggleSFXMute()
+            }
+        }) {
+            Image(systemName: audioManager.isSFXMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                .font(.system(size: 34, weight: .medium))
+                .foregroundColor(.white)
+                .bold()
+                .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
+                .offset(x: offsetX)
+        }
     }
 }
 
@@ -30,11 +69,9 @@ struct LeftToolbar: View {
     ZStack {
         Color.blue
         LeftToolbar(
-            onMusicToggle: {},
-            onSoundToggle: {},
-            isSoundEnabled: true,
             onHelp: {},
-            onGear: {}
+            onGear: {},
+            audioManager: AudioManager.shared
         )
     }
 }

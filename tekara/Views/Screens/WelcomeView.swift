@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @ObservedObject var viewModel: GameViewModel
+    private let audioManager = AudioManager.shared
     @State private var logoScale: CGFloat = 0.1
     @State private var logoOpacity: Double = 0
     @State private var buttonScale: CGFloat = 0
@@ -45,7 +46,7 @@ struct WelcomeView: View {
                         .frame(height: geometry.size.height * 0.08)
                     PlayButton(action: {
                         viewModel.navigateTo(.chapter)
-                    })
+                    }, audioManager: audioManager)
                     .scaleEffect(buttonScale)
                     Spacer()
                 }
@@ -55,15 +56,13 @@ struct WelcomeView: View {
                     Spacer()
                     HStack {
                         LeftToolbar(
-                            onMusicToggle: {},
-                            onSoundToggle: { viewModel.toggleSound() },
-                            isSoundEnabled: viewModel.gameState.isSoundEnabled,
                             onHelp: {},
-                            onGear: {}
+                            onGear: {},
+                            audioManager: audioManager
                         )
                         .padding(.leading, 32)
                         .padding(.bottom, geometry.safeAreaInsets.bottom )
-                        
+
                         Spacer()
                     }
                 }
@@ -73,7 +72,7 @@ struct WelcomeView: View {
                 logoScale = 0.1
                 logoOpacity = 0
                 buttonScale = 0
-                
+
                 withAnimation(.spring(response: 0.7, dampingFraction: 0.6, blendDuration: 0)) {
                     logoScale = 1.0
                     logoOpacity = 1.0
@@ -85,6 +84,8 @@ struct WelcomeView: View {
                 Timer.scheduledTimer(withTimeInterval: 0.7, repeats: true) { _ in
                     currentBgIndex = currentBgIndex == 0 ? 1 : 0
                 }
+
+                audioManager.playBackgroundMusic(named: "beachtrack.mp3")
             }
         }
     }

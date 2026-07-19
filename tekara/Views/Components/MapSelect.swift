@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MapSelect: View {
     var onMapSelected: (() -> Void)? = nil
+    var audioManager: AudioManager?
 
     @State private var arrow1Scale: CGFloat = 0
     @State private var arrow2Scale: CGFloat = 0
@@ -43,6 +44,7 @@ struct MapSelect: View {
                     .scaleEffect(arrow3Scale)
 
                 Button(action: {
+                    audioManager?.playSFX(named: "bubblesound.mp3")
                     print("Seashore map selected!")
                     onMapSelected?()
                 }) {
@@ -56,6 +58,7 @@ struct MapSelect: View {
                 .position(x: geometry.size.width * 0.15, y: geometry.size.height * 0.6)
 
                 Button(action: {
+                    audioManager?.playSFX(named: "bubblesound.mp3")
                     print("Seagrass map is locked!")
                 }) {
                     Image("seagrass")
@@ -68,6 +71,7 @@ struct MapSelect: View {
                 .position(x: geometry.size.width * 0.4, y: geometry.size.height * 0.33)
 
                 Button(action: {
+                    audioManager?.playSFX(named: "bubblesound.mp3")
                     print("Mangrove map is locked!")
                 }) {
                     Image("mangrove")
@@ -80,6 +84,7 @@ struct MapSelect: View {
                 .position(x: geometry.size.width * 0.63, y: geometry.size.height * 0.7)
 
                 Button(action: {
+                    audioManager?.playSFX(named: "bubblesound.mp3")
                     print("Deep Ocean map is locked!")
                 }) {
                     Image("deepocean")

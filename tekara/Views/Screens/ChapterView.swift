@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChapterView: View {
     @ObservedObject var viewModel: GameViewModel
+    private let audioManager = AudioManager.shared
     @State private var titleScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200
 
@@ -22,12 +23,12 @@ struct ChapterView: View {
                     .blur(radius: 4)
                 MapSelect(onMapSelected: {
                     viewModel.navigateTo(.episodes)
-                })
+                }, audioManager: audioManager)
                 VStack {
                     HStack {
                         BackButton(action: {
                             viewModel.navigateTo(.welcome)
-                        })
+                        }, audioManager: audioManager)
                         Spacer()
                     }
                     .padding(.leading, 20)
@@ -51,10 +52,18 @@ struct ChapterView: View {
                     }
                 }
 
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                    }
+                }
+
             }
         }
         .ignoresSafeArea()
         .onAppear {
+            audioManager.playBackgroundMusic(named: "beachtrack.mp3")
             withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
                 titleScale = 1
             }

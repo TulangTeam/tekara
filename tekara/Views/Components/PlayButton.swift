@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct PlayButton: View {
-    let action: () -> Void
-    
+    var action: () -> Void
+    var audioManager: AudioManager?
+
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            audioManager?.playSFX(named: "bubblesound.mp3")
+            action()
+        }) {
             ZStack {
                 Image("labelgreen")
                     .resizable()
