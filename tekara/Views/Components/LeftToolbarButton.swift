@@ -18,6 +18,7 @@ struct LeftToolbarButton: View {
                 .foregroundColor(.white)
                 .bold()
                 .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
+                .frame(width: 48, height: 40)
         }
         .buttonStyle(ScaleButtonStyle())
     }

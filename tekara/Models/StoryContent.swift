@@ -36,7 +36,7 @@ struct StoryData {
                         stageName: "Prologue",
                         backgroundImage: "prologue1",
                         dialogues: [
-                            DialogueItem(speaker: "Narrator", text: "One sunny morning, Kai visits the beach with their class for a field trip. While everyone is excited to play, Kai notices something unusual. The beach is covered with plastic bottles, food wrappers, and fishing lines. The waves gently carry more trash toward the sea.")
+                            DialogueItem(speaker: "Narrator", text: "One sunny morning, Kai visits the beach, hoping to enjoy the fresh sea breeze and the sound of the waves. But something feels different. Plastic bottles, food wrappers, and old fishing lines are scattered across the sand. Every wave carries more trash toward the ocean. The sand is messy, and the water doesn't look as blue as it should.")
                         ]
                     ),
                     StoryStage(
@@ -50,16 +50,17 @@ struct StoryData {
                         stageName: "Story",
                         backgroundImage: "bgocean",
                         dialogues: [
-                            DialogueItem(speaker: "Narrator", text: "Kai arrives at the beach, excited to play by the sea. But something feels... strange. Plastic bottles are floating near the shore. The sand is messy, and the water doesn't look as blue as it should. Just then, a tiny sea turtle waddles over.")
+                            DialogueItem(speaker: "Tori", text: "Tori: Hi! I'm Tori! 👋. Our beach used to be clean and beautiful. But now, trash keeps washing into the ocean.")
                         ]
                     ),
                     StoryStage(
                         stageName: "Story",
                         backgroundImage: "bgocean2",
                         dialogues: [
-                            DialogueItem(speaker: "Tori", text: "Hi there! I'm Tori, a sea turtle. I'm so glad you're here! This beach used to be so clean and beautiful... Now, every day, more and more trash washes up on shore. My friends and I are losing our home because of all this pollution."),
-                            DialogueItem(speaker: "Kai", text: "Don't worry, Tori! I'm here to help! Together, we'll clean up the beach and protect the ocean!"),
-                            DialogueItem(speaker: "Tori", text: "Thank you, Ocean Hero! But be careful - there's so much trash everywhere! We'll need to work together to make a difference!")
+                            DialogueItem(speaker: "Narrator", text: "A wave pushes trash toward the water."),
+                            DialogueItem(speaker: "Kai", text: "Kai: Oh no! It's floating away!"),
+                            DialogueItem(speaker: "Tori", text: "Tori: Let's pick it up before the waves carry it into the sea!"),
+                            DialogueItem(speaker: "Kai", text: "Kai: Let's do it together!")
                         ]
                     )
                 ]

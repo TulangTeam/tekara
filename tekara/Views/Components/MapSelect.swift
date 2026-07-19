@@ -51,7 +51,7 @@ struct MapSelect: View {
                     Image("seashore")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 300)
+                        .frame(width: 600)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .scaleEffect(seashoreScale)
@@ -64,11 +64,12 @@ struct MapSelect: View {
                     Image("seagrass")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 300)
+                        .frame(width: 600)
+                        .saturation(0)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .scaleEffect(seagrassScale)
-                .position(x: geometry.size.width * 0.4, y: geometry.size.height * 0.33)
+                .position(x: geometry.size.width * 0.36, y: geometry.size.height * 0.32)
 
                 Button(action: {
                     audioManager?.playSFX(named: "bubblesound.mp3")
@@ -77,7 +78,8 @@ struct MapSelect: View {
                     Image("mangrove")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 330)
+                        .frame(width: 700)
+                        .saturation(0)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .scaleEffect(mangroveScale)
@@ -90,7 +92,8 @@ struct MapSelect: View {
                     Image("deepocean")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 300)
+                        .frame(width: 800)
+                        .saturation(0)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .scaleEffect(deepoceanScale)

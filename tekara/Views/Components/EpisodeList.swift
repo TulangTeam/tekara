@@ -9,60 +9,45 @@ import SwiftUI
 
 struct EpisodeListView: View {
     var onEpisodeSelected: ((Int) -> Void)?
+    var audioManager: AudioManager? = nil
+
+    @State private var cardScales: [CGFloat] = Array(repeating: 0, count: 6)
+
+    private let episodes: [(number: String, title: String, status: EpisodeStatus)] = [
+        ("1", "CLEAN UP THE\nSEASHORE", .begin),
+        ("2", "SAVE THE\nTURTLES", .locked),
+        ("3", "LOST LITTLE\nFISH", .locked),
+        ("4", "SAVE THE\nCORAL", .locked),
+        ("5", "WELCOME\nHOME", .locked),
+        ("6", "BE THE\nOCEAN HERO!", .locked),
+    ]
 
     var body: some View {
         HStack(spacing: 20) {
-
-            EpisodeCard(
-                episodeNumber: "1",
-                title: "CLEAN UP THE\nSEASHORE",
-                status: .begin,
-                episodeId: 1,
-                onTap: { onEpisodeSelected?(1) }
-            )
-
-            EpisodeCard(
-                episodeNumber: "2",
-                title: "SAVE THE\nTURTLES",
-                status: .locked,
-                episodeId: 2,
-                onTap: {}
-            )
-
-            EpisodeCard(
-                episodeNumber: "3",
-                title: "LOST LITTLE\nFISH",
-                status: .locked,
-                episodeId: 3,
-                onTap: {}
-            )
-
-            EpisodeCard(
-                episodeNumber: "4",
-                title: "SAVE THE\nCORAL",
-                status: .locked,
-                episodeId: 4,
-                onTap: {}
-            )
-            
-            EpisodeCard(
-                episodeNumber: "5",
-                title: "WELCOME\nHOME",
-                status: .locked,
-                episodeId: 5,
-                onTap: {}
-            )
-            
-            EpisodeCard(
-                episodeNumber: "6",
-                title: "BE THE\nOCEAN HERO!",
-                status: .locked,
-                episodeId: 6,
-                onTap: {}
-            )
-
+            ForEach(Array(episodes.enumerated()), id: \.offset) { index, episode in
+                EpisodeCard(
+                    episodeNumber: episode.number,
+                    title: episode.title,
+                    status: episode.status,
+                    episodeId: index + 1,
+                    onTap: { onEpisodeSelected?(index + 1) },
+                    audioManager: audioManager
+                )
+                .scaleEffect(cardScales[index])
+            }
         }
         .padding(.horizontal, 40)
+        .onAppear {
+            // Staggered pop-in, left to right (like MapSelect)
+            for index in episodes.indices {
+                withAnimation(
+                    .spring(response: 0.7, dampingFraction: 0.6)
+                        .delay(0.2 + Double(index) * 0.1)
+                ) {
+                    cardScales[index] = 1
+                }
+            }
+        }
     }
 }
 

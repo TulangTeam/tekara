@@ -11,7 +11,6 @@ struct EpisodesView: View {
     @ObservedObject var viewModel: GameViewModel
     private let audioManager = AudioManager.shared
     @State private var titleScale: CGFloat = 0
-    @State private var listScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200
 
     var body: some View {
@@ -41,9 +40,9 @@ struct EpisodesView: View {
                     EpisodeListView(
                         onEpisodeSelected: { episodeId in
                             viewModel.navigateToStory(episodeId: episodeId)
-                        }
+                        },
+                        audioManager: audioManager
                     )
-                    .scaleEffect(listScale)
                     Image("episodebubble")
                         .padding(.bottom, 20)
                         .offset(y: bubbleOffset)
@@ -62,9 +61,6 @@ struct EpisodesView: View {
             audioManager.playBackgroundMusic(named: "beachtrack.mp3")
             withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
                 titleScale = 1
-            }
-            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.3)) {
-                listScale = 1
             }
             withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0).delay(0.2)) {
                 bubbleOffset = 0

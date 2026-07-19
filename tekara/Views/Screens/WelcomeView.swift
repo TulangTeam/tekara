@@ -36,7 +36,7 @@ struct WelcomeView: View {
                         Image("logo")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: geometry.size.height * 0.34)
+                            .frame(height: geometry.size.height * 0.3)
                     }
                     .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
                     .scaleEffect(logoScale)

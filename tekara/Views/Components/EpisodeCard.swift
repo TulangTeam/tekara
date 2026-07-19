@@ -35,51 +35,55 @@ struct EpisodeCard: View {
     var status: EpisodeStatus = .completed
     var episodeId: Int = 1
     var onTap: (() -> Void)? = nil
+    var audioManager: AudioManager? = nil
 
     let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
     let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
 
     var body: some View {
-        VStack {
-            Text(episodeNumber)
-                .font(.custom("Baloo 2", size: 22))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .frame(width: 60, height: 60)
-                .background(Circle().fill(themeBlue))
-                .padding(.top, 30)
-
-            Spacer()
-
-            Text(title)
-                .font(.custom("Baloo 2", size: 16))
-                .fontWeight(.heavy)
-                .foregroundColor(themeBlue)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 10)
-                .padding(.bottom, 12)
-
-            Text(status.text)
-                .font(.custom("Baloo 2", size: 16))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity)
-                .background(Capsule().fill(status.backgroundColor))
-                .padding(.horizontal, 20)
-                .padding(.bottom, 20)
-        }
-        .frame(width: 160, height: 340)
-        .background(
-            RoundedRectangle(cornerRadius: 24)
-                .fill(cardBackground)
-        )
-        .opacity(status == .locked ? 0.6 : 1.0)
-        .onTapGesture {
+        Button(action: {
+            audioManager?.playSFX(named: "bubblesound.mp3")
             if status == .begin {
                 onTap?()
             }
+        }) {
+            VStack {
+                Text(episodeNumber)
+                    .font(.custom("Baloo 2", size: 22))
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .frame(width: 60, height: 60)
+                    .background(Circle().fill(themeBlue))
+                    .padding(.top, 30)
+
+                Spacer()
+
+                Text(title)
+                    .font(.custom("Baloo 2", size: 16))
+                    .fontWeight(.heavy)
+                    .foregroundColor(themeBlue)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 10)
+                    .padding(.bottom, 12)
+
+                Text(status.text)
+                    .font(.custom("Baloo 2", size: 16))
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity)
+                    .background(Capsule().fill(status.backgroundColor))
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+            }
+            .frame(width: 160, height: 340)
+            .background(
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(cardBackground)
+            )
+            .opacity(status == .locked ? 0.6 : 1.0)
         }
+        .buttonStyle(ScaleButtonStyle())
     }
 }
 
