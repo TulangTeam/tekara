@@ -13,15 +13,16 @@ import ThumbStickView
 struct GameplayView: View {
     var episodeId: Int
     @ObservedObject var viewModel: GameViewModel
-
+    
     private let isometricAngleX: Float = -35.264
     private let isometricAngleY: Float = 45.0
     private let cameraZoom: Float = 6.5  // Camera
-
+    
     @State private var joystickValue: CGPoint = .zero
-
+    
     @State private var interactionManager = TrashInteractionManager()
-
+    @State private var showExitConfirmation = false
+    
     init(episodeId: Int, viewModel: GameViewModel) {
         self.episodeId = episodeId
         self.viewModel = viewModel
@@ -30,7 +31,7 @@ struct GameplayView: View {
         CharacterMovementConfiguration.registerSystem()
         CharacterMovementConfiguration.interactionManager = interactionManager
     }
-
+    
     var body: some View {
         ZStack {
             // LAYER 1: 3D Scene Rendering
@@ -40,27 +41,27 @@ struct GameplayView: View {
                     in: tekaraAssetsBundle
                 ) {
                     content.add(sceneEntity)
-
+                    
                     if let island = sceneEntity.findEntity(named: "Island"),
-                        let character = island.findEntity(named: "kai_chara")
+                       let character = island.findEntity(named: "kai_chara")
                     {
                         character.components.set(CharacterGroundingComponent())
                         character.components.set(MovementInputComponent())
                     }
                 }
-
+                
                 // Setup Kamera Fixed Isometric
                 let cameraEntity = Entity()
                 var cameraComponent = PerspectiveCameraComponent()
                 cameraComponent.fieldOfViewInDegrees = 15
                 cameraEntity.components.set(cameraComponent)
                 cameraEntity.name = "custom_camera"
-
+                
                 let cameraAnchor = Entity()
                 cameraAnchor.name = "camera_anchor"
                 cameraAnchor.addChild(cameraEntity)
                 content.add(cameraAnchor)
-
+                
                 let radiansX = isometricAngleX * (.pi / 180.0)
                 let radiansY = isometricAngleY * (.pi / 180.0)
                 let rotationX = simd_quatf(
@@ -77,7 +78,7 @@ struct GameplayView: View {
                     0,
                     cameraZoom
                 )
-
+                
             } update: { content in
                 guard
                     let island = content.entities.first?.findEntity(
@@ -85,10 +86,10 @@ struct GameplayView: View {
                     ),
                     let kai = island.findEntity(named: "kai_chara")
                 else { return }
-
+                
                 var inputComp =
-                    kai.components[MovementInputComponent.self]
-                    ?? MovementInputComponent()
+                kai.components[MovementInputComponent.self]
+                ?? MovementInputComponent()
                 inputComp.joystickValue = SIMD2<Float>(
                     Float(joystickValue.x),
                     Float(joystickValue.y)
@@ -96,34 +97,59 @@ struct GameplayView: View {
                 kai.components.set(inputComp)
             }
             .ignoresSafeArea()
-
+            
             // LAYER 2: UI Overlay (Mission, Tools, Joystick & Action Buttons)
             VStack {
                 HStack(alignment: .top) {
-                    MissionCard(manager: interactionManager)
-                        .padding(.leading, 20)
-                        .padding(.top, 16)
-
+                    VStack(alignment: .leading, spacing: 12) {
+                        
+                        Button(action: {
+                            showExitConfirmation = true
+                        }) {
+                            Image(systemName: "door.left.hand.open")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 54, height: 54)
+                                .background(Color(hex: "DC2626"))
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white, lineWidth: 4)
+                                )
+                                .shadow(
+                                    color: .black.opacity(0.25),
+                                    radius: 6,
+                                    x: 0,
+                                    y: 4
+                                )
+                        }
+                        .buttonStyle(ScaleButtonStyle())
+                        
+                        MissionCard(manager: interactionManager)
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, 16)
+                    
                     Spacer()
                 }
-
+                
                 Spacer()
-
+                
                 // BOTTOM ROW: Joystick
                 HStack(alignment: .bottom) {
                     ThumbStickView(updatingValue: $joystickValue, radius: 60)
                         .frame(width: 120, height: 120)
                         .padding(.leading, 40)
                         .padding(.bottom, 40)
-
+                    
                     Spacer()
-
+                    
                     // RIGIT SIDE: DYNAMIC CONTEXTUAL BUTTONS
                     VStack(spacing: 12) {
                         if let trashEntity = interactionManager
                             .nearbyTrashEntity,
-                            !interactionManager.isHoldingTrash,
-                            interactionManager.selectedTool == .gloves
+                           !interactionManager.isHoldingTrash,
+                           interactionManager.selectedTool == .gloves
                         {
                             Button(action: {
                                 trashEntity.removeFromParent()
@@ -138,9 +164,9 @@ struct GameplayView: View {
                             }
                             .buttonStyle(ScaleButtonStyle())
                             .transition(.scale.combined(with: .opacity))
-
+                            
                         } else if interactionManager.isNearDepositZone
-                            && interactionManager.isHoldingTrash
+                                    && interactionManager.isHoldingTrash
                         {
                             Button(action: {
                                 withAnimation(
@@ -152,13 +178,13 @@ struct GameplayView: View {
                                 print(
                                     "Trash Successfully Deposited! (\(interactionManager.collectedTrashCount)/\(interactionManager.totalTrashCount))"
                                 )
-
+                                
                                 DispatchQueue.main.asyncAfter(
                                     deadline: .now() + 0.5
                                 ) {
                                     if interactionManager.isMissionComplete
                                         && interactionManager.missionPhase
-                                            == .none
+                                        == .none
                                     {
                                         withAnimation(
                                             .spring(
@@ -180,9 +206,9 @@ struct GameplayView: View {
                             }
                             .buttonStyle(ScaleButtonStyle())
                             .transition(.scale.combined(with: .opacity))
-
+                            
                         } else if interactionManager.nearbyTrashEntity != nil,
-                            !interactionManager.isHoldingTrash
+                                  !interactionManager.isHoldingTrash
                         {
                             HStack(spacing: 5) {
                                 Image(
@@ -191,8 +217,8 @@ struct GameplayView: View {
                                 .font(.system(size: 10))
                                 Text(
                                     interactionManager.selectedTool == nil
-                                        ? "Select the Tool first!"
-                                        : "Use gloves to collect the trash!"
+                                    ? "Select the Tool first!"
+                                    : "Use gloves to collect the trash!"
                                 )
                                 .font(
                                     .system(
@@ -225,7 +251,7 @@ struct GameplayView: View {
                     .padding(.bottom, 50)
                 }
             }
-
+            
             // LAYER 3: Tools Menu Card
             if interactionManager.isNearHut
                 && interactionManager.missionPhase == .none
@@ -241,7 +267,7 @@ struct GameplayView: View {
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
             }
-
+            
             // LAYER 4: Mission Complete Popups
             if interactionManager.missionPhase == .oceanFact {
                 OceanFactPopup(onNext: {
@@ -252,7 +278,7 @@ struct GameplayView: View {
                 })
                 .transition(.opacity)
             }
-
+            
             if interactionManager.missionPhase == .congratulations {
                 CongratulationsPopup(
                     episodeId: episodeId,
@@ -271,7 +297,28 @@ struct GameplayView: View {
                 )
                 .transition(.opacity)
             }
+            
+            // LAYER 5: Exit Confirmation Popup
+            if showExitConfirmation {
+                ExitConfirmationPopup(
+                    onStay: {
+                        withAnimation(
+                            .spring(response: 0.4, dampingFraction: 0.8)
+                        ) {
+                            showExitConfirmation = false
+                        }
+                    },
+                    onLeave: {
+                        viewModel.navigateTo(.episodes)
+                    }
+                )
+                .transition(.opacity)
+            }
         }
+        .animation(
+            .spring(response: 0.5, dampingFraction: 0.8),
+            value: showExitConfirmation
+        )
         .animation(
             .spring(response: 0.5, dampingFraction: 0.8),
             value: interactionManager.isNearHut
