@@ -17,37 +17,7 @@
         "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root",
         "Island",
-        "kai_charaa"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "Island",
-        "Materials"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-        "Root"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "Island",
-        "Sand",
-        "sand_layer2"
+        "Sand"
       ],
       {
         "isExpanded" : true,
@@ -63,16 +33,6 @@
         "isLocked" : false
       },
       [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "SkyDome"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
         "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
         "Root",
         "SkyDome"
@@ -84,7 +44,19 @@
       },
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root"
+        "Root",
+        "Island",
+        "kai_charaa"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "Materials"
       ],
       {
         "isExpanded" : true,
@@ -114,8 +86,9 @@
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root",
-        "Materials",
-        "Sand_Shader"
+        "Island",
+        "Sand",
+        "sand_layer2"
       ],
       {
         "isExpanded" : true,
@@ -124,8 +97,35 @@
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root",
-        "Island",
-        "Sand"
+        "SkyDome"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Materials",
+        "Sand_Shader"
       ],
       {
         "isExpanded" : true,
