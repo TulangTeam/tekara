@@ -22,7 +22,7 @@ enum EpisodeStatus {
 
     var backgroundColor: Color {
         switch self {
-        case .begin: return Color.orange
+        case .begin: return Color(red: 229 / 255, green: 208 / 255, blue: 39 / 255)
         case .completed: return Color(red: 0.18, green: 0.73, blue: 0.16)
         case .locked: return Color.gray
         }
