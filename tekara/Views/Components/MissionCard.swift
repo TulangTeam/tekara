@@ -10,12 +10,8 @@ import SwiftUI
 struct MissionCard: View {
     @Bindable var manager: TrashInteractionManager
 
-    private let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
-    private let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
-
     var body: some View {
         VStack(spacing: 10) {
-            // Title Badge
             Text("Missions")
                 .font(.custom("Baloo 2", size: 18))
                 .fontWeight(.bold)
@@ -23,14 +19,14 @@ struct MissionCard: View {
                 .padding(.horizontal, 28)
                 .padding(.vertical, 6)
                 .background(
-                    Capsule().fill(themeBlue)
+                    Capsule().fill(PopupStyle.themeBlue)
                 )
                 .offset(y: -8)
 
             VStack(alignment: .leading, spacing: 10) {
                 MissionRow(
                     iconName: "trash.fill",
-                    iconColor: Color(red: 0.20, green: 0.44, blue: 0.72),
+                    iconColor: PopupStyle.themeBlue,
                     text:
                         "Collect \(manager.totalTrashCount) trash\n\(manager.collectedTrashCount)/\(manager.totalTrashCount)",
                     isCompleted: manager.isMissionComplete
@@ -45,7 +41,7 @@ struct MissionCard: View {
 
                 MissionRow(
                     iconName: "arrow.down.to.line.compact",
-                    iconColor: Color(red: 0.18, green: 0.73, blue: 0.16),
+                    iconColor: PopupStyle.themeGreen,
                     text: "Dispose trash\nin the bin",
                     isCompleted: manager.collectedTrashCount > 0
                 )
@@ -56,13 +52,13 @@ struct MissionCard: View {
         .frame(width: 200)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(cardBackground)
+                .fill(PopupStyle.cardBackground)
                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .strokeBorder(
-                    Color(red: 0.85, green: 0.83, blue: 0.78),
+                    PopupStyle.borderColor,
                     lineWidth: 1.5
                 )
         )

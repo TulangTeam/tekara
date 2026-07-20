@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoryScreenView: View {
-    @ObservedObject var viewModel: GameViewModel
+    @Bindable var viewModel: GameViewModel
     private let audioManager = AudioManager.shared
     var content: StoryContent
 

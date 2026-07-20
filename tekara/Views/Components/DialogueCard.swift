@@ -113,7 +113,9 @@ struct DialogueCard: View {
             dialogueText: "One sunny morning, Kai visits the beach with their class for a field trip.\nWhile everyone is excited to play, Kai notices something unusual.\nThe beach is covered with plastic bottles, food wrappers, and fishing lines.\nThe waves gently carry more trash toward the sea.",
             buttonText: "Next",
             onButtonTapped: {
+                #if DEBUG
                 print("Proceed to next dialogue")
+                #endif
             }
         )
     }

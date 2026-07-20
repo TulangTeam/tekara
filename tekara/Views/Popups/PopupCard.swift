@@ -16,6 +16,7 @@ enum PopupStyle {
     static let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
     static let borderColor = Color(red: 0.85, green: 0.83, blue: 0.78)
     static let textColor = Color(red: 0.25, green: 0.25, blue: 0.25)
+    static let disabledGray = Color.gray
 }
 
 /// Reusable popup shell shared by all mission popups.
@@ -95,7 +96,7 @@ struct PopupButton: View {
                 .padding(.horizontal, 32)
                 .padding(.vertical, 10)
                 .background(
-                    Capsule().fill(isEnabled ? color : Color.gray)
+                    Capsule().fill(isEnabled ? color : PopupStyle.disabledGray)
                 )
                 .overlay(
                     Capsule().stroke(Color.white, lineWidth: 3)

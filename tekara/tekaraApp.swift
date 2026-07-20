@@ -14,7 +14,6 @@ struct tekaraApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-            //cihuy
         }
     }
 }
@@ -24,4 +23,3 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return .landscape
     }
 }
-

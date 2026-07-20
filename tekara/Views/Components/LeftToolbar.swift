@@ -56,9 +56,8 @@ struct SpeakerButton: View {
             }
         }) {
             Image(systemName: audioManager.isSFXMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
-                .font(.system(size: 34, weight: .medium))
+                .font(.system(size: 34, weight: .bold))
                 .foregroundColor(.white)
-                .bold()
                 .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
                 .frame(width: 48, height: 40)
                 .offset(x: offsetX)

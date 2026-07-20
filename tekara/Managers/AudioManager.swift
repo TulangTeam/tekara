@@ -45,7 +45,9 @@ class AudioManager {
             try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
+            #if DEBUG
             print("Failed to setup audio session: \(error)")
+            #endif
         }
     }
 
@@ -56,7 +58,9 @@ class AudioManager {
         }
 
         guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else {
+            #if DEBUG
             print("Audio file not found: \(filename)")
+            #endif
             return
         }
 
@@ -68,7 +72,9 @@ class AudioManager {
             backgroundMusicPlayer?.play()
             currentSong = filename
         } catch {
+            #if DEBUG
             print("Failed to play background music: \(error)")
+            #endif
         }
     }
 
@@ -111,7 +117,9 @@ class AudioManager {
         }
 
         guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else {
+            #if DEBUG
             print("SFX file not found: \(filename)")
+            #endif
             return
         }
 
@@ -122,7 +130,9 @@ class AudioManager {
             player.play()
             sfxPlayers[filename] = player
         } catch {
+            #if DEBUG
             print("Failed to play SFX: \(error)")
+            #endif
         }
     }
 }

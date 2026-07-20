@@ -14,20 +14,21 @@ struct FactVideo {
 }
 
 struct FactVideoData {
+    // ponytail: add new episodes here
+    private static let videos: [Int: FactVideo] = [
+        1: FactVideo(
+            episodeId: 1,
+            videoName: "av-oceanep1",
+            sourceCredit: "Source: National Geographic YouTube Channel"
+        )
+    ]
+    private static let fallback = FactVideo(
+        episodeId: 0,
+        videoName: "av-oceanep1",
+        sourceCredit: "Source: YouTube Channel"
+    )
+
     static func getVideo(for episodeId: Int) -> FactVideo {
-        switch episodeId {
-        case 1:
-            return FactVideo(
-                episodeId: 1,
-                videoName: "av-oceanep1",
-                sourceCredit: "Source: National Geographic YouTube Channel"
-            )
-        default:
-            return FactVideo(
-                episodeId: episodeId,
-                videoName: "av-oceanep1",
-                sourceCredit: "Source: YouTube Channel"
-            )
-        }
+        videos[episodeId] ?? fallback
     }
 }

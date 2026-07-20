@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @ObservedObject var viewModel: GameViewModel
+    @Bindable var viewModel: GameViewModel
     private let audioManager = AudioManager.shared
     @State private var logoScale: CGFloat = 0.1
     @State private var logoOpacity: Double = 0
     @State private var buttonScale: CGFloat = 0
     @State private var currentBgIndex: Int = 0
+    @State private var bgTimer: Timer? = nil
     
     var body: some View {
         GeometryReader { geometry in
@@ -81,11 +82,15 @@ struct WelcomeView: View {
                     buttonScale = 1
                 }
 
-                Timer.scheduledTimer(withTimeInterval: 0.7, repeats: true) { _ in
+                bgTimer = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: true) { _ in
                     currentBgIndex = currentBgIndex == 0 ? 1 : 0
                 }
 
                 audioManager.playBackgroundMusic(named: "beachtrack.mp3")
+            }
+            .onDisappear {
+                bgTimer?.invalidate()
+                bgTimer = nil
             }
         }
     }

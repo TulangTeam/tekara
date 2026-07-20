@@ -37,8 +37,8 @@ struct EpisodeCard: View {
     var onTap: (() -> Void)? = nil
     var audioManager: AudioManager? = nil
 
-    let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
-    let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
+    let cardBackground = PopupStyle.cardBackground
+    let themeBlue = PopupStyle.themeBlue
 
     var body: some View {
         Button(action: {

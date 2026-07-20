@@ -6,18 +6,14 @@
 //
 
 import SwiftUI
-import Combine
 
 @MainActor
-final class GameViewModel: ObservableObject {
-    @Published var gameState: GameState
+@Observable
+final class GameViewModel {
+    var gameState: GameState
 
     init(gameState: GameState = GameState()) {
         self.gameState = gameState
-    }
-
-    func toggleSound() {
-        gameState.isSoundEnabled.toggle()
     }
 
     func navigateTo(_ screen: AppScreen) {
@@ -26,14 +22,6 @@ final class GameViewModel: ObservableObject {
 
     func navigateToStory(episodeId: Int) {
         gameState.currentScreen = .story(episodeId: episodeId)
-    }
-
-    func getStoryContent(for episodeId: Int) -> StoryContent {
-        return StoryData.getContent(for: episodeId)
-    }
-
-    func getFactVideo(for episodeId: Int) -> FactVideo {
-        return FactVideoData.getVideo(for: episodeId)
     }
 
     func navigateToNextScreen() {

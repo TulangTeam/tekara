@@ -37,7 +37,9 @@ struct BackButton: View {
             .ignoresSafeArea()
         
         BackButton(action: {
+            #if DEBUG
             print("Back button tapped!")
+            #endif
         })
     }
 }

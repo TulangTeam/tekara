@@ -10,9 +10,6 @@ import SwiftUI
 struct ToolsMenuCard: View {
     @Bindable var manager: TrashInteractionManager
 
-    private let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
-    private let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
-
     var body: some View {
         VStack(spacing: 12) {
             Text("Tools")
@@ -22,7 +19,7 @@ struct ToolsMenuCard: View {
                 .padding(.horizontal, 28)
                 .padding(.vertical, 6)
                 .background(
-                    Capsule().fill(themeBlue)
+                    Capsule().fill(PopupStyle.themeBlue)
                 )
                 .offset(y: -8)
 
@@ -57,13 +54,13 @@ struct ToolsMenuCard: View {
         .frame(width: 170)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(cardBackground)
+                .fill(PopupStyle.cardBackground)
                 .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .strokeBorder(
-                    Color(red: 0.85, green: 0.83, blue: 0.78),
+                    PopupStyle.borderColor,
                     lineWidth: 1.5
                 )
         )

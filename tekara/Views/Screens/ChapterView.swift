@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChapterView: View {
-    @ObservedObject var viewModel: GameViewModel
+    @Bindable var viewModel: GameViewModel
     private let audioManager = AudioManager.shared
     @State private var titleScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200

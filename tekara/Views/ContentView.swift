@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = GameViewModel()
+    @State private var viewModel = GameViewModel()
 
     var body: some View {
         ZStack {
@@ -22,7 +22,7 @@ struct ContentView: View {
             case .story(let episodeId):
                 StoryScreenView(
                     viewModel: viewModel,
-                    content: viewModel.getStoryContent(for: episodeId)
+                    content: StoryData.getContent(for: episodeId)
                 )
             case .gameplay(let episodeId):
                 GameplayView(episodeId: episodeId, viewModel: viewModel)

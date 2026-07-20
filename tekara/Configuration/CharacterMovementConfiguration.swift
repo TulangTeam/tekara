@@ -14,6 +14,17 @@ public class CharacterMovementConfiguration: RealityKit.System {
             && .has(CharacterGroundingComponent.self)
     )
 
+    private enum Distance {
+        static let trashRadius: Float = 0.8
+        static let bigHutRadius: Float = 0.8
+        static let binRadius: Float = 1.2
+        static let hutRadius: Float = 0.6
+        static let wallBuffer: Float = 0.15
+        static let raycastHeight: Float = 2.0
+        static let raycastLength: Float = 5.0
+        static let groundingBaseAngle: Float = 270.0
+    }
+
     public static var interactionManager: TrashInteractionManager?
 
     required public init(scene: RealityKit.Scene) {}
@@ -38,7 +49,6 @@ public class CharacterMovementConfiguration: RealityKit.System {
 
             if let manager = Self.interactionManager {
                 var closestTrash: Entity? = nil
-                var minTrashDistance: Float = 0.8  // Detect radius trash
                 var nearDeposit = false
                 var nearHut = false
                 var trashCount = 0
@@ -48,17 +58,15 @@ public class CharacterMovementConfiguration: RealityKit.System {
                         let entityPos = entity.position(relativeTo: nil)
                         let distance = simd_distance(kaiWorldPos, entityPos)
 
-                        // Check if is there any entity named trash
                         if entity.name.lowercased().contains("trash") {
                             trashCount += 1
-                            if distance < minTrashDistance {
-                                minTrashDistance = distance
+                            if distance < Distance.trashRadius {
                                 closestTrash = entity
                             }
                         }
 
                         if entity.name.lowercased().contains("big_hut") {
-                            if distance < 0.8 {  // Radius area Hut
+                            if distance < Distance.bigHutRadius {
                                 nearHut = true
                             }
                         }
@@ -70,7 +78,7 @@ public class CharacterMovementConfiguration: RealityKit.System {
                         let hutPos = hutEntity.position(relativeTo: nil)
                         let distanceToHut = simd_distance(kaiWorldPos, hutPos)
 
-                        if distanceToHut < 1.2 {  // Radius area bin
+                        if distanceToHut < Distance.binRadius {
                             nearDeposit = true
                         }
                     }
@@ -84,19 +92,27 @@ public class CharacterMovementConfiguration: RealityKit.System {
                                 kaiWorldPos,
                                 hutPos
                             )
-                            if distanceToHut < 0.6 {
+                            if distanceToHut < Distance.hutRadius {
                                 nearHut = true
                             }
                         }
                     }
                 }
 
-                Task { @MainActor in
-                    manager.nearbyTrashEntity = closestTrash
-                    manager.isNearDepositZone = nearDeposit
-                    manager.isNearHut = nearHut
-                    manager.totalTrashCount =
-                        trashCount + manager.collectedTrashCount
+                // ponytail: debounce main-thread writes to state changes only
+                let totalTrashCount = trashCount + manager.collectedTrashCount
+                let didChange = closestTrash !== manager.nearbyTrashEntity
+                    || manager.isNearDepositZone != nearDeposit
+                    || manager.isNearHut != nearHut
+                    || manager.totalTrashCount != totalTrashCount
+
+                if didChange {
+                    Task { @MainActor in
+                        manager.nearbyTrashEntity = closestTrash
+                        manager.isNearDepositZone = nearDeposit
+                        manager.isNearHut = nearHut
+                        manager.totalTrashCount = totalTrashCount
+                    }
                 }
             }
 
@@ -132,13 +148,13 @@ public class CharacterMovementConfiguration: RealityKit.System {
                 // RAYCAST A: Cek If any ground
                 let groundRayOrigin = SIMD3<Float>(
                     targetWorldPos.x,
-                    targetWorldPos.y + 2.0,
+                    targetWorldPos.y + Distance.raycastHeight,
                     targetWorldPos.z
                 )
                 let groundHits = scene.raycast(
                     origin: groundRayOrigin,
                     direction: SIMD3<Float>(0, -1, 0),
-                    length: 5.0
+                    length: Distance.raycastLength
                 )
                 let isOnSand = groundHits.contains(where: {
                     $0.entity.name == "sand_layer2"
@@ -157,7 +173,7 @@ public class CharacterMovementConfiguration: RealityKit.System {
                 var hitsObstacle = false
                 if distance > 0.001 {
                     let wallRayDirection = simd_normalize(targetDirection)
-                    let wallRayLength = distance + 0.15
+                    let wallRayLength = distance + Distance.wallBuffer
 
                     let wallHits = scene.raycast(
                         origin: wallRayOrigin,
@@ -192,7 +208,7 @@ public class CharacterMovementConfiguration: RealityKit.System {
                     angle: angle,
                     axis: SIMD3<Float>(0, 1, 0)
                 )
-                let baseAngleX = 270.0 * (Float.pi / 180.0)
+                let baseAngleX = Distance.groundingBaseAngle * (Float.pi / 180.0)
                 let baseFixRotation = simd_quatf(
                     angle: baseAngleX,
                     axis: SIMD3<Float>(1, 0, 0)
@@ -211,13 +227,13 @@ public class CharacterMovementConfiguration: RealityKit.System {
             let worldPos = kai.position(relativeTo: nil)
             let currentGroundRayOrigin = SIMD3<Float>(
                 worldPos.x,
-                worldPos.y + 2.0,
+                worldPos.y + Distance.raycastHeight,
                 worldPos.z
             )
             let hits = scene.raycast(
                 origin: currentGroundRayOrigin,
                 direction: SIMD3<Float>(0, -1, 0),
-                length: 5.0
+                length: Distance.raycastLength
             )
 
             if let sandHit = hits.first(where: {

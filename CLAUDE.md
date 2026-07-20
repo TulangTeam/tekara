@@ -10,7 +10,7 @@ The app uses **MVVM** for the menu/navigation interface:
 - **ViewModel**: `GameViewModel` in `ViewModels/GameViewModel.swift`
 - **View**: SwiftUI views in `Views/Screens/` and `Views/Components/`
 
-Views observe `GameViewModel` via `@ObservedObject` and call methods to update state.
+Views observe `GameViewModel` via `@Bindable` (all screen views) or `@State` (ContentView). `GameViewModel` uses `@Observable @MainActor` — the modern iOS 17+ pattern (no `ObservableObject`/`@Published`).
 
 ### Navigation Pattern
 - **GameViewModel** (in `ViewModels/`) is the central state manager
@@ -36,19 +36,18 @@ case gameplay(episodeId: Int)
 Located in `Models/GameState.swift`:
 - `currentScreen: AppScreen` - current navigation state
 - `currentEpisodeId: Int` - current episode being played
-- `isSoundEnabled: Bool` - sound toggle state
 
 ### StoryContent Model
 Located in `Models/StoryContent.swift`:
 - `DialogueItem` - speaker name and dialogue text
 - `StoryStage` - stage name, background image, dialogues array
 - `StoryContent` - episode info with array of stages
-- `StoryData.getContent(for:)` - returns story content per episode
+- `StoryData.getContent(for:)` - O(1) dictionary lookup; episode data is a top-level private constant
 
 ### FactVideo Model
 Located in `Models/FactVideo.swift`:
 - `FactVideo` - video name (bundle filename, no extension), source credit text
-- `FactVideoData.getVideo(for:)` - returns fact video per episode
+- `FactVideoData.getVideo(for:)` - O(1) dictionary lookup; add new episodes to the `videos` dictionary with a `// ponytail: add new episodes here` marker
 
 ## 3D Gameplay (RealityKit)
 
@@ -59,18 +58,20 @@ Located in `Models/FactVideo.swift`:
   - `CleanupTool` enum (`.gloves`, `.scissors`, `.trashBag`) with icon/color/emoji
   - `MissionCompletePhase` enum (`.none`, `.oceanFact`, `.factVideo`, `.congratulations`)
   - `TrashInteractionManager` (`@Observable`) - gameplay state: nearby trash, holding trash, deposit zone / hut proximity, selected tool, trash counts, mission phase
-- **CharacterMovementConfiguration** (`Configuration/CharacterMovementConfiguration.swift`) - RealityKit `System` that moves the character (`kai_chara` entity inside `Island`); receives the shared `TrashInteractionManager` via a static property
+- **CharacterMovementConfiguration** (`Configuration/CharacterMovementConfiguration.swift`) - RealityKit `System` that moves the character (`kai_chara` entity inside `Island`); receives the shared `TrashInteractionManager` via a static property. Proximity thresholds (`trashRadius`, `binRadius`, `hutRadius`, etc.) are named constants in a private `Distance` enum. Main-thread writes are debounced — only dispatched when values actually change.
 - Components/systems are registered in `GameplayView.init`
 
 ### Gameplay Flow (Episode 1)
 Joystick (ThumbStickView package) moves the character → near hut opens `ToolsMenuCard` → select gloves → near trash shows pick-up button → carry trash to deposit zone → dispose. When all trash is collected:
 `OceanFactPopup` → `DidYouKnowPopup` (AVKit video) → `CongratulationsPopup` (back to episodes / next episode). Exit button (red, door icon, top-left under MissionCard) shows `ExitConfirmationPopup` before navigating back to episodes.
 
+`GameplayView` uses `private enum Layout` for frame sizes/padding and `private enum Animation` for spring presets — no magic numbers in the view body.
+
 ### Popup Components
 All gameplay popups live in `Views/Popups/` and share the `PopupCard` shell (dimmed background, spring scale-in, fixed 520pt card width, capsule header, Baloo 2 font). Customize look in one place:
-- `PopupStyle` enum - theme colors, card dimensions, text colors
+- `PopupStyle` enum - theme colors (`themeBlue`, `themeGreen`, `themeRed`, `cardBackground`, `borderColor`, `textColor`, `disabledGray`), card dimensions
 - `PopupCard<Content>` - reusable shell with spring animation
-- `PopupButton` - shared capsule button (green/red/gray, enabled state)
+- `PopupButton` - shared capsule button (uses `PopupStyle.themeGreen` by default, `PopupStyle.disabledGray` for disabled state)
 
 ## Local Packages
 
@@ -118,6 +119,7 @@ The game features a **tropical beach / under-the-sea** theme with playful, cheer
 - Separate mute toggles: `isMusicMuted` / `isSFXMuted` via `toggleMusicMute()` / `toggleSFXMute()`
 - Audio files live in `Resources/Audio/` (`beachtrack.mp3`, `bubblesound.mp3`)
 - Video files live in `Resources/Video/` (`av-oceanep1.mp4`)
+- `print()` calls are wrapped in `#if DEBUG` — safe to leave in production builds
 
 ### Soundtrack Prompts
 
