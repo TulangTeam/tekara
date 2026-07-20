@@ -14,7 +14,6 @@ struct CongratulationsPopup: View {
 
     private let cardBackground = Color(red: 0.92, green: 0.91, blue: 0.87)
     private let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
-    private let themeGreen = Color(red: 0.18, green: 0.73, blue: 0.16)
     private let themeRed = Color(red: 0.85, green: 0.30, blue: 0.25)
 
     @State private var popupScale: CGFloat = 0
@@ -78,10 +77,12 @@ struct CongratulationsPopup: View {
                             .padding(.horizontal, 20)
                             .padding(.vertical, 10)
                             .background(
-                                Capsule().fill(themeGreen)
+                                Capsule().fill(Color.gray)
                             )
                     }
                     .buttonStyle(ScaleButtonStyle())
+                    .disabled(true)
+                    .opacity(0.6)
                 }
                 .padding(.bottom, 20)
             }

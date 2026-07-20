@@ -286,13 +286,7 @@ struct GameplayView: View {
                         viewModel.navigateTo(.episodes)
                     },
                     onNextEpisode: {
-                        // Navigate ke story episode berikutnya
-                        let nextId = episodeId + 1
-                        if nextId <= 6 {
-                            viewModel.navigateTo(.story(episodeId: nextId))
-                        } else {
-                            viewModel.navigateTo(.episodes)
-                        }
+                        // Placeholder: only episode 1 exists for now
                     }
                 )
                 .transition(.opacity)
