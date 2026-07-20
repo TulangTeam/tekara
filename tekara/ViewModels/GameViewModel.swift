@@ -32,6 +32,10 @@ final class GameViewModel: ObservableObject {
         return StoryData.getContent(for: episodeId)
     }
 
+    func getFactVideo(for episodeId: Int) -> FactVideo {
+        return FactVideoData.getVideo(for: episodeId)
+    }
+
     func navigateToNextScreen() {
         switch gameState.currentScreen {
         case .story(let episodeId):

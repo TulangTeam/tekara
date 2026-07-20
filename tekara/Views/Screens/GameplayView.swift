@@ -270,13 +270,43 @@ struct GameplayView: View {
             
             // LAYER 4: Mission Complete Popups
             if interactionManager.missionPhase == .oceanFact {
-                OceanFactPopup(onNext: {
-                    withAnimation(.spring(response: 0.5, dampingFraction: 0.8))
-                    {
-                        interactionManager.missionPhase = .congratulations
+                OceanFactPopup(
+                    onBack: nil,
+                    onNext: {
+                        withAnimation(
+                            .spring(response: 0.5, dampingFraction: 0.8)
+                        ) {
+                            interactionManager.missionPhase = .factVideo
+                        }
                     }
-                })
+                )
                 .transition(.opacity)
+            }
+
+            if interactionManager.missionPhase == .factVideo {
+                DidYouKnowPopup(
+                    video: viewModel.getFactVideo(for: episodeId),
+                    onBack: {
+                        AudioManager.shared.resumeBackgroundMusic()
+                        withAnimation(
+                            .spring(response: 0.5, dampingFraction: 0.8)
+                        ) {
+                            interactionManager.missionPhase = .oceanFact
+                        }
+                    },
+                    onNext: {
+                        AudioManager.shared.resumeBackgroundMusic()
+                        withAnimation(
+                            .spring(response: 0.5, dampingFraction: 0.8)
+                        ) {
+                            interactionManager.missionPhase = .congratulations
+                        }
+                    }
+                )
+                .transition(.opacity)
+                .onAppear {
+                    AudioManager.shared.pauseBackgroundMusic()
+                }
             }
             
             if interactionManager.missionPhase == .congratulations {

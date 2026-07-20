@@ -59,6 +59,7 @@ public enum CleanupTool: String, CaseIterable, Identifiable {
 public enum MissionCompletePhase {
     case none
     case oceanFact
+    case factVideo
     case congratulations
 }
 

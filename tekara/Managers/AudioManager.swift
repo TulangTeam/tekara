@@ -2,7 +2,7 @@
 //  AudioManager.swift
 //  tekara
 //
-//  Created by Claude on 18/07/26.
+//  Created by DIMAS DAFFA ERNANDA on 18/07/26.
 //
 
 import AVFoundation
