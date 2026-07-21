@@ -58,7 +58,7 @@ struct MissionCard: View {
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .strokeBorder(
-                    PopupStyle.borderColor,
+                    PopupStyle.cardEdge,
                     lineWidth: 1.5
                 )
         )

@@ -35,7 +35,7 @@ struct DidYouKnowPopup: View {
 
             HStack(spacing: 16) {
                 if let onBack {
-                    PopupButton(title: "Back", color: Color.gray, action: {
+                    PopupButton(title: "Back", face: Color.gray, edge: PopupStyle.neutralEdge, action: {
                         player?.pause()
                         onBack()
                     })

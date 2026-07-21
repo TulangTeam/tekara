@@ -34,7 +34,7 @@ struct OceanFactPopup: View {
 
             HStack(spacing: 16) {
                 if let onBack {
-                    PopupButton(title: "Back", color: Color.gray, action: onBack)
+                    PopupButton(title: "Back", face: Color.gray, edge: PopupStyle.neutralEdge, action: onBack)
                 }
 
                 PopupButton(title: "Next", action: onNext)
