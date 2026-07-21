@@ -12,16 +12,7 @@ struct MissionCard: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            Text("Missions")
-                .font(.custom("Baloo 2", size: 18))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding(.horizontal, 28)
-                .padding(.vertical, 6)
-                .background(
-                    Capsule().fill(PopupStyle.themeBlue)
-                )
-                .offset(y: -8)
+            CardHeaderPill(text: "Missions")
 
             VStack(alignment: .leading, spacing: 10) {
                 MissionRow(
@@ -65,30 +56,4 @@ struct MissionCard: View {
     }
 }
 
-// MARK: - Mission Row
 
-private struct MissionRow: View {
-    let iconName: String
-    let iconColor: Color
-    let text: String
-    let isCompleted: Bool
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image(systemName: isCompleted ? "checkmark.circle.fill" : iconName)
-                .font(.system(size: 22))
-                .foregroundStyle(
-                    isCompleted
-                        ? Color(red: 0.18, green: 0.73, blue: 0.16) : iconColor
-                )
-                .frame(width: 32, height: 32)
-
-            Text(text)
-                .font(.custom("Baloo 2", size: 13))
-                .fontWeight(.semibold)
-                .foregroundColor(Color(red: 0.30, green: 0.30, blue: 0.30))
-                .lineLimit(3)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-}

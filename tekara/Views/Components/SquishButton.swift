@@ -48,3 +48,13 @@ struct SquishCapsuleButton: View {
         }
     }
 }
+
+#Preview {
+    VStack(spacing: 16) {
+        SquishCapsuleButton(text: "Back", top: Color.gray, edge: PopupStyle.neutralEdge) {}
+        SquishCapsuleButton(text: "Next", top: PopupStyle.themeGreen, edge: PopupStyle.successEdge) {}
+        SquishCapsuleButton(text: "Play", top: PopupStyle.themeBlue, edge: PopupStyle.themeBlue.opacity(0.6)) {}
+    }
+    .padding()
+    .background(Color(red: 0.92, green: 0.91, blue: 0.87))
+}

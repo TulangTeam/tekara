@@ -38,12 +38,8 @@ struct EpisodeListView: View {
         }
         .padding(.horizontal, 40)
         .onAppear {
-            // Staggered pop-in, left to right (like MapSelect)
             for index in episodes.indices {
-                withAnimation(
-                    .spring(response: 0.7, dampingFraction: 0.6)
-                        .delay(0.2 + Double(index) * 0.1)
-                ) {
+                withAnimation(StaggeredAnimation.spring(delay: index)) {
                     cardScales[index] = 1
                 }
             }

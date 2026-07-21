@@ -51,7 +51,7 @@ private let episode1Content = StoryContent(
         ),
         StoryStage(
             stageName: "Story",
-            backgroundImage: "bgocean",
+            backgroundImage: "story1",
             dialogues: [
                 DialogueItem(
                     speakerId: "tori",
@@ -61,7 +61,7 @@ private let episode1Content = StoryContent(
         ),
         StoryStage(
             stageName: "Story",
-            backgroundImage: "bgocean2",
+            backgroundImage: "story2",
             dialogues: [
                 DialogueItem(speakerId: "narrator", text: "A wave pushes trash toward the water."),
                 DialogueItem(speakerId: "kai", text: "Oh no! It's floating away!"),

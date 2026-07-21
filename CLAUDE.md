@@ -69,9 +69,9 @@ Joystick (ThumbStickView package) moves the character → near hut opens `ToolsM
 
 ### Popup Components
 All gameplay popups live in `Views/Popups/` and share the `PopupCard` shell (dimmed background, spring scale-in, fixed 520pt card width, capsule header, Baloo 2 font). Customize look in one place:
-- `PopupStyle` enum - theme colors (`themeBlue`, `themeGreen`, `themeRed`, `cardBackground`, `borderColor`, `textColor`, `disabledGray`), card dimensions
-- `PopupCard<Content>` - reusable shell with spring animation
-- `PopupButton` - shared capsule button (uses `PopupStyle.themeGreen` by default, `PopupStyle.disabledGray` for disabled state)
+- `PopupStyle` (`Views/Components/PopupStyle.swift`) - shared design tokens: theme colors, card dimensions
+- `PopupCard<Content>` (`Views/Popups/PopupCard.swift`) - reusable popup shell
+- `PopupButton` (`Views/Components/PopupButton.swift`) - shared capsule action button with auto-sizing
 
 ## Local Packages
 
@@ -90,13 +90,7 @@ withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
 ```
 
 **Staggered pop-in** (cards/maps appear left to right, e.g. `EpisodeListView`, `MapSelect`):
-```swift
-for index in items.indices {
-    withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2 + Double(index) * 0.1)) {
-        cardScales[index] = 1
-    }
-}
-```
+Use `StaggeredAnimation.spring(delay:)` and `StaggeredAnimation.mapArrowSpring(delay:)` from `Views/Components/StaggeredAnimation.swift`.
 
 **Button press animation**: Use `ScaleButtonStyle` modifier with `.buttonStyle(ScaleButtonStyle())`
 
@@ -144,9 +138,19 @@ Chord Progression: C, F, G, C"
 - **PlayButton**: Green "PLAY" button on label image
 - **ScaleButtonStyle** (`Views/Components/ScaleButtonStyle.swift`): Press-scale button animation
 - **ToolsMenuCard**: Tool selection card (gloves/scissors/trash bag), shown near the hut
+- **PopupStyle** (`Views/Components/PopupStyle.swift`): Shared design token enum — theme colors, card dimensions
+- **PopupButton** (`Views/Components/PopupButton.swift`): Shared capsule action button with auto-sizing, press animation
+- **StarRating** (`Views/Components/StarRating.swift`): N-of-M star rating display
+- **MissionRow** (`Views/Components/MissionRow.swift`): Icon + text checklist row
+- **ToolGridItem** (`Views/Components/ToolGridItem.swift`): Tool selection grid cell
+- **IconCircleButton** (`Views/Components/IconCircleButton.swift`): Unified 3D circular icon button (BackButton, LeftToolbarButton)
+- **SpeakerButton** (`Views/Components/SpeakerButton.swift`): SFX mute toggle with wiggle animation
+- **StaggeredAnimation** (`Views/Components/StaggeredAnimation.swift`): Shared animation factory methods
+- **CardHeaderPill** (`Views/Components/CardHeaderPill.swift`): Floating card header label
+- **SquishCapsuleButton** (`Views/Components/SquishButton.swift`): Generic 3D capsule button
 
 ### Views/Popups/ (gameplay popup views)
-- **PopupCard** (`Views/Popups/PopupCard.swift`): Reusable popup shell + `PopupStyle` enum + `PopupButton`
+- **PopupCard** (`Views/Popups/PopupCard.swift`): Reusable popup shell
 - **OceanFactPopup**: "Ocean Fact" text popup
 - **DidYouKnowPopup**: AVKit `VideoPlayer` popup for educational clips
 - **CongratulationsPopup**: Mission-complete popup (back to episodes / next episode)
@@ -164,9 +168,11 @@ tekara/
 ├── Info.plist                      (UIAppFonts, landscape orientation)
 ├── Assets.xcassets/                (AccentColor, AppIcon, Elements/, Image/)
 ├── Models/
-│   ├── FactVideo.swift            (FactVideo + FactVideoData)
+│   ├── EpisodeStatus.swift       (EpisodeStatus enum with status-driven colors)
+│   ├── FactVideo.swift          (FactVideo + FactVideoData)
 │   ├── GameState.swift
-│   ├── StoryContent.swift         (DialogueItem, StoryStage, StoryData)
+│   ├── Speaker.swift            (Speaker + SpeakerRegistry)
+│   ├── StoryContent.swift       (DialogueItem, StoryStage, StoryData)
 │   └── Navigation/
 │       └── AppScreen.swift
 ├── ViewModels/
@@ -181,18 +187,28 @@ tekara/
 │   │   └── GameplayView.swift
 │   ├── Components/               (non-popup UI helpers)
 │   │   ├── BackButton.swift
+│   │   ├── CardHeaderPill.swift
 │   │   ├── DialogueCard.swift
 │   │   ├── EpisodeCard.swift
 │   │   ├── EpisodeList.swift
+│   │   ├── IconCircleButton.swift
 │   │   ├── LeftToolbar.swift
 │   │   ├── LeftToolbarButton.swift
 │   │   ├── MapSelect.swift
 │   │   ├── MissionCard.swift
+│   │   ├── MissionRow.swift
 │   │   ├── PlayButton.swift
+│   │   ├── PopupButton.swift
+│   │   ├── PopupStyle.swift
 │   │   ├── ScaleButtonStyle.swift
+│   │   ├── SpeakerButton.swift
+│   │   ├── SquishButton.swift
+│   │   ├── StaggeredAnimation.swift
+│   │   ├── StarRating.swift
+│   │   ├── ToolGridItem.swift
 │   │   └── ToolsMenuCard.swift
 │   └── Popups/                    (gameplay popup views)
-│       ├── PopupCard.swift        (shared shell + PopupStyle + PopupButton)
+│       ├── PopupCard.swift        (reusable shell only — style tokens in PopupStyle.swift)
 │       ├── OceanFactPopup.swift
 │       ├── DidYouKnowPopup.swift
 │       ├── CongratulationsPopup.swift

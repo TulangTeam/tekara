@@ -12,16 +12,7 @@ struct ToolsMenuCard: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text("Tools")
-                .font(.custom("Baloo 2", size: 18))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding(.horizontal, 28)
-                .padding(.vertical, 6)
-                .background(
-                    Capsule().fill(PopupStyle.themeBlue)
-                )
-                .offset(y: -8)
+            CardHeaderPill(text: "Tools")
 
             LazyVGrid(
                 columns: [
@@ -67,38 +58,4 @@ struct ToolsMenuCard: View {
     }
 }
 
-private struct ToolGridItem: View {
-    let tool: CleanupTool
-    let isSelected: Bool
-    let action: () -> Void
 
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 4) {
-                Image(systemName: tool.iconName)
-                    .font(.system(size: 26))
-                    .foregroundStyle(
-                        isSelected
-                            ? .white : Color(red: 0.35, green: 0.35, blue: 0.35)
-                    )
-                    .frame(width: 48, height: 48)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(
-                                isSelected
-                                    ? tool.color : Color.white.opacity(0.6)
-                            )
-                    )
-
-                Text(tool.rawValue)
-                    .font(.custom("Baloo 2", size: 11))
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color(red: 0.30, green: 0.30, blue: 0.30))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-        .buttonStyle(ScaleButtonStyle())
-    }
-}

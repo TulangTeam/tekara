@@ -102,25 +102,25 @@ struct MapSelect: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .onAppear {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+            withAnimation(StaggeredAnimation.mapArrowSpring(delay: 0)) {
                 arrow1Scale = 1
             }
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.7).delay(0.1)) {
+            withAnimation(StaggeredAnimation.mapArrowSpring(delay: 1)) {
                 arrow2Scale = 1
             }
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.7).delay(0.15)) {
+            withAnimation(StaggeredAnimation.mapArrowSpring(delay: 2)) {
                 arrow3Scale = 1
             }
-            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
+            withAnimation(StaggeredAnimation.spring(delay: 0)) {
                 seashoreScale = 1
             }
-            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.3)) {
+            withAnimation(StaggeredAnimation.spring(delay: 1)) {
                 seagrassScale = 1
             }
-            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.4)) {
+            withAnimation(StaggeredAnimation.spring(delay: 2)) {
                 mangroveScale = 1
             }
-            withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.5)) {
+            withAnimation(StaggeredAnimation.spring(delay: 3)) {
                 deepoceanScale = 1
             }
         }
