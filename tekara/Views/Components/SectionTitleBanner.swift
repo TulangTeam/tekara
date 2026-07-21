@@ -66,7 +66,8 @@ struct SectionTitleBanner: View {
         .overlay(alignment: .topLeading) {
             if let leadingDecoration {
                 Image(leadingDecoration)
-                    .offset(x: -18, y: -22)
+                    .rotationEffect(.degrees(-18))
+                    .offset(x: -17, y: -29)
             }
         }
         .overlay(alignment: .topTrailing) {
@@ -94,7 +95,7 @@ struct SectionTitleBanner: View {
                 title: "Seashore & coral reef",
                 subtitle: "Episode 1–6",
                 leadingDecoration: "coral_red",
-                trailingDecoration: "coral_cluster"
+                trailingDecoration: "coral_purple"
             )
             .frame(width: 400)
         }
