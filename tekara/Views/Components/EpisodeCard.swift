@@ -7,55 +7,6 @@
 
 import SwiftUI
 
-enum EpisodeStatus {
-    case begin
-    case completed
-    case locked
-
-    var text: String {
-        switch self {
-        case .begin: return "Begin"
-        case .completed: return "Play"
-        case .locked: return "Locked"
-        }
-    }
-
-    // 3D capsule button colors
-    var buttonTop: Color {
-        switch self {
-        case .begin: return Color(red: 229 / 255, green: 208 / 255, blue: 39 / 255)
-        case .completed: return Color(red: 0.37, green: 0.82, blue: 0.41)
-        case .locked: return .gray
-        }
-    }
-
-    var buttonEdge: Color {
-        switch self {
-        case .begin: return Color(red: 0.62, green: 0.51, blue: 0.0)
-        case .completed: return Color(red: 0.16, green: 0.55, blue: 0.19)
-        case .locked: return Color(red: 0.35, green: 0.35, blue: 0.35)
-        }
-    }
-
-    // Flat badge circle color
-    var badgeColor: Color {
-        switch self {
-        case .begin: return Color(red: 229 / 255, green: 208 / 255, blue: 39 / 255)
-        case .completed: return Color(red: 0.37, green: 0.82, blue: 0.41)
-        case .locked: return .gray
-        }
-    }
-
-    // Card border color
-    var borderColor: Color {
-        switch self {
-        case .begin: return Color(red: 229 / 255, green: 208 / 255, blue: 39 / 255)
-        case .completed: return Color(red: 0.37, green: 0.82, blue: 0.41)
-        case .locked: return Color(red: 0.72, green: 0.72, blue: 0.72)
-        }
-    }
-}
-
 struct StarRating: View {
     let filled: Int
     let total: Int = 3
@@ -71,6 +22,11 @@ struct StarRating: View {
                     .foregroundColor(index <= filled ? starColor : emptyColor)
             }
         }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 4)
+        .background(
+            Capsule().fill(Color.black.opacity(0.05))
+        )
     }
 }
 
@@ -88,6 +44,7 @@ struct EpisodeCard: View {
 
     private let cardWidth: CGFloat = 160
     private let cardHeight: CGFloat = 340
+    private let cardPressDepth: CGFloat = 6   // card-level 3D lip
     private let badgeSize: CGFloat = 60
     private let buttonWidth: CGFloat = 120
     private let buttonHeight: CGFloat = 36
@@ -95,10 +52,37 @@ struct EpisodeCard: View {
     private let borderWidth: CGFloat = 4
 
     @State private var buttonPressed = false
+    @State private var pulse = false   // "next episode" spotlight animation
 
     var body: some View {
+        ZStack(alignment: .bottom) {
+            // NEW — base layer, gives the whole card the same tactile lip as buttons
+            RoundedRectangle(cornerRadius: 24)
+                .fill(status.cardEdge)
+                .frame(width: cardWidth, height: cardHeight)
+
+            cardFace
+                .offset(y: -cardPressDepth)
+        }
+        .frame(width: cardWidth, height: cardHeight + cardPressDepth)
+        .saturation(status == .locked ? 0 : 1)   // CHANGED — true desaturation, not just opacity
+        .opacity(status == .locked ? 0.75 : 1.0)
+        .overlay(alignment: .topTrailing) {
+            if status == .begin {
+                nextBadge
+            }
+        }
+        .onAppear {
+            if status == .begin {
+                withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) {
+                    pulse = true
+                }
+            }
+        }
+    }
+
+    private var cardFace: some View {
         VStack(spacing: 0) {
-            // Flat badge circle — NOT clickable
             ZStack {
                 Circle()
                     .fill(status.badgeColor)
@@ -113,7 +97,6 @@ struct EpisodeCard: View {
 
             Spacer()
 
-            // Title
             Text(title)
                 .font(.custom("Baloo 2", size: 14))
                 .fontWeight(.heavy)
@@ -121,13 +104,11 @@ struct EpisodeCard: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
 
-            // Star rating
             StarRating(filled: stars)
                 .padding(.top, 8)
 
             Spacer()
 
-            // 3D status button
             statusButtonView
                 .padding(.bottom, 16)
         }
@@ -138,12 +119,23 @@ struct EpisodeCard: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 24)
-                .stroke(status.borderColor, lineWidth: borderWidth)
+                .stroke(status.borderColor, lineWidth: status == .begin ? borderWidth + 1 : borderWidth)
         )
-        .opacity(status == .locked ? 0.6 : 1.0)
     }
 
-    // 3D capsule button — the only clickable element
+    // NEW — a small sticker-style badge that marks the next playable episode,
+    // so a child scanning the row doesn't have to read text to know where to tap.
+    private var nextBadge: some View {
+        Image(systemName: "star.fill")
+            .font(.system(size: 16, weight: .bold))
+            .foregroundColor(.white)
+            .padding(8)
+            .background(Circle().fill(Color(red: 1.0, green: 0.48, blue: 0.33)))
+            .overlay(Circle().stroke(Color.white, lineWidth: 2))
+            .scaleEffect(pulse ? 1.12 : 0.95)
+            .offset(x: 8, y: -8 - cardPressDepth)
+    }
+
     private var statusButtonView: some View {
         ZStack(alignment: .bottom) {
             Capsule()
@@ -188,7 +180,7 @@ struct EpisodeCard: View {
         Color(red: 0.11, green: 0.44, blue: 0.62)
             .ignoresSafeArea()
 
-        HStack(spacing: 20) {
+        HStack(spacing: 24) {
             EpisodeCard(episodeNumber: "1", title: "CLEAN UP THE\nSEASHORE", status: .begin, stars: 2)
             EpisodeCard(episodeNumber: "2", title: "SAVE THE\nTURTLES", status: .completed, stars: 2)
             EpisodeCard(episodeNumber: "3", title: "LOST LITTLE\nFISH", status: .locked, stars: 0)

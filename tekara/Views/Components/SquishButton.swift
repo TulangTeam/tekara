@@ -7,12 +7,44 @@
 
 import SwiftUI
 
-struct SquishButton: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+struct SquishCapsuleButton: View {
+    let text: String
+    let top: Color
+    let edge: Color
+    var horizontalPadding: CGFloat = 30
+    var audioManager: AudioManager?
+    let action: () -> Void
 
-#Preview {
-    SquishButton()
+    @State private var isPressed = false
+    private let pressDepth: CGFloat = 5
+
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            Capsule()
+                .fill(edge)
+
+            Capsule()
+                .fill(top)
+                .overlay(Capsule().stroke(Color.white, lineWidth: 3))
+                .overlay(
+                    Text(text)
+                        .font(.custom("Baloo 2", size: 18).bold())
+                        .foregroundColor(.white)
+                )
+                .padding(.bottom, pressDepth)
+                .offset(y: isPressed ? pressDepth : 0)
+        }
+        .padding(.horizontal, horizontalPadding)
+        .padding(.vertical, 12)
+        .fixedSize()
+        .contentShape(Rectangle())
+        .onTapGesture {
+            audioManager?.playSFX(named: "bubblesound.mp3")
+            withAnimation(.easeOut(duration: 0.06)) { isPressed = true }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+                withAnimation(.easeOut(duration: 0.08)) { isPressed = false }
+                action()
+            }
+        }
+    }
 }
