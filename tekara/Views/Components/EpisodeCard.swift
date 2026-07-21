@@ -12,7 +12,7 @@ struct EpisodeCard: View {
     var title: String = "CLEAN UP THE\nSEASHORE"
     var status: EpisodeStatus = .begin
     var episodeId: Int = 1
-    var stars: Int = 0
+    var muralImage: String? = nil
     var onTap: (() -> Void)? = nil
     var audioManager: AudioManager? = nil
 
@@ -21,12 +21,14 @@ struct EpisodeCard: View {
 
     private let cardWidth: CGFloat = 160
     private let cardHeight: CGFloat = 340
-    private let cardPressDepth: CGFloat = 6   // card-level 3D lip
+    private let cardPressDepth: CGFloat = 6
     private let badgeSize: CGFloat = 60
     private let buttonWidth: CGFloat = 120
     private let buttonHeight: CGFloat = 36
     private let buttonPressDepth: CGFloat = 4
     private let borderWidth: CGFloat = 4
+    private let muralWidth: CGFloat = 120
+    private let muralHeight: CGFloat = 80
 
     @State private var buttonPressed = false
     @State private var pulse = false   // "next episode" spotlight animation
@@ -74,15 +76,20 @@ struct EpisodeCard: View {
 
             Spacer()
 
+            if let muralImage {
+                Image(muralImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: muralWidth, height: muralHeight)
+            }
+            
             Text(title)
                 .font(.custom("Baloo 2", size: 14))
                 .fontWeight(.heavy)
                 .foregroundColor(themeBlue)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 10)
-
-            StarRating(filled: stars)
-                .padding(.top, 8)
+                .offset(y: 20)
 
             Spacer()
 
@@ -158,9 +165,9 @@ struct EpisodeCard: View {
             .ignoresSafeArea()
 
         HStack(spacing: 24) {
-            EpisodeCard(episodeNumber: "1", title: "CLEAN UP THE\nSEASHORE", status: .begin, stars: 2)
-            EpisodeCard(episodeNumber: "2", title: "SAVE THE\nTURTLES", status: .completed, stars: 2)
-            EpisodeCard(episodeNumber: "3", title: "LOST LITTLE\nFISH", status: .locked, stars: 0)
+            EpisodeCard(episodeNumber: "1", title: "CLEAN UP THE\nSEASHORE", status: .begin, muralImage: "clean")
+            EpisodeCard(episodeNumber: "2", title: "SAVE THE\nTURTLES", status: .completed, muralImage: "saveturtle")
+            EpisodeCard(episodeNumber: "3", title: "LOST LITTLE\nFISH", status: .locked, muralImage: "lostfish")
         }
     }
 }

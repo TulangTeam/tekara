@@ -13,13 +13,13 @@ struct EpisodeListView: View {
 
     @State private var cardScales: [CGFloat] = Array(repeating: 0, count: 6)
 
-    private let episodes: [(number: String, title: String, status: EpisodeStatus)] = [
-        ("1", "CLEAN UP THE\nSEASHORE", .begin),
-        ("2", "SAVE THE\nTURTLES", .locked),
-        ("3", "LOST LITTLE\nFISH", .locked),
-        ("4", "SAVE THE\nCORAL", .locked),
-        ("5", "WELCOME\nHOME", .locked),
-        ("6", "BE THE\nOCEAN HERO!", .locked),
+    private let episodes: [(number: String, title: String, status: EpisodeStatus, muralImage: String)] = [
+        ("1", "CLEAN UP THE\nSEASHORE", .begin, "clean"),
+        ("2", "SAVE THE\nTURTLES", .locked, "saveturtle"),
+        ("3", "LOST LITTLE\nFISH", .locked, "lostfish"),
+        ("4", "SAVE THE\nCORAL", .locked, "savecoral"),
+        ("5", "WELCOME\nHOME", .locked, "welcomehome"),
+        ("6", "BE THE\nOCEAN HERO!", .locked, "behero"),
     ]
 
     var body: some View {
@@ -30,6 +30,7 @@ struct EpisodeListView: View {
                     title: episode.title,
                     status: episode.status,
                     episodeId: index + 1,
+                    muralImage: episode.muralImage,
                     onTap: { onEpisodeSelected?(index + 1) },
                     audioManager: audioManager
                 )
