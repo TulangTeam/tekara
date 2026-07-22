@@ -16,6 +16,7 @@ struct StoryScreenView: View {
     @State private var textOpacity: Double = 0
     @State private var contentScale: CGFloat = 0
     @State private var bgOpacity: Double = 0
+    @State private var isTransitioning: Bool = false
 
     private var totalDialogues: Int {
         content.stages.reduce(0) { $0 + $1.dialogues.count }
@@ -179,8 +180,10 @@ struct StoryScreenView: View {
     }
 
     private func nextDialogue() {
+        guard !isTransitioning else { return }
         guard dialogueIndex < totalDialogues - 1 else { return }
 
+        isTransitioning = true
         withAnimation(.easeOut(duration: 0.2)) {
             textOpacity = 0
         }
@@ -190,12 +193,17 @@ struct StoryScreenView: View {
             withAnimation(.easeIn(duration: 0.3)) {
                 textOpacity = 1
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                isTransitioning = false
+            }
         }
     }
 
     private func previousDialogue() {
+        guard !isTransitioning else { return }
         guard dialogueIndex > 0 else { return }
 
+        isTransitioning = true
         withAnimation(.easeOut(duration: 0.2)) {
             textOpacity = 0
         }
@@ -204,6 +212,9 @@ struct StoryScreenView: View {
             dialogueIndex -= 1
             withAnimation(.easeIn(duration: 0.3)) {
                 textOpacity = 1
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                isTransitioning = false
             }
         }
     }

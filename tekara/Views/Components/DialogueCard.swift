@@ -82,8 +82,6 @@ struct DialogueCard: View {
         VStack(alignment: .leading, spacing: 0) {
             // CHANGED — pill removed, avatar + ring now do the identification work.
             // Dialogue sits vertically centered against the avatar instead of stacked below a tag.
-            // The upper area is the tap-to-advance region; the button row below it is
-            // a sibling so button taps don't accidentally trigger the card tap.
             HStack(alignment: .center, spacing: 16) {
                 avatarView
 
@@ -95,10 +93,6 @@ struct DialogueCard: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.vertical, 8)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                onCardTapped?()
-            }
 
             HStack {
                 if onBackTapped != nil {
@@ -130,6 +124,11 @@ struct DialogueCard: View {
         .background(
             RoundedRectangle(cornerRadius: 24)
                 .fill(cardBackground)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    audioManager?.playSFX(named: "bubblesound.mp3")
+                    onCardTapped?()
+                }
         )
         .overlay(
             RoundedRectangle(cornerRadius: 24)
