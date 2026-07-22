@@ -10,62 +10,55 @@ import SwiftUI
 struct ChapterView: View {
     @Bindable var viewModel: GameViewModel
     private let audioManager = AudioManager.shared
-    @State private var titleScale: CGFloat = 0
+    @State private var bannerScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Image("bgocean")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .blur(radius: 4)
-                MapSelect(onMapSelected: {
-                    viewModel.navigateTo(.episodes)
-                }, audioManager: audioManager)
-                VStack {
-                    HStack {
-                        BackButton(action: {
-                            viewModel.navigateTo(.welcome)
-                        }, audioManager: audioManager)
-                        Spacer()
-                    }
-                    .padding(.leading, 20)
-                    .padding(.top, 50)
-                    Spacer()
-                }
-                VStack {
-                    Image("chaptertitle")
-                        .scaleEffect(titleScale)
-                    Spacer()
-                }
+        ZStack {
+            Image("bgocean")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+//                .blur(radius: 4)
 
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Image("chapterbubble")
-                            .padding(.bottom, 20)
-                            .offset(y: bubbleOffset)
-                        Spacer()
-                    }
-                }
+            MapSelect(onMapSelected: {
+                viewModel.navigateTo(.episodes)
+            }, audioManager: audioManager)
+                .scaleEffect(0.87, anchor: UnitPoint.center)
 
-                VStack {
+            VStack(spacing: 0) {
+                HStack {
+                    BackButton(action: {
+                        viewModel.navigateTo(.welcome)
+                    }, audioManager: audioManager)
                     Spacer()
-                    HStack {
-                        Spacer()
-                    }
                 }
+                .padding(.leading, 20)
+                .padding(.top, 50)
+
+                SectionTitleBanner(
+                    title: "OCEAN MAP",
+                    leadingDecoration: "coral_red",
+                    trailingDecoration: "coral_purple"
+                )
+                .offset(y: -40)
+                .scaleEffect(bannerScale)
+                .frame(width: 400)
+
+                Spacer()
+
+                Image("chapterbubble")
+                    .padding(.bottom, 30)
+                    .offset(y: bubbleOffset)
 
             }
+            .padding(.horizontal)
         }
         .ignoresSafeArea()
         .onAppear {
             audioManager.playBackgroundMusic(named: "beachtrack.mp3")
             withAnimation(.spring(response: 0.7, dampingFraction: 0.6).delay(0.2)) {
-                titleScale = 1
+                bannerScale = 1
             }
             withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0).delay(0.2)) {
                 bubbleOffset = 0

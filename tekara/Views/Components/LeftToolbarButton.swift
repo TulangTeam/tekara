@@ -12,14 +12,12 @@ struct LeftToolbarButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Image(systemName: iconName)
-                .font(.system(size: 34, weight: .bold))
-                .foregroundColor(.white)
-                .shadow(color: .black.opacity(0.5), radius: 2, x: 1, y: 1)
-                .frame(width: 48, height: 40)
+        IconCircleButton(
+            iconName: iconName,
+            audioManager: nil
+        ) {
+            action()
         }
-        .buttonStyle(ScaleButtonStyle())
     }
 }
 

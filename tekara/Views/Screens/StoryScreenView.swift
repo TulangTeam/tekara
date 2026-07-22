@@ -49,7 +49,7 @@ struct StoryScreenView: View {
     var currentDialogueItem: DialogueItem {
         guard !content.stages.isEmpty,
               !content.stages[0].dialogues.isEmpty else {
-            return DialogueItem(speaker: "", text: "")
+                return DialogueItem(speakerId: "", text: "")
         }
 
         var remaining = dialogueIndex
@@ -116,6 +116,7 @@ struct StoryScreenView: View {
 
                     DialogueCard(
                         title: currentStageName,
+                        speaker: SpeakerRegistry.speaker(for: currentDialogueItem.speakerId),
                         dialogueText: currentDialogueItem.text,
                         buttonText: buttonText,
                         onButtonTapped: {

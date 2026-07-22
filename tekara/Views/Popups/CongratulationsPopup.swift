@@ -35,7 +35,8 @@ struct CongratulationsPopup: View {
             HStack(spacing: 16) {
                 PopupButton(
                     title: "Back to Episodes",
-                    color: PopupStyle.themeRed,
+                    face: PopupStyle.themeRed,
+                    edge: PopupStyle.themeRedEdge,
                     action: onBackToEpisodes
                 )
 

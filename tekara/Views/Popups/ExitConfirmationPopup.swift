@@ -27,12 +27,15 @@ struct ExitConfirmationPopup: View {
                     title: "Keep Playing",
                     action: onStay
                 )
+                .frame(width: 160)
 
                 PopupButton(
                     title: "Leave",
-                    color: PopupStyle.themeRed,
+                    face: PopupStyle.themeRed,
+                    edge: PopupStyle.themeRedEdge,
                     action: onLeave
                 )
+                .frame(width: 160)
             }
         }
     }

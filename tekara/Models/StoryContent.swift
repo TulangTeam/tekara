@@ -8,7 +8,7 @@
 import Foundation
 
 struct DialogueItem {
-    var speaker: String
+    var speakerId: String   // CHANGED — was `speaker: String`, now a key into SpeakerRegistry
     var text: String
 }
 
@@ -33,31 +33,40 @@ private let episode1Content = StoryContent(
             stageName: "Prologue",
             backgroundImage: "prologue1",
             dialogues: [
-                DialogueItem(speaker: "Narrator", text: "One sunny morning, Kai visits the beach, hoping to enjoy the fresh sea breeze and the sound of the waves. But something feels different. Plastic bottles, food wrappers, and old fishing lines are scattered across the sand. Every wave carries more trash toward the ocean. The sand is messy, and the water doesn't look as blue as it should.")
+                DialogueItem(
+                    speakerId: "narrator",
+                    text: "One sunny morning, Kai visits the beach, hoping to enjoy the fresh sea breeze and the sound of the waves. But something feels different. Plastic bottles, food wrappers, and old fishing lines are scattered across the sand. Every wave carries more trash toward the ocean. The sand is messy, and the water doesn't look as blue as it should."
+                )
             ]
         ),
         StoryStage(
             stageName: "Prologue",
             backgroundImage: "prologue2",
             dialogues: [
-                DialogueItem(speaker: "Narrator", text: "Suddenly, a tiny sea turtle named Tori appears. Tori explains that the nearby coral reef is becoming polluted, and many sea creatures are losing their home.")
+                DialogueItem(
+                    speakerId: "narrator",
+                    text: "Suddenly, a tiny sea turtle named Tori appears. Tori explains that the nearby coral reef is becoming polluted, and many sea creatures are losing their home."
+                )
             ]
         ),
         StoryStage(
             stageName: "Story",
-            backgroundImage: "bgocean",
+            backgroundImage: "story1",
             dialogues: [
-                DialogueItem(speaker: "Tori", text: "Tori: Hi! I'm Tori! \u{1F44B}. Our beach used to be clean and beautiful. But now, trash keeps washing into the ocean.")
+                DialogueItem(
+                    speakerId: "tori",
+                    text: "Hi! I'm Tori! \u{1F44B}. Our beach used to be clean and beautiful. But now, trash keeps washing into the ocean."
+                )
             ]
         ),
         StoryStage(
             stageName: "Story",
-            backgroundImage: "bgocean2",
+            backgroundImage: "story2",
             dialogues: [
-                DialogueItem(speaker: "Narrator", text: "A wave pushes trash toward the water."),
-                DialogueItem(speaker: "Kai", text: "Kai: Oh no! It's floating away!"),
-                DialogueItem(speaker: "Tori", text: "Tori: Let's pick it up before the waves carry it into the sea!"),
-                DialogueItem(speaker: "Kai", text: "Kai: Let's do it together!")
+                DialogueItem(speakerId: "narrator", text: "A wave pushes trash toward the water."),
+                DialogueItem(speakerId: "kai", text: "Oh no! It's floating away!"),
+                DialogueItem(speakerId: "tori", text: "Let's pick it up before the waves carry it into the sea!"),
+                DialogueItem(speakerId: "kai", text: "Let's do it together!")
             ]
         )
     ]

@@ -15,13 +15,13 @@ struct EpisodeListView: View {
 
     @State private var cardScales: [CGFloat] = Array(repeating: 0, count: 6)
 
-    private let episodes: [(number: String, title: String, id: Int)] = [
-        ("1", "CLEAN UP THE\nSEASHORE", 1),
-        ("2", "SAVE THE\nTURTLES", 2),
-        ("3", "LOST LITTLE\nFISH", 3),
-        ("4", "SAVE THE\nCORAL", 4),
-        ("5", "WELCOME\nHOME", 5),
-        ("6", "BE THE\nOCEAN HERO!", 6),
+    private let episodes: [(number: String, title: String, status: EpisodeStatus, muralImage: String)] = [
+        ("1", "CLEAN UP THE\nSEASHORE", .begin, "clean"),
+        ("2", "SAVE THE\nTURTLES", .locked, "saveturtle"),
+        ("3", "LOST LITTLE\nFISH", .locked, "lostfish"),
+        ("4", "SAVE THE\nCORAL", .locked, "savecoral"),
+        ("5", "WELCOME\nHOME", .locked, "welcomehome"),
+        ("6", "BE THE\nOCEAN HERO!", .locked, "behero"),
     ]
 
     var body: some View {
@@ -32,9 +32,10 @@ struct EpisodeListView: View {
                 EpisodeCard(
                     episodeNumber: episode.number,
                     title: episode.title,
-                    status: progressManager.episodeStatus(for: episode.id),
-                    episodeId: episode.id,
-                    onTap: { onEpisodeSelected?(episode.id) },
+                    status: episode.status,
+                    episodeId: index + 1,
+                    muralImage: episode.muralImage,
+                    onTap: { onEpisodeSelected?(index + 1) },
                     audioManager: audioManager
                 )
                 .scaleEffect(cardScales[index])
@@ -43,10 +44,7 @@ struct EpisodeListView: View {
         .padding(.horizontal, 40)
         .onAppear {
             for index in episodes.indices {
-                withAnimation(
-                    .spring(response: 0.7, dampingFraction: 0.6)
-                        .delay(0.2 + Double(index) * 0.1)
-                ) {
+                withAnimation(StaggeredAnimation.spring(delay: index)) {
                     cardScales[index] = 1
                 }
             }
