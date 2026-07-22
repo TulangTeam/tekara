@@ -16,6 +16,8 @@ final class GameViewModel {
         self.gameState = gameState
     }
 
+    // MARK: - Navigation
+
     func navigateTo(_ screen: AppScreen) {
         gameState.currentScreen = screen
     }
@@ -35,5 +37,17 @@ final class GameViewModel {
         default:
             break
         }
+    }
+
+    func markEpisodeComplete(episodeId: Int) {
+        gameState.episodeProgress.markCompleted(episodeId: episodeId)
+    }
+
+    func isEpisodeCompleted(episodeId: Int) -> Bool {
+        gameState.episodeProgress.isCompleted(episodeId: episodeId)
+    }
+
+    func episodeStatus(for episodeId: Int) -> EpisodeStatus {
+        gameState.episodeProgress.episodeStatus(for: episodeId)
     }
 }

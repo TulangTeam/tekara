@@ -11,26 +11,30 @@ struct EpisodeListView: View {
     var onEpisodeSelected: ((Int) -> Void)?
     var audioManager: AudioManager? = nil
 
+    private let progressManager = EpisodeProgressManager.shared
+
     @State private var cardScales: [CGFloat] = Array(repeating: 0, count: 6)
 
-    private let episodes: [(number: String, title: String, status: EpisodeStatus)] = [
-        ("1", "CLEAN UP THE\nSEASHORE", .begin),
-        ("2", "SAVE THE\nTURTLES", .locked),
-        ("3", "LOST LITTLE\nFISH", .locked),
-        ("4", "SAVE THE\nCORAL", .locked),
-        ("5", "WELCOME\nHOME", .locked),
-        ("6", "BE THE\nOCEAN HERO!", .locked),
+    private let episodes: [(number: String, title: String, id: Int)] = [
+        ("1", "CLEAN UP THE\nSEASHORE", 1),
+        ("2", "SAVE THE\nTURTLES", 2),
+        ("3", "LOST LITTLE\nFISH", 3),
+        ("4", "SAVE THE\nCORAL", 4),
+        ("5", "WELCOME\nHOME", 5),
+        ("6", "BE THE\nOCEAN HERO!", 6),
     ]
 
     var body: some View {
         HStack(spacing: 20) {
-            ForEach(Array(episodes.enumerated()), id: \.offset) { index, episode in
+            ForEach(Array(episodes.enumerated()), id: \.offset) {
+                index,
+                episode in
                 EpisodeCard(
                     episodeNumber: episode.number,
                     title: episode.title,
-                    status: episode.status,
-                    episodeId: index + 1,
-                    onTap: { onEpisodeSelected?(index + 1) },
+                    status: progressManager.episodeStatus(for: episode.id),
+                    episodeId: episode.id,
+                    onTap: { onEpisodeSelected?(episode.id) },
                     audioManager: audioManager
                 )
                 .scaleEffect(cardScales[index])
@@ -38,7 +42,6 @@ struct EpisodeListView: View {
         }
         .padding(.horizontal, 40)
         .onAppear {
-            // Staggered pop-in, left to right (like MapSelect)
             for index in episodes.indices {
                 withAnimation(
                     .spring(response: 0.7, dampingFraction: 0.6)

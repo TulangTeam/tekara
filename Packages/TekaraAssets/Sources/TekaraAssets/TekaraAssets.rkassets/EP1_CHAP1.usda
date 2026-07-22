@@ -1,0 +1,3941 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (494.100.6)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["SkySphere", "Materials", "Scene"]
+    def Xform "Materials" (
+        active = true
+    )
+    {
+        reorder nameChildren = ["Sand_Material", "Water_Material", "Dome_Material"]
+        float2 ui:nodegraph:node:pos = (20, 20)
+        int ui:nodegraph:node:stackingOrder = 1
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (-0.8656765, 0.34266782, -0.8816371)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "Water_Material"
+        {
+            token outputs:mtlx:surface.connect = </Root/Materials/Water_Material/PBRSurface.outputs:out>
+            token outputs:realitykit:vertex
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+            def Shader "PBRSurface"
+            {
+                uniform token info:id = "ND_realitykit_pbr_surfaceshader"
+                float inputs:ambientOcclusion
+                color3f inputs:baseColor = (0.37979648, 0.853093, 1) (
+                    colorSpace = "srgb_displayp3"
+                )
+                float inputs:clearcoat
+                float inputs:clearcoatRoughness
+                color3f inputs:emissiveColor.connect = None
+                bool inputs:hasPremultipliedAlpha
+                float inputs:metallic
+                float3 inputs:normal.connect = None
+                float inputs:opacity = 0.5
+                float inputs:opacityThreshold
+                float inputs:roughness = 0.05
+                float inputs:specular
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-34.316406, 74.67578)
+                int ui:nodegraph:node:stackingOrder = 159
+            }
+
+            def "Power"
+            {
+            }
+        }
+
+        def Material "Dome_Material"
+        {
+            token cullMode = "back" (
+                allowedTokens = ["unspecified", "none", "front", "back"]
+            )
+            token outputs:mtlx:surface.connect = </Root/Materials/Dome_Material/UnlitSurface.outputs:out>
+            token outputs:realitykit:vertex
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+            def Shader "UnlitSurface"
+            {
+                uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+                color3f inputs:color.connect = </Root/Materials/Dome_Material/Mix.outputs:out>
+                bool inputs:hasPremultipliedAlpha
+                float inputs:opacity
+                float inputs:opacityThreshold
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-13.425682, 115.78425)
+                int ui:nodegraph:node:stackingOrder = 14
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out"]
+            }
+
+            def Shader "Position"
+            {
+                uniform token info:id = "ND_position_vector3"
+                string inputs:space = "world"
+                float3 outputs:out
+                float2 ui:nodegraph:node:pos = (-1034.3715, 120.23895)
+                int ui:nodegraph:node:stackingOrder = 50
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out", "outputs:out"]
+            }
+
+            def Shader "Separate3"
+            {
+                uniform token info:id = "ND_separate3_vector3"
+                float3 inputs:in.connect = </Root/Materials/Dome_Material/Position.outputs:out>
+                float outputs:outx
+                float outputs:outy
+                float outputs:outz
+                float2 ui:nodegraph:node:pos = (-783.2007, 181.1512)
+                int ui:nodegraph:node:stackingOrder = 50
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = []
+            }
+
+            def Shader "Mix"
+            {
+                uniform token info:id = "ND_mix_color3"
+                color3f inputs:bg = (0.7764706, 0.8627451, 0.9098039) (
+                    colorSpace = "lin_srgb"
+                )
+                color3f inputs:fg = (0.68235296, 0.80784315, 0.8745098) (
+                    colorSpace = "lin_srgb"
+                )
+                float inputs:mix.connect = </Root/Materials/Dome_Material/Remap.outputs:out>
+                color3f outputs:out
+                float2 ui:nodegraph:node:pos = (-299.473, 172.16055)
+                int ui:nodegraph:node:stackingOrder = 58
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:out"]
+            }
+
+            def Shader "Remap"
+            {
+                uniform token info:id = "ND_remap_float"
+                float inputs:in.connect = </Root/Materials/Dome_Material/Separate3.outputs:outy>
+                float inputs:inhigh = 8
+                float inputs:inlow
+                float inputs:outhigh
+                float inputs:outlow
+                float outputs:out
+                float2 ui:nodegraph:node:pos = (-592.0635, 68.03581)
+                int ui:nodegraph:node:stackingOrder = 57
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:outhigh", "inputs:outlow", "outputs:out"]
+            }
+        }
+
+        def "Sand_Material" (
+            active = true
+            references = @HoneyMustardMerinoWool.usdz@
+        )
+        {
+        }
+    }
+
+    def Xform "Scene" (
+        active = true
+    )
+    {
+        reorder nameChildren = ["sharprocks", "trash_bottle_1", "trash_bottle", "stonedarkmesh", "lilpalmmesh", "kapalmesh", "main_chara", "bush_group", "palm_group", "seastar", "seastar_1", "seastar_2", "seastar_3", "seastar_4", "shell_1", "shell", "turtlemesh", "trash_soda_1", "boat", "trash_canna", "trash_glass_1", "trash_glass", "trash_soda", "bin_dump", "hut", "wall_titan", "sand_ground", "sand_ground_2", "water"]
+        def Cube "sand_ground" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/Materials/Sand_Material> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (40, 1, 80)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Material "DefaultMaterial"
+            {
+                token outputs:surface.connect = </Root/Scene/sand_ground/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                def Shader "DefaultSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor = (1, 1, 1)
+                    float inputs:roughness = 0.75
+                    token outputs:surface
+                }
+            }
+        }
+
+        def Cube "sand_ground_2" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/Materials/Sand_Material> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            float2 ui:nodegraph:node:pos = (32.86331, 471.47977)
+            int ui:nodegraph:node:stackingOrder = 1
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (40, 1, 60)
+            float3 xformOp:translate = (0, 1, -10)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Material "DefaultMaterial"
+            {
+                token outputs:surface.connect = </Root/Scene/sand_ground_2/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                def Shader "DefaultSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor = (1, 1, 1)
+                    float inputs:roughness = 0.75
+                    token outputs:surface
+                }
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (1, 1, 1)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+        }
+
+        def Cube "water" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Root/Materials/Water_Material> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            double size = 1
+            float2 ui:nodegraph:node:pos = (52.86331, 491.47977)
+            int ui:nodegraph:node:stackingOrder = 2
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (40, 0.8, 20)
+            float3 xformOp:translate = (0, 1, 30)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Material "DefaultMaterial"
+            {
+                token outputs:surface.connect = </Root/Scene/water/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                def Shader "DefaultSurfaceShader"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor = (1, 1, 1)
+                    float inputs:roughness = 0.75
+                    token outputs:surface
+                }
+            }
+        }
+
+        def "hut" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/hutmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-15.17208, 1.991017, -32.381016)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "wall_titan" (
+            active = true
+        )
+        {
+            reorder nameChildren = ["wall_1", "wall_2", "wall_3"]
+            def Xform "wall_1" (
+                active = true
+            )
+            {
+                def "bigstonemesh" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.017752, 0.7657515, 23.654175)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_1" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                    int ui:nodegraph:node:stackingOrder = 1
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.637157, 0.76575285, 15.514567)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_2" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.763523, 0.76575667, 8.109866)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_3" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.748764, 0.7657555, 0.41873455)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_4" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                    int ui:nodegraph:node:stackingOrder = 1
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.377806, 0.7657, -9.614964)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_5" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.61477, 0.76570606, -17.687176)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_6" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.473776, 0.7657063, -25.044693)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_7" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                    int ui:nodegraph:node:stackingOrder = 4
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.459017, 0.7657051, -32.735825)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_8" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                    int ui:nodegraph:node:stackingOrder = 1
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.045347, 0.76571786, 34.52689)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def RealityKitComponent "Collider"
+                {
+                    uint group = 1
+                    uniform token info:id = "RealityKit.Collider"
+                    uint mask = 4294967295
+                    token type = "Default"
+
+                    def RealityKitStruct "Shape"
+                    {
+                        float3 extent = (11, 5.228005, 84.57779)
+                        float height = 5.228005
+                        float radius = 42.288895
+                        token shapeType = "Box"
+
+                        def RealityKitStruct "pose"
+                        {
+                            float3 position = (-22.47179, 3.441902, -0.7580929)
+                        }
+                    }
+                }
+
+                def "bigstonemesh_9" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.04533, -1.6196281, 34.52689)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_10" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                    int ui:nodegraph:node:stackingOrder = 1
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (-22.017735, -1.6195946, 23.654175)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Xform "wall_2" (
+                active = true
+            )
+            {
+                float3 xformOp:translate = (0, 0, -0.3422947)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def "bigstonemesh_9" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.712384, 0, 7.565518e-8)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.7071051, -0.7071084, -2.6748205e-8, 2.6748078e-8)
+                    float3 xformOp:scale = (1.3999997, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (-17.53518, 0.76569724, -39.56421)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_10" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                    int ui:nodegraph:node:stackingOrder = 4
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (-5.0437627, 0.76571834, -41.795723)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_11" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                    int ui:nodegraph:node:stackingOrder = 5
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (5.4528255, 0.76573557, -42.675102)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_12" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                    int ui:nodegraph:node:stackingOrder = 6
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (15.25215, 0.7657357, -42.724434)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def RealityKitComponent "Collider"
+                {
+                    uint group = 1
+                    uniform token info:id = "RealityKit.Collider"
+                    uint mask = 4294967295
+                    token type = "Default"
+
+                    def RealityKitStruct "Shape"
+                    {
+                        float3 extent = (48.310795, 5.228006, 9.5)
+                        token shapeType = "Box"
+
+                        def RealityKitStruct "pose"
+                        {
+                            float3 position = (0.47289848, 3.4418828, -41.62903)
+                        }
+                    }
+                }
+            }
+
+            def Xform "wall_3" (
+                active = true
+            )
+            {
+                float3 xformOp:translate = (0.8781829, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def "bigstonemesh_13" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                    int ui:nodegraph:node:stackingOrder = 1
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (21.314857, 0.7658047, 22.626614)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_14" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.695452, 0.7658061, 14.487007)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_15" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.569086, 0.7658099, 7.082305)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_16" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                    int ui:nodegraph:node:stackingOrder = 4
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.583845, 0.7658087, -0.60882664)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_17" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.954803, 0.7657532, -10.642525)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_18" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.717838, 0.7657593, -18.714737)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_19" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                    int ui:nodegraph:node:stackingOrder = 4
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.858833, 0.7657595, -26.072254)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_20" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                    int ui:nodegraph:node:stackingOrder = 5
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (20.873592, 0.76575834, -33.763382)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_21" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (21.28726, 0.7657711, 33.49933)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def RealityKitComponent "Collider"
+                {
+                    uint group = 1
+                    uniform token info:id = "RealityKit.Collider"
+                    uint mask = 4294967295
+                    token type = "Default"
+
+                    def RealityKitStruct "Shape"
+                    {
+                        float3 extent = (11, 5.228005, 84.57778)
+                        token shapeType = "Box"
+
+                        def RealityKitStruct "pose"
+                        {
+                            float3 position = (20.860819, 3.4419553, -1.7856522)
+                        }
+                    }
+                }
+
+                def "bigstonemesh_22" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                    int ui:nodegraph:node:stackingOrder = 2
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (21.314919, -1.5262918, 22.626614)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_23" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123866, 1.3962636, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.54167473, -0.54167575, 0.45451903, 0.4545199)
+                    float3 xformOp:scale = (1.4000001, 1.4000001, 1.4)
+                    float3 xformOp:translate = (21.287321, -1.5263255, 33.49933)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Xform "wall_4" (
+                active = true
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0, 81.11794)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def "bigstonemesh_9" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.712384, 0, 7.565518e-8)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.7071051, -0.7071084, -2.6748205e-8, 2.6748078e-8)
+                    float3 xformOp:scale = (1.3999997, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (-17.53518, 0.76569724, -39.56421)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_10" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                    int ui:nodegraph:node:stackingOrder = 4
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (-5.0437627, 0.76571834, -41.795723)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_11" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                    int ui:nodegraph:node:stackingOrder = 5
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (5.4528255, 0.76573557, -42.675102)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_12" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                    int ui:nodegraph:node:stackingOrder = 6
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (15.25215, 0.7657357, -42.724434)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def RealityKitComponent "Collider"
+                {
+                    uint group = 1
+                    uniform token info:id = "RealityKit.Collider"
+                    uint mask = 4294967295
+                    token type = "Default"
+
+                    def RealityKitStruct "Shape"
+                    {
+                        float3 extent = (48.310795, 5.228006, 9.5)
+                        token shapeType = "Box"
+
+                        def RealityKitStruct "pose"
+                        {
+                            float3 position = (0.47289848, 3.4418828, -41.62903)
+                        }
+                    }
+                }
+            }
+
+            def Xform "wall_5" (
+                active = true
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, -3.2881413, 81.11794)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def "bigstonemesh_9" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.712384, 0, 7.565518e-8)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                    int ui:nodegraph:node:stackingOrder = 3
+                    quatf xformOp:orient = (0.7071051, -0.7071084, -2.6748205e-8, 2.6748078e-8)
+                    float3 xformOp:scale = (1.3999997, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (-17.53518, 0.76569724, -39.56421)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_10" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                    int ui:nodegraph:node:stackingOrder = 4
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (-5.0437627, 0.76571834, -41.795723)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_11" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                    int ui:nodegraph:node:stackingOrder = 5
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (5.4528255, 0.76573557, -42.675102)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def "bigstonemesh_12" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (4.7123857, 0, 0)
+                    }
+                    references = @Assets/bigstonemesh.usdz@
+                )
+                {
+                    float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                    int ui:nodegraph:node:stackingOrder = 6
+                    quatf xformOp:orient = (0.70710576, -0.7071077, 0, 0)
+                    float3 xformOp:scale = (1.4, 1.3999997, 1.3999997)
+                    float3 xformOp:translate = (15.25215, 0.7657357, -42.724434)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def RealityKitComponent "Collider"
+                {
+                    uint group = 1
+                    uniform token info:id = "RealityKit.Collider"
+                    uint mask = 4294967295
+                    token type = "Default"
+
+                    def RealityKitStruct "Shape"
+                    {
+                        float3 extent = (48.310795, 5.228006, 9.5)
+                        token shapeType = "Box"
+
+                        def RealityKitStruct "pose"
+                        {
+                            float3 position = (0.47289848, 3.4418828, -41.62903)
+                        }
+                    }
+                }
+            }
+        }
+
+        def "bin_dump" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (1.570797, -1.5707963, 0)
+            }
+            references = @Assets/trashbinmesh.usdz@
+        )
+        {
+            reorder nameChildren = ["kapalmesh", "scene", "_materials", "Collider"]
+            quatf xformOp:orient = (-0.49999976, 0.50000024, 0.49999976, 0.50000024)
+            float3 xformOp:scale = (3, 3, 3)
+            float3 xformOp:translate = (14.733782, 1.531533, -3.505317)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.7855315, 0.93583846, 1.2088406)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                        float3 position = (0.010853976, 0.09793691, 0.60442007)
+                    }
+                }
+            }
+        }
+
+        def "trash_glass" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (-0.6981317, 0, 0)
+            }
+            references = @Assets/glassbottlemesh.usdz@
+        )
+        {
+            reorder nameChildren = ["turtlemesh", "scene", "_materials"]
+            quatf xformOp:orient = (0.9396926, -0.34202012, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-1.8745308, 1.2501093, 21.24987)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "trash_soda" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/sodacanmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (4, 4, 4)
+            float3 xformOp:translate = (11.853619, 1.5424178, 21.502865)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "trash_canna" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/cannabismesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.4, 1.4, 1.4)
+            float3 xformOp:translate = (-11.266723, 1.4262056, 20.86907)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "trash_glass_1" (
+            active = true
+            references = @Assets/glassbottlemesh.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+            int ui:nodegraph:node:stackingOrder = 1
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (10.770571, 1.479382, -7.0303783)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "boat" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.712388, 0.6981317, 3.890417e-8)
+            }
+            references = @Assets/kapalmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.66446286, -0.66446316, 0.24184468, 0.2418448)
+            float3 xformOp:scale = (2, 2, 2)
+            float3 xformOp:translate = (-13.037734, 1.3710322, 26.828465)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "turtlemesh" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.712388, 2.4434607, 0)
+            }
+            references = @Assets/turtlemesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.24184471, -0.24184482, 0.6644628, 0.66446316)
+            float3 xformOp:scale = (0.99999994, 0.99999976, 0.9999998)
+            float3 xformOp:translate = (-14.960463, 0.8065041, 23.14919)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "trash_soda_1" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.712389, 3.1415927, 0)
+            }
+            references = @Assets/sodacanmesh.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+            int ui:nodegraph:node:stackingOrder = 1
+            quatf xformOp:orient = (-3.090862e-8, 3.090862e-8, 0.70710677, 0.70710677)
+            float3 xformOp:scale = (4, 4, 4)
+            float3 xformOp:translate = (0.06418696, 1.5423834, 2.88405)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "shell" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/shellsmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-14.981379, 1.5358099, 18.705877)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "seastar" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/redstar.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.6, 1.6, 1.6)
+            float3 xformOp:translate = (9.248543, 1.5152825, 16.001432)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "seastar_1" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/redstar.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+            int ui:nodegraph:node:stackingOrder = 1
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.6, 1.6, 1.6)
+            float3 xformOp:translate = (11.384156, 1.5152721, 4.5394297)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "seastar_2" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/redstar.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+            int ui:nodegraph:node:stackingOrder = 2
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.6, 1.6, 1.6)
+            float3 xformOp:translate = (14.851628, 1.5152816, 19.09399)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "seastar_3" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/redstar.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+            int ui:nodegraph:node:stackingOrder = 3
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.6, 1.6, 1.6)
+            float3 xformOp:translate = (6.9577956, 1.6038879, 9.6372175)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "seastar_4" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/redstar.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+            int ui:nodegraph:node:stackingOrder = 4
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.6, 1.6, 1.6)
+            float3 xformOp:translate = (12.662666, 1.5152736, 13.522924)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "shell_1" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 1.5707963, 0)
+            }
+            references = @Assets/shellsmesh.usdz@
+        )
+        {
+            float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+            int ui:nodegraph:node:stackingOrder = 1
+            quatf xformOp:orient = (0.49999988, -0.5000001, 0.49999988, 0.5000001)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (3.4762077, 1.5026932, 15.263777)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "main_chara" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Chara/main_chara.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (2.4704022, 1.8643397, 2.665095)
+                    float radius = 1.3325475
+                    token shapeType = "Sphere"
+
+                    def RealityKitStruct "pose"
+                    {
+                        float3 position = (-0.05560708, 0.07080704, 1.2674097)
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def Xform "bush_group" (
+            active = true
+        )
+        {
+            reorder nameChildren = ["bushmesh_84", "bushmesh_85", "bushmesh_86", "bushmesh_87", "bushmesh_88", "bushmesh_89", "bushmesh_90", "bushmesh_91", "bushmesh_92", "bushmesh_93", "bushmesh_94", "bushmesh_95", "bushmesh_96", "bushmesh_97", "bushmesh_98", "bushmesh_99", "bushmesh_100", "bushmesh_101", "bushmesh_102", "bushmesh_103", "bushmesh_104", "bushmesh_105", "bushmesh_106", "bushmesh_107", "bushmesh_108", "bushmesh_109", "bushmesh_110", "bushmesh_111", "bushmesh_112", "bushmesh_113", "bushmesh_114", "bushmesh_115", "bushmesh_116", "bushmesh_117", "bushmesh_118", "bushmesh_119", "bushmesh_120", "bushmesh_121", "bushmesh_122", "bushmesh_123", "bushmesh_124", "bushmesh_125", "bushmesh_126", "bushmesh_127", "bushmesh_128", "bushmesh_129", "bushmesh_130", "bushmesh_131", "bushmesh_132", "bushmesh_133", "bushmesh_134", "bushmesh_14", "bushmesh_15", "bushmesh_16", "bushmesh_17", "bushmesh_18", "bushmesh_19", "bushmesh_20", "bushmesh_21", "bushmesh_22", "bushmesh_23", "bushmesh_24", "bushmesh_25", "bushmesh_26", "bushmesh_27", "bushmesh_28", "bushmesh_29", "bushmesh_30", "bushmesh_31", "bushmesh_32", "bushmesh_33", "bushmesh_34", "bushmesh_35", "bushmesh_36", "bushmesh_37", "bushmesh_38", "bushmesh_39", "bushmesh_40", "bushmesh_41", "bushmesh_42", "bushmesh_43", "bushmesh_44", "bushmesh_45", "bushmesh_46", "bushmesh_47", "bushmesh_48", "bushmesh_49", "bushmesh_50", "bushmesh_51", "bushmesh_52", "bushmesh_53", "bushmesh_54", "bushmesh_55", "bushmesh_56", "bushmesh_57", "bushmesh_58", "bushmesh_59", "bushmesh_60", "bushmesh_61", "bushmesh_62", "bushmesh_63", "bushmesh_64", "bushmesh_65", "bushmesh_66", "bushmesh_67", "bushmesh_68", "bushmesh_69", "bushmesh_70", "bushmesh_71", "bushmesh_72", "bushmesh_73", "bushmesh_74", "bushmesh_75", "bushmesh_76", "bushmesh_77", "bushmesh_78", "bushmesh_79", "bushmesh_80", "bushmesh_81", "bushmesh_82", "bushmesh_83", "bushmesh_3", "bushmesh_4", "bushmesh_5", "bushmesh_6", "bushmesh_7", "bushmesh_8", "bushmesh_9", "bushmesh_10", "bushmesh_11", "bushmesh_12", "bushmesh_13", "bushmesh", "bushmesh_1", "bushmesh_2"]
+            def "bushmesh_84" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.965944, 1.4999322, -32.388046)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_85" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.835598, 1.49993, -33.59854)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_86" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.121536, 1.4999305, -34.33099)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_87" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.280291, 1.4999304, -35.233986)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_88" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.923161, 1.4999121, -36.296608)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_89" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.277424, 1.4999344, -30.879004)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_90" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.498838, 1.499934, -30.147789)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_91" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.916615, 1.4999353, -29.057028)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_92" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (279.5918, 252.17578)
+                int ui:nodegraph:node:stackingOrder = 8
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.32409, 1.4999361, -27.84482)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_93" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (299.5918, 272.17578)
+                int ui:nodegraph:node:stackingOrder = 9
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.083633, 1.4999384, -26.619799)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_94" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (319.5918, 292.17578)
+                int ui:nodegraph:node:stackingOrder = 10
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.811485, 1.4999392, -25.595467)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_95" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (339.5918, 312.17578)
+                int ui:nodegraph:node:stackingOrder = 11
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.88636, 1.4999398, -24.474888)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_96" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (359.5918, 332.17578)
+                int ui:nodegraph:node:stackingOrder = 12
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.867004, 1.4999408, -23.276562)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_97" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (379.5918, 352.17578)
+                int ui:nodegraph:node:stackingOrder = 13
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.290934, 1.4999408, -22.275858)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_98" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (399.5918, 372.17578)
+                int ui:nodegraph:node:stackingOrder = 14
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.721727, 1.4999417, -21.207651)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_99" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (419.5918, 392.17578)
+                int ui:nodegraph:node:stackingOrder = 15
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.390242, 1.4999436, -20.027882)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_100" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (439.5918, 412.17578)
+                int ui:nodegraph:node:stackingOrder = 16
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.074732, 1.4999454, -19.282022)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_101" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (459.5918, 432.17578)
+                int ui:nodegraph:node:stackingOrder = 17
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.762838, 1.4999464, -18.416147)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_102" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (479.5918, 452.17578)
+                int ui:nodegraph:node:stackingOrder = 18
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.877731, 1.4999474, -17.193693)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_103" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (499.5918, 472.17578)
+                int ui:nodegraph:node:stackingOrder = 19
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.105742, 1.4999483, -16.174366)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_104" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (519.5918, 492.17578)
+                int ui:nodegraph:node:stackingOrder = 20
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.260462, 1.4999492, -15.342118)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_105" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (539.5918, 512.1758)
+                int ui:nodegraph:node:stackingOrder = 21
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.384195, 1.4999503, -14.338336)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_106" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (559.5918, 532.1758)
+                int ui:nodegraph:node:stackingOrder = 22
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.884712, 1.4999511, -13.322511)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_107" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (579.5918, 552.1758)
+                int ui:nodegraph:node:stackingOrder = 23
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.636492, 1.4999522, -11.968573)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_108" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (599.5918, 572.1758)
+                int ui:nodegraph:node:stackingOrder = 24
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.493557, 1.499954, -11.043703)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_109" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (619.5918, 592.1758)
+                int ui:nodegraph:node:stackingOrder = 25
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.001352, 1.4999548, -10.034423)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_110" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (639.5918, 612.1758)
+                int ui:nodegraph:node:stackingOrder = 26
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.129599, 1.499956, -8.709974)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_111" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (659.5918, 632.1758)
+                int ui:nodegraph:node:stackingOrder = 27
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.415148, 1.4999571, -7.3661027)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_112" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (679.5918, 652.1758)
+                int ui:nodegraph:node:stackingOrder = 28
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (18.722033, 1.499958, -7.0473022)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_113" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (699.5918, 672.1758)
+                int ui:nodegraph:node:stackingOrder = 29
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (18.312672, 1.4999598, -6.073945)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_114" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (719.5918, 692.1758)
+                int ui:nodegraph:node:stackingOrder = 30
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.28654, 1.4999607, -5.5249753)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_115" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (739.5918, 712.1758)
+                int ui:nodegraph:node:stackingOrder = 31
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.412708, 1.4999616, -4.709778)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_116" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (759.5918, 732.1758)
+                int ui:nodegraph:node:stackingOrder = 32
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.282177, 1.4999634, -1.8824253)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_117" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (779.5918, 752.1758)
+                int ui:nodegraph:node:stackingOrder = 33
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.183325, 1.4999647, -0.9788415)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_118" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (799.5918, 772.1758)
+                int ui:nodegraph:node:stackingOrder = 34
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.58334, 1.4999664, 0.14168143)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_119" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (819.5918, 792.1758)
+                int ui:nodegraph:node:stackingOrder = 35
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.87209, 1.4999684, 1.24778)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_120" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (839.5918, 812.1758)
+                int ui:nodegraph:node:stackingOrder = 36
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.766466, 1.4999692, 2.3553998)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_121" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (859.5918, 832.1758)
+                int ui:nodegraph:node:stackingOrder = 37
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.974638, 1.4999702, 3.305369)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_122" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (879.5918, 852.1758)
+                int ui:nodegraph:node:stackingOrder = 38
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.566979, 1.4999712, 4.4221344)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_123" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (899.5918, 872.1758)
+                int ui:nodegraph:node:stackingOrder = 39
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.114875, 1.4999722, 5.5642347)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_124" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (919.5918, 892.1758)
+                int ui:nodegraph:node:stackingOrder = 40
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.979274, 1.4999732, 6.4614587)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_125" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (939.5918, 912.1758)
+                int ui:nodegraph:node:stackingOrder = 41
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.555695, 1.499974, 7.505323)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_126" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (959.5918, 932.1758)
+                int ui:nodegraph:node:stackingOrder = 42
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.623947, 1.4999751, 8.822868)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_127" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (979.5918, 952.1758)
+                int ui:nodegraph:node:stackingOrder = 43
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.569292, 1.4999759, 10.105901)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_128" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (999.5918, 972.1758)
+                int ui:nodegraph:node:stackingOrder = 44
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.030836, 1.4999769, 11.24996)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_129" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (1019.5918, 992.1758)
+                int ui:nodegraph:node:stackingOrder = 45
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.3504925, 1.499977, 12.313875)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_130" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (1039.5918, 1012.1758)
+                int ui:nodegraph:node:stackingOrder = 46
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.7630825, 1.499978, 13.537934)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_131" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (1059.5918, 1032.1758)
+                int ui:nodegraph:node:stackingOrder = 47
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.60736, 1.4999788, 14.608626)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_132" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (1079.5918, 1052.1758)
+                int ui:nodegraph:node:stackingOrder = 48
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.743391, 1.4999806, 15.971809)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_133" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (1099.5918, 1072.1758)
+                int ui:nodegraph:node:stackingOrder = 49
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.73579, 1.4999826, 17.276516)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_134" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (1119.5918, 1092.1758)
+                int ui:nodegraph:node:stackingOrder = 50
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.654821, 1.4999833, 18.524061)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_14" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (14.195087, 1.4999162, -38.12635)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_15" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (15.177138, 1.499922, -38.954567)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_16" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.049097, 1.4999238, -38.803963)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_17" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.8978, 1.499925, -38.359673)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_18" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (16.788218, 1.4999173, -37.38293)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_19" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-10.801526, 1.499921, -38.32997)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_20" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-11.848812, 1.4999158, -38.054276)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_21" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.975237, 1.499912, -25.776579)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_22" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.43201, 1.4999136, -24.695898)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_23" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.412949, 1.4999225, -23.598688)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_24" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.41311, 1.4999226, -16.371473)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_25" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.432173, 1.4999137, -17.468683)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_26" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.975399, 1.4999121, -18.549364)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_27" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.950062, 1.4999226, -7.945491)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_28" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.294643, 1.499914, -9.157163)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_29" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.83787, 1.4999125, -10.2378435)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_30" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.361347, 1.4999086, -13.621226)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_31" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.157494, 1.4999095, -12.538827)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_32" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.289358, 1.499919, -11.299942)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_33" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.612394, 1.4999237, -15.5271435)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_34" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.073498, 1.4999079, -14.558237)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_35" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.432005, 1.4999113, -19.706917)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_36" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.161545, 1.4999104, -20.794783)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_37" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.312572, 1.4999095, -21.797083)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_38" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.459993, 1.4999086, -22.711967)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_39" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.019726, 1.4999229, -6.9361467)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_40" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-16.881294, 1.4999237, -5.808221)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_41" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (279.5918, 252.17578)
+                int ui:nodegraph:node:stackingOrder = 8
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.061453, 1.4999256, -4.772042)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_42" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (299.5918, 272.17578)
+                int ui:nodegraph:node:stackingOrder = 9
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.407108, 1.4999266, -3.7679963)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_43" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (319.5918, 292.17578)
+                int ui:nodegraph:node:stackingOrder = 10
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.693947, 1.4999284, -2.7711494)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_44" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (339.5918, 312.17578)
+                int ui:nodegraph:node:stackingOrder = 11
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.59368, 1.4999295, -1.5906091)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_45" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (359.5918, 332.17578)
+                int ui:nodegraph:node:stackingOrder = 12
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.702965, 1.4999315, -0.5291166)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_46" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (379.5918, 352.17578)
+                int ui:nodegraph:node:stackingOrder = 13
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.45294, 1.49993, 0.29416394)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_47" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (399.5918, 372.17578)
+                int ui:nodegraph:node:stackingOrder = 14
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.61214, 1.4999313, 1.2408051)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_48" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (419.5918, 392.17578)
+                int ui:nodegraph:node:stackingOrder = 15
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.036524, 1.4999323, 2.1220875)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_49" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (439.5918, 412.17578)
+                int ui:nodegraph:node:stackingOrder = 16
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.3416, 1.4999329, 3.22206)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_50" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (459.5918, 432.17578)
+                int ui:nodegraph:node:stackingOrder = 17
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.130184, 1.4999341, 4.430822)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_51" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (479.5918, 452.17578)
+                int ui:nodegraph:node:stackingOrder = 18
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.482985, 1.499935, 5.5989203)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_52" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (499.5918, 472.17578)
+                int ui:nodegraph:node:stackingOrder = 19
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.8217, 1.4999362, 6.7359476)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_53" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (519.5918, 492.17578)
+                int ui:nodegraph:node:stackingOrder = 20
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.157457, 1.4999369, 7.720185)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_54" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (539.5918, 512.1758)
+                int ui:nodegraph:node:stackingOrder = 21
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.560003, 1.4999388, 8.482222)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_55" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (559.5918, 532.1758)
+                int ui:nodegraph:node:stackingOrder = 22
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.510239, 1.4999379, 9.4853)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_56" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (579.5918, 552.1758)
+                int ui:nodegraph:node:stackingOrder = 23
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.694286, 1.4999367, 10.354485)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_57" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (599.5918, 572.1758)
+                int ui:nodegraph:node:stackingOrder = 24
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.40061, 1.499938, 11.609976)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_58" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (619.5918, 592.1758)
+                int ui:nodegraph:node:stackingOrder = 25
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.30937, 1.4999388, 12.760336)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_59" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (639.5918, 612.1758)
+                int ui:nodegraph:node:stackingOrder = 26
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.45879, 1.4999387, 13.882174)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_60" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (659.5918, 632.1758)
+                int ui:nodegraph:node:stackingOrder = 27
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.982595, 1.4999388, 15.022541)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_61" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (679.5918, 652.1758)
+                int ui:nodegraph:node:stackingOrder = 28
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-18.489761, 1.4999398, 16.015867)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_62" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (699.5918, 672.1758)
+                int ui:nodegraph:node:stackingOrder = 29
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.978912, 1.4999415, 17.053951)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_63" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (719.5918, 692.1758)
+                int ui:nodegraph:node:stackingOrder = 30
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.372072, 1.4999427, 18.00415)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_64" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (739.5918, 712.1758)
+                int ui:nodegraph:node:stackingOrder = 31
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.251081, 1.4999439, 19.254044)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_65" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.341738, 1.4999113, -26.761162)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_66" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.228243, 1.4999106, -27.969816)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_67" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.180655, 1.4999096, -29.157316)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_68" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-17.480873, 1.4999087, -30.23591)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_69" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-12.041507, 1.4999173, -36.599)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_70" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-12.836567, 1.499918, -35.70754)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_71" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (4.153427, 1.4999375, -37.52486)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_72" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (3.1864986, 1.4999363, -36.993134)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_73" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (2.0942605, 1.4999362, -36.821003)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_74" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (0.9486203, 1.4999353, -37.223118)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_75" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-6.250672, 1.4999181, -36.804913)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_76" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-7.335094, 1.499918, -36.15548)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_77" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-8.504938, 1.4999181, -36.077766)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_78" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-9.625075, 1.49992, -36.23052)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_79" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-10.424401, 1.4999219, -37.022827)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_80" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (10.129099, 1.4999344, -37.34126)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_81" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (11.213218, 1.4999346, -36.907562)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_82" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (12.3171625, 1.4999342, -36.997353)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_83" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (13.311481, 1.4999342, -37.212227)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_3" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (9.475529, 1.4999338, -38.24285)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_4" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (8.475708, 1.4999366, -38.237354)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_5" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (7.5215054, 1.4999325, -38.343266)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_6" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-0.19851196, 1.4999061, -37.977253)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_7" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-1.241407, 1.4999245, -37.388317)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_8" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-2.3287098, 1.4999235, -37.3403)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_9" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-5.4992104, 1.4999167, -37.903286)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_10" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-3.3523917, 1.4999319, -37.481182)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_11" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (-4.3859615, 1.4999238, -37.918316)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_12" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (18.775675, 1.4999348, -38.583214)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_13" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (17.737162, 1.499934, -38.463238)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (4.8944736, 1.4999366, -38.607468)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_1" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (6.6147156, 1.4999378, -38.614647)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "bushmesh_2" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.712388, 0, 0)
+                }
+                references = @Assets/bushmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710653, -0.70710695, 0, 0)
+                float3 xformOp:scale = (1.9999998, 1.9999996, 1.9999996)
+                float3 xformOp:translate = (5.729638, 1.4999421, -39.011982)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+        }
+
+        def Xform "palm_group" (
+            active = true
+        )
+        {
+            def "palmmesh_2" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (14.281004, 0.000004671514, -38.742424)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_3" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-11.098347, 0.000004157424, -39.00438)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_4" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.193998, 0.00000500679, -24.413073)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_5" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.19416, 0.0000051110983, -17.185858)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_6" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.056631, 0.0000054240227, -8.874337)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_3" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.19484, 0.000007778406, -3.5103216)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_7" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.347727, 0.71132576, 1.118693)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_4" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.492384, 0.000008866191, 8.520036)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_5" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-18.552494, 0.17378664, 16.00038)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (9.7743225, 0.0000015869737, -38.475163)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_1" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-0.2725649, 0.0000032484531, -38.742424)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_1" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-4.636327, 0.000003322959, -38.361324)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_2" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (18.438696, -0.78511953, -38.475163)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (5.720038, 0.0000032484531, -38.742424)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_6" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (17.358515, 0.0000068843365, -30.575794)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_8" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (16.5747, 0.000004982576, -34.028812)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_9" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (159.5918, 132.17578)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (17.071718, -0.5177417, -24.299831)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_10" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (179.5918, 152.17578)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (16.574924, 0.0000071302056, -17.63283)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_11" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (16.764942, 0.69503856, -14.855803)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_12" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (18.04145, 1.1822358, -6.3606477)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_13" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (219.5918, 192.17578)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (17.198822, -0.042420864, -9.919309)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_14" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (239.5918, 212.17578)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (16.606441, 0.6950357, -0.4806452)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_15" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (259.5918, 232.17578)
+                int ui:nodegraph:node:stackingOrder = 7
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (16.606745, -0.18236083, 2.676783)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "leftpalmmesh_16" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/leftpalmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (279.5918, 252.17578)
+                int ui:nodegraph:node:stackingOrder = 8
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (16.607176, 0.9392429, 6.9184823)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_7" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-17.066961, -0.81365746, 12.730231)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "palmmesh_8" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/palmmesh.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (199.5918, 172.17578)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-17.536295, -1.0122073, 5.154201)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+        }
+
+        def "kapalmesh" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (1.5707959, 1.0471977, -5.9604645e-8)
+            }
+            references = @Assets/kapalmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.6123726, 0.6123723, 0.35355347, -0.35355332)
+            float3 xformOp:scale = (2, 2, 2)
+            float3 xformOp:translate = (8.263675, 2.455212, 13.204316)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (4.15, 2.3049443, 1.4)
+                    float height = 2.3049443
+                    float radius = 1.8
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                        float3 position = (0.4124393, -0.22687781, 0.8359653)
+                    }
+                }
+            }
+        }
+
+        def "lilpalmmesh" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/lilpalmmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (16.655273, 1.588177, 10.001459)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "stonedarkmesh" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 4.712389, 0)
+            }
+            references = @Assets/stonedarkmesh.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.49999994, 0.50000006, -0.49999994, 0.5000001)
+            float3 xformOp:scale = (1.4, 1.4, 1.4)
+            float3 xformOp:translate = (8.739947, 2.235668, 8.88908)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "sharprocks" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (4.7123885, 0, 0)
+            }
+            references = @Assets/sharprocks.usdz@
+        )
+        {
+            quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
+            float3 xformOp:scale = (1.4, 1.4, 1.4)
+            float3 xformOp:translate = (11.467545, 1.536663, 10.114616)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def "SkySphere" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            float3 rotationEulerHint = (-0.37240416, 0, 0)
+        }
+        references = @SkySphere.usdz@
+    )
+    {
+        rel material:binding = </Root/Materials/Dome_Material> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        quatf xformOp:orient = (0.9827144, -0.18512796, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+    }
+
+    def Xform "DirectionalLight" (
+        customData = {
+            float3 rotationEulerHint = (-1.0471973, 13.962634, 8.581243e-7)
+        }
+    )
+    {
+        float2 ui:nodegraph:node:pos = (139.5918, 112.17578)
+        int ui:nodegraph:node:stackingOrder = 1
+        quatf xformOp:orient = (0.6634138, -0.38302228, 0.55667037, 0.32139403)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (39.573833, 41.76162, -3.084087)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "DirectionalLight"
+        {
+            float3 color = (0.9318678, 1, 0.4454458)
+            token info:id = "RealityKit.DirectionalLight"
+            float intensity = 4000
+
+            def RealityKitStruct "Shadow"
+            {
+                token cullMode = "Default"
+                float depthBias = 0.4
+                bool isEnabled = 1
+                float maximumDistance = 500
+            }
+        }
+    }
+}
+

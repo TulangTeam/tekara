@@ -1,5 +1,5 @@
 //
-//  MovementConfiguration.swift
+//  CharacterMovementConfiguration.swift
 //  tekara
 //
 //  Created by Shandika David Ardiansyah on 19/07/26.
@@ -14,18 +14,12 @@ public class CharacterMovementConfiguration: RealityKit.System {
             && .has(CharacterGroundingComponent.self)
     )
 
-    private enum Distance {
-        static let trashRadius: Float = 0.8
-        static let bigHutRadius: Float = 0.8
-        static let binRadius: Float = 1.2
-        static let hutRadius: Float = 0.6
+    private enum Config {
         static let wallBuffer: Float = 0.15
         static let raycastHeight: Float = 2.0
         static let raycastLength: Float = 5.0
         static let groundingBaseAngle: Float = 270.0
     }
-
-    public static var interactionManager: TrashInteractionManager?
 
     required public init(scene: RealityKit.Scene) {}
 
@@ -41,92 +35,43 @@ public class CharacterMovementConfiguration: RealityKit.System {
             else { return }
 
             let joystick = inputComp.joystickValue
-            let kaiWorldPos = kai.position(relativeTo: nil)
 
-            if let camera = cameraAnchor {
-                camera.transform.translation = kaiWorldPos
-            }
-
-            if let manager = Self.interactionManager {
-                var closestTrash: Entity? = nil
-                var nearDeposit = false
-                var nearHut = false
-                var trashCount = 0
-
-                if let island = kai.parent {
-                    for entity in island.children {
-                        let entityPos = entity.position(relativeTo: nil)
-                        let distance = simd_distance(kaiWorldPos, entityPos)
-
-                        if entity.name.lowercased().contains("trash") {
-                            trashCount += 1
-                            if distance < Distance.trashRadius {
-                                closestTrash = entity
-                            }
-                        }
-
-                        if entity.name.lowercased().contains("big_hut") {
-                            if distance < Distance.bigHutRadius {
-                                nearHut = true
-                            }
-                        }
-                    }
-                }
-
-                if let rootEntity = kai.anchor ?? cameraAnchor?.parent {
-                    if let hutEntity = rootEntity.findEntity(named: "bin") {
-                        let hutPos = hutEntity.position(relativeTo: nil)
-                        let distanceToHut = simd_distance(kaiWorldPos, hutPos)
-
-                        if distanceToHut < Distance.binRadius {
-                            nearDeposit = true
-                        }
-                    }
-                }
-
-                if !nearHut {
-                    if let rootEntity = kai.anchor ?? cameraAnchor?.parent {
-                        if let hutEntity = rootEntity.findEntity(named: "hut") {
-                            let hutPos = hutEntity.position(relativeTo: nil)
-                            let distanceToHut = simd_distance(
-                                kaiWorldPos,
-                                hutPos
-                            )
-                            if distanceToHut < Distance.hutRadius {
-                                nearHut = true
-                            }
-                        }
-                    }
-                }
-
-                // ponytail: debounce main-thread writes to state changes only
-                let totalTrashCount = trashCount + manager.collectedTrashCount
-                let didChange = closestTrash !== manager.nearbyTrashEntity
-                    || manager.isNearDepositZone != nearDeposit
-                    || manager.isNearHut != nearHut
-                    || manager.totalTrashCount != totalTrashCount
-
-                if didChange {
-                    Task { @MainActor in
-                        manager.nearbyTrashEntity = closestTrash
-                        manager.isNearDepositZone = nearDeposit
-                        manager.isNearHut = nearHut
-                        manager.totalTrashCount = totalTrashCount
-                    }
-                }
-            }
-
-            // Controlling Analog and Collision Detection
             if joystick != .zero {
                 let inputX = joystick.x
                 let inputZ = joystick.y
 
-                let isometricAngleY: Float = 45.0
-                let radiansY = isometricAngleY * (.pi / 180.0)
-                let forwardX = sin(radiansY)
-                let forwardZ = cos(radiansY)
-                let rightX = cos(radiansY)
-                let rightZ = -sin(radiansY)
+                // Extract Forward & Right vectors from camera transform matrix
+                var forwardX: Float = 0
+                var forwardZ: Float = 1
+                var rightX: Float = 1
+                var rightZ: Float = 0
+
+                if let camera = cameraAnchor {
+                    let matrix = camera.transform.matrix
+
+                    let camRight = SIMD3<Float>(
+                        matrix.columns.0.x,
+                        0,
+                        matrix.columns.0.z
+                    )
+                    let camForward = SIMD3<Float>(
+                        matrix.columns.2.x,
+                        0,
+                        matrix.columns.2.z
+                    )
+
+                    if simd_length(camRight) > 0.001,
+                        simd_length(camForward) > 0.001
+                    {
+                        let normRight = simd_normalize(camRight)
+                        let normForward = simd_normalize(camForward)
+
+                        rightX = normRight.x
+                        rightZ = normRight.z
+                        forwardX = normForward.x
+                        forwardZ = normForward.z
+                    }
+                }
 
                 let moveDirectionX = (rightX * inputX) + (forwardX * inputZ)
                 let moveDirectionZ = (rightZ * inputX) + (forwardZ * inputZ)
@@ -145,22 +90,22 @@ public class CharacterMovementConfiguration: RealityKit.System {
                     kai.parent?.convert(position: targetLocalPos, to: nil)
                     ?? targetLocalPos
 
-                // RAYCAST A: Cek If any ground
+                // RAYCAST A: Ground detection
                 let groundRayOrigin = SIMD3<Float>(
                     targetWorldPos.x,
-                    targetWorldPos.y + Distance.raycastHeight,
+                    targetWorldPos.y + Config.raycastHeight,
                     targetWorldPos.z
                 )
                 let groundHits = scene.raycast(
                     origin: groundRayOrigin,
                     direction: SIMD3<Float>(0, -1, 0),
-                    length: Distance.raycastLength
+                    length: Config.raycastLength
                 )
                 let isOnSand = groundHits.contains(where: {
-                    $0.entity.name == "sand_layer2"
+                    $0.entity.name == "sand_ground_2"
                 })
 
-                // RAYCAST B: Cek if any wall collisions
+                // RAYCAST B: Wall/obstacle collision
                 let currentWorldPos = kai.position(relativeTo: nil)
                 let wallRayOrigin = SIMD3<Float>(
                     currentWorldPos.x,
@@ -173,7 +118,7 @@ public class CharacterMovementConfiguration: RealityKit.System {
                 var hitsObstacle = false
                 if distance > 0.001 {
                     let wallRayDirection = simd_normalize(targetDirection)
-                    let wallRayLength = distance + Distance.wallBuffer
+                    let wallRayLength = distance + Config.wallBuffer
 
                     let wallHits = scene.raycast(
                         origin: wallRayOrigin,
@@ -182,7 +127,7 @@ public class CharacterMovementConfiguration: RealityKit.System {
                     )
                     hitsObstacle = wallHits.contains { hit in
                         let isNotKai = hit.entity != kai
-                        let isNotSand = hit.entity.name != "sand_layer2"
+                        let isNotSand = hit.entity.name != "sand_ground_2"
                         let hasCollision = hit.entity.components.has(
                             CollisionComponent.self
                         )
@@ -190,6 +135,7 @@ public class CharacterMovementConfiguration: RealityKit.System {
                     }
                 }
 
+                // Apply movement if valid
                 if isOnSand && !hitsObstacle {
                     kai.position.x = targetLocalX
                     kai.position.z = targetLocalZ
@@ -203,12 +149,13 @@ public class CharacterMovementConfiguration: RealityKit.System {
                     }
                 }
 
+                // Rotate character to face movement direction
                 let angle = atan2(moveDirectionX, moveDirectionZ)
                 let movementRotation = simd_quatf(
                     angle: angle,
                     axis: SIMD3<Float>(0, 1, 0)
                 )
-                let baseAngleX = Distance.groundingBaseAngle * (Float.pi / 180.0)
+                let baseAngleX = Config.groundingBaseAngle * (Float.pi / 180.0)
                 let baseFixRotation = simd_quatf(
                     angle: baseAngleX,
                     axis: SIMD3<Float>(1, 0, 0)
@@ -223,21 +170,20 @@ public class CharacterMovementConfiguration: RealityKit.System {
                 }
             }
 
-            // BACKGROUND GROUNDING SYSTEM
             let worldPos = kai.position(relativeTo: nil)
             let currentGroundRayOrigin = SIMD3<Float>(
                 worldPos.x,
-                worldPos.y + Distance.raycastHeight,
+                worldPos.y + Config.raycastHeight,
                 worldPos.z
             )
             let hits = scene.raycast(
                 origin: currentGroundRayOrigin,
                 direction: SIMD3<Float>(0, -1, 0),
-                length: Distance.raycastLength
+                length: Config.raycastLength
             )
 
             if let sandHit = hits.first(where: {
-                $0.entity.name == "sand_layer2"
+                $0.entity.name == "sand_ground_2"
             }) {
                 let localHitPos =
                     kai.parent?.convert(position: sandHit.position, from: nil)

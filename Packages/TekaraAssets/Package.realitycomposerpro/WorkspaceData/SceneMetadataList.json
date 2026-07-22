@@ -14,20 +14,8 @@
   "29CE4316-3263-449E-922C-FD471FCE2895" : {
     "objectMetadataList" : [
       [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "Island",
-        "kaimove",
-        "KAI_Armature"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "SkyDome"
+        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
+        "Root"
       ],
       {
         "disallowsFraming" : true,
@@ -37,7 +25,29 @@
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root",
-        "Island"
+        "Island",
+        "Materials",
+        "Dome_Shader"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Timeline",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Island",
+        "big_hut"
       ],
       {
         "isExpanded" : true,
@@ -55,19 +65,11 @@
       },
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root"
+        "Root",
+        "Island"
       ],
       {
         "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "5F00B1BF-0CB8-4F5E-8F87-0DC439CD8C1A",
-        "Root"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
         "isLocked" : false
       },
       [
@@ -75,36 +77,6 @@
         "Root",
         "Materials",
         "Sand_Shader"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "Island",
-        "Materials",
-        "Dome_Shader"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "Timeline"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "29CE4316-3263-449E-922C-FD471FCE2895",
-        "Root",
-        "Island",
-        "big_hut"
       ],
       {
         "isExpanded" : true,
@@ -123,11 +95,48 @@
       [
         "29CE4316-3263-449E-922C-FD471FCE2895",
         "Root",
-        "Timeline",
-        "Track"
+        "Island",
+        "kaimove",
+        "KAI_Armature"
       ],
       {
         "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "Timeline"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "hutmesh"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "29CE4316-3263-449E-922C-FD471FCE2895",
+        "Root",
+        "SkyDome"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
         "isLocked" : false
       }
     ]
@@ -137,6 +146,118 @@
       [
         "6CF1E4CB-45BF-4F2F-ABCD-78AC26D47EB6",
         "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD" : {
+    "objectMetadataList" : [
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "Scene",
+        "wall_titan",
+        "wall_3"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "Scene",
+        "wall_titan"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "Scene",
+        "wall_titan",
+        "wall_2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "Scene",
+        "palm_group"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "6E3E7A9A-D010-4A86-9303-BE1CA7C58EBD",
+        "Root",
+        "Scene"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "7619CD17-8942-4F24-96DC-F1EFB8C14C91" : {
+    "objectMetadataList" : [
+      [
+        "7619CD17-8942-4F24-96DC-F1EFB8C14C91",
+        "Root",
+        "Island"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7619CD17-8942-4F24-96DC-F1EFB8C14C91",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7619CD17-8942-4F24-96DC-F1EFB8C14C91",
+        "Root",
+        "Materials"
       ],
       {
         "isExpanded" : true,
@@ -160,7 +281,8 @@
     "objectMetadataList" : [
       [
         "9871D513-ED16-43C5-B879-4B8D4672CB87",
-        "Root"
+        "Root",
+        "Water_Shader"
       ],
       {
         "isExpanded" : true,
@@ -168,8 +290,7 @@
       },
       [
         "9871D513-ED16-43C5-B879-4B8D4672CB87",
-        "Root",
-        "Water_Shader"
+        "Root"
       ],
       {
         "isExpanded" : true,
