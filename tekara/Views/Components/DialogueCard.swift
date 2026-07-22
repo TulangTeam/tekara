@@ -14,6 +14,7 @@ struct DialogueCard: View {
     var buttonText: String = "Next"
     var onButtonTapped: () -> Void
     var onBackTapped: (() -> Void)? = nil
+    var onCardTapped: (() -> Void)? = nil
     var audioManager: AudioManager?
 
     private let cardBackground = Color.white
@@ -37,17 +38,17 @@ struct DialogueCard: View {
                 )
                 .padding(.bottom, cardPressDepth)
 
-            Text(title)
-                .font(.custom("Baloo 2", size: 22).bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 60)
-                .padding(.vertical, 12)
-                .background(Capsule().fill(themeBlue))
-                .overlay(
-                    Capsule().stroke(Color.white, lineWidth: 3)
-                )
-                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 3)
-                .offset(y: -24)
+//            Text(title)
+//                .font(.custom("Baloo 2", size: 22).bold())
+//                .foregroundColor(.white)
+//                .padding(.horizontal, 60)
+//                .padding(.vertical, 12)
+//                .background(Capsule().fill(themeBlue))
+//                .overlay(
+//                    Capsule().stroke(Color.white, lineWidth: 3)
+//                )
+//                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 3)
+//                .offset(y: -24)
         }
         .padding(.top, 24)
         .padding(.horizontal, 40)
@@ -79,9 +80,10 @@ struct DialogueCard: View {
 
     private var cardFace: some View {
         VStack(alignment: .leading, spacing: 0) {
-
             // CHANGED — pill removed, avatar + ring now do the identification work.
             // Dialogue sits vertically centered against the avatar instead of stacked below a tag.
+            // The upper area is the tap-to-advance region; the button row below it is
+            // a sibling so button taps don't accidentally trigger the card tap.
             HStack(alignment: .center, spacing: 16) {
                 avatarView
 
@@ -89,6 +91,13 @@ struct DialogueCard: View {
                     .font(.custom("Baloo 2", size: 19).bold())
                     .foregroundColor(textBrown)
                     .lineSpacing(7)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.vertical, 8)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                onCardTapped?()
             }
 
             HStack {

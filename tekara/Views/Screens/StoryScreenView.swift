@@ -17,25 +17,12 @@ struct StoryScreenView: View {
     @State private var contentScale: CGFloat = 0
     @State private var bgOpacity: Double = 0
 
-    var currentStage: StoryStage {
-        content.stages[currentStageIndex]
+    private var totalDialogues: Int {
+        content.stages.reduce(0) { $0 + $1.dialogues.count }
     }
 
-    var isFirstDialogue: Bool {
-        dialogueIndex == 0
-    }
-
-    var isLastDialogue: Bool {
-        let totalDialogues = content.stages.reduce(0) { $0 + $1.dialogues.count }
-        return dialogueIndex == totalDialogues - 1
-    }
-
-    var isLastInStage: Bool {
-        let stage = content.stages[currentStageIndex]
-        return dialogueIndex == stage.dialogues.count - 1 && currentStageIndex == content.stages.count - 1
-    }
-
-    var currentStageIndex: Int {
+    private var safeStageIndex: Int {
+        guard !content.stages.isEmpty else { return 0 }
         var count = 0
         for (index, stage) in content.stages.enumerated() {
             count += stage.dialogues.count
@@ -43,31 +30,63 @@ struct StoryScreenView: View {
                 return index
             }
         }
-        return 0
+        return content.stages.count - 1
+    }
+
+    var currentStage: StoryStage {
+        guard !content.stages.isEmpty else {
+            return StoryStage(stageName: "", backgroundImage: "", dialogues: [])
+        }
+        return content.stages[safeStageIndex]
+    }
+
+    var currentStageIndex: Int {
+        safeStageIndex
     }
 
     var currentDialogueItem: DialogueItem {
-        guard !content.stages.isEmpty,
-              !content.stages[0].dialogues.isEmpty else {
-                return DialogueItem(speakerId: "", text: "")
-        }
+        let total = totalDialogues
+        guard total > 0 else { return DialogueItem(speakerId: "", text: "") }
 
-        var remaining = dialogueIndex
+        // Clamp into range so a stale or out-of-bounds index can't crash.
+        let safeIndex = max(0, min(dialogueIndex, total - 1))
+
+        var remaining = safeIndex
         for stage in content.stages {
             if remaining < stage.dialogues.count {
+                guard !stage.dialogues.isEmpty else {
+                    return DialogueItem(speakerId: "", text: "")
+                }
                 return stage.dialogues[remaining]
             }
             remaining -= stage.dialogues.count
         }
-        return content.stages[0].dialogues[0]
+        // Unreachable given the clamp above, but kept as a defensive fallback.
+        return DialogueItem(speakerId: "", text: "")
     }
 
     var currentStageName: String {
-        content.stages[currentStageIndex].stageName
+        currentStage.stageName
     }
 
     var currentBackgroundImage: String {
-        content.stages[currentStageIndex].backgroundImage
+        currentStage.backgroundImage
+    }
+
+    var isFirstDialogue: Bool {
+        dialogueIndex == 0
+    }
+
+    var isLastDialogue: Bool {
+        let total = totalDialogues
+        guard total > 0 else { return false }
+        return dialogueIndex == total - 1
+    }
+
+    var isLastInStage: Bool {
+        guard !content.stages.isEmpty else { return false }
+        let stage = content.stages[safeStageIndex]
+        return dialogueIndex == stage.dialogues.count - 1 && safeStageIndex == content.stages.count - 1
     }
 
     var buttonText: String {
@@ -125,6 +144,9 @@ struct StoryScreenView: View {
                         onBackTapped: !isFirstDialogue ? {
                             previousDialogue()
                         } : nil,
+                        onCardTapped: {
+                            handleButtonTap()
+                        },
                         audioManager: audioManager
                     )
                     .padding(.bottom,44)
@@ -157,7 +179,6 @@ struct StoryScreenView: View {
     }
 
     private func nextDialogue() {
-        let totalDialogues = content.stages.reduce(0) { $0 + $1.dialogues.count }
         guard dialogueIndex < totalDialogues - 1 else { return }
 
         withAnimation(.easeOut(duration: 0.2)) {
