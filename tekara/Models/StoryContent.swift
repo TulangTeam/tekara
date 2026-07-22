@@ -55,7 +55,7 @@ private let episode1Content = StoryContent(
             dialogues: [
                 DialogueItem(
                     speakerId: "tori",
-                    text: "Hi! I'm Tori! \u{1F44B}. Our beach used to be clean and beautiful. But now, trash keeps washing into the ocean."
+                    text: "Hi! I'm Tori! Our beach used to be clean and beautiful. But now, trash keeps washing into the ocean."
                 )
             ]
         ),
@@ -63,9 +63,27 @@ private let episode1Content = StoryContent(
             stageName: "Story",
             backgroundImage: "story2",
             dialogues: [
-                DialogueItem(speakerId: "narrator", text: "A wave pushes trash toward the water."),
+                DialogueItem(speakerId: "narrator", text: "A wave pushes trash toward the water.")
+            ]
+        ),
+        StoryStage(
+            stageName: "Story",
+            backgroundImage: "story3",
+            dialogues: [
                 DialogueItem(speakerId: "kai", text: "Oh no! It's floating away!"),
-                DialogueItem(speakerId: "tori", text: "Let's pick it up before the waves carry it into the sea!"),
+            ]
+        ),
+        StoryStage(
+            stageName: "Story",
+            backgroundImage: "story4",
+            dialogues: [
+                DialogueItem(speakerId: "tori", text: "Let's pick it up before the waves carry it into the sea!")
+            ]
+        ),
+        StoryStage(
+            stageName: "Story",
+            backgroundImage: "story5",
+            dialogues: [
                 DialogueItem(speakerId: "kai", text: "Let's do it together!")
             ]
         )
@@ -82,7 +100,7 @@ struct StoryData {
     private static let content: [Int: StoryContent] = [
         1: episode1Content
     ]
-
+    
     static func getContent(for episodeId: Int) -> StoryContent {
         content[episodeId] ?? StoryContent(
             episodeId: episodeId,
