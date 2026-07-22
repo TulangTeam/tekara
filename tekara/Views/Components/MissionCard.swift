@@ -29,23 +29,23 @@ struct MissionCard: View {
                     iconName: "trash.fill",
                     iconColor: PopupStyle.themeBlue,
                     text: "Collect \(manager.totalTrashCount) trash\n\(manager.collectedTrashCount)/\(manager.totalTrashCount)",
-                    status: manager.isMissionComplete ? .completed : .inProgress
+                    isCompleted: manager.isMissionComplete
                 )
-                
+
                 // 2. Use Gloves
                 MissionRow(
                     iconName: "hand.raised.fill",
                     iconColor: Color(hex: "F59E0B"),
                     text: "Use hand gloves\nto pick up trash",
-                    status: manager.selectedTool == .gloves ? .completed : .inProgress
+                    isCompleted: manager.selectedTool == .gloves
                 )
-                
+
                 // 3. Dispose to Bin
                 MissionRow(
                     iconName: "arrow.down.to.line.compact",
                     iconColor: PopupStyle.themeGreen,
                     text: "Dispose trash\nin the bin",
-                    status: manager.collectedTrashCount > 0 ? .completed : .inProgress
+                    isCompleted: manager.collectedTrashCount > 0
                 )
 
                 // 4. Avoid Sea Star (Optional)
@@ -53,7 +53,7 @@ struct MissionCard: View {
                     iconName: "star.fill",
                     iconColor: Color(hex: "EC4899"),
                     text: "Avoid picking\nsea star (Optional)",
-                    status: manager.pickedSeaStarCount == 0 ? .completed : .failed
+                    isCompleted: manager.pickedSeaStarCount == 0
                 )
 
                 // 5. Avoid Sea Shell (Optional)
@@ -61,7 +61,7 @@ struct MissionCard: View {
                     iconName: "sparkles",
                     iconColor: Color(hex: "8B5CF6"),
                     text: "Avoid picking\nsea shell (Optional)",
-                    status: manager.pickedShellCount == 0 ? .completed : .failed
+                    isCompleted: manager.pickedShellCount == 0
                 )
             }
             .padding(.horizontal, 14)

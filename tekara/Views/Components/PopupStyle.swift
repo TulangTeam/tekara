@@ -13,6 +13,7 @@ enum PopupStyle {
     static let cardPressDepth: CGFloat = 8
 
     static let themeBlue = Color(red: 0.20, green: 0.44, blue: 0.72)
+    static let themeBlueEdge = Color(red: 0.10, green: 0.27, blue: 0.52)
 
     static let successFace = Color(red: 0.37, green: 0.82, blue: 0.41)
     static let successEdge = Color(red: 0.16, green: 0.55, blue: 0.19)

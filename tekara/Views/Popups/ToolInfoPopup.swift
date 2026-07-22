@@ -37,7 +37,7 @@ struct ToolInfoPopup: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 // Close Action Button
-                PopupButton(title: "Got it!", color: PopupStyle.themeBlue, action: onClose)
+                PopupButton(title: "Got it!", face: PopupStyle.themeBlue, edge: PopupStyle.themeBlueEdge, action: onClose)
                     .padding(.top, 8)
             }
         }

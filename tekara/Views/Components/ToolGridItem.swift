@@ -46,8 +46,8 @@ struct ToolGridItem: View {
 #Preview {
     HStack(spacing: 12) {
         ToolGridItem(tool: .gloves, isSelected: false, action: {})
-        ToolGridItem(tool: .scissors, isSelected: true, action: {})
-        ToolGridItem(tool: .trashBag, isSelected: false, action: {})
+        ToolGridItem(tool: .netScissor, isSelected: true, action: {})
+        ToolGridItem(tool: .coralCleaner, isSelected: false, action: {})
     }
     .padding()
     .background(PopupStyle.cardBackground)

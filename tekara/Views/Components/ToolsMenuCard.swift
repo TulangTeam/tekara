@@ -30,7 +30,7 @@ struct ToolsMenuCard: View {
 
                 VStack(spacing: 8) {
                     ForEach(CleanupTool.allCases) { tool in
-                        ToolGridItem(
+                        ToolMenuRow(
                             tool: tool,
                             isSelected: manager.selectedTool == tool,
                             onSelect: {
@@ -63,7 +63,7 @@ struct ToolsMenuCard: View {
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .strokeBorder(PopupStyle.borderColor, lineWidth: 1.5)
+                    .strokeBorder(PopupStyle.cardEdge, lineWidth: 1.5)
             )
 
             // Tool Info Popup Modal
@@ -82,7 +82,7 @@ struct ToolsMenuCard: View {
     }
 }
 
-private struct ToolGridItem: View {
+private struct ToolMenuRow: View {
     let tool: CleanupTool
     let isSelected: Bool
     let onSelect: () -> Void
