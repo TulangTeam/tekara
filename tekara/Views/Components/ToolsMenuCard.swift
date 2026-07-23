@@ -12,59 +12,23 @@ struct ToolsMenuCard: View {
     @State private var selectedToolForInfo: CleanupTool? = nil
 
     private let cardBackground = PopupStyle.cardBackground
-    private let themeBlue = PopupStyle.themeBlue
+    private let cardEdge = PopupStyle.cardEdge
+    private let pressDepth: CGFloat = 6
 
     var body: some View {
-        ZStack {
-            VStack(spacing: 12) {
-                Text("Tools")
-                    .font(.custom("Baloo 2", size: 18))
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 28)
-                    .padding(.vertical, 6)
-                    .background(
-                        Capsule().fill(themeBlue)
-                    )
-                    .offset(y: -8)
+        ZStack(alignment: .top) {
+            // 3D Base Lip & Face
+            cardFace
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(cardEdge)
+                        .offset(y: pressDepth)
+                )
+                .padding(.bottom, pressDepth)
 
-                VStack(spacing: 8) {
-                    ForEach(CleanupTool.allCases) { tool in
-                        ToolMenuRow(
-                            tool: tool,
-                            isSelected: manager.selectedTool == tool,
-                            onSelect: {
-                                withAnimation(
-                                    .spring(response: 0.35, dampingFraction: 0.7)
-                                ) {
-                                    if manager.selectedTool == tool {
-                                        manager.selectedTool = nil
-                                    } else {
-                                        manager.selectedTool = tool
-                                    }
-                                }
-                            },
-                            onInfoTap: {
-                                withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
-                                    selectedToolForInfo = tool
-                                }
-                            }
-                        )
-                    }
-                }
-                .padding(.horizontal, 10)
-                .padding(.bottom, 12)
-            }
-            .frame(width: 195)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(cardBackground)
-                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .strokeBorder(PopupStyle.cardEdge, lineWidth: 1.5)
-            )
+            // Header Pill matching MissionCard
+            CardHeaderPill(text: "Tools", backgroundColor: PopupStyle.themeBlue)
+                .offset(y: -16)
 
             // Tool Info Popup Modal
             if let infoTool = selectedToolForInfo {
@@ -79,6 +43,45 @@ struct ToolsMenuCard: View {
                 .transition(.opacity)
             }
         }
+    }
+
+    private var cardFace: some View {
+        VStack(spacing: 8) {
+            Spacer().frame(height: 6) // clears the floating header pill
+
+            ForEach(CleanupTool.allCases) { tool in
+                ToolMenuRow(
+                    tool: tool,
+                    isSelected: manager.selectedTool == tool,
+                    onSelect: {
+                        withAnimation(
+                            .spring(response: 0.35, dampingFraction: 0.7)
+                        ) {
+                            if manager.selectedTool == tool {
+                                manager.selectedTool = nil
+                            } else {
+                                manager.selectedTool = tool
+                            }
+                        }
+                    },
+                    onInfoTap: {
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
+                            selectedToolForInfo = tool
+                        }
+                    }
+                )
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.top, 16)
+        .padding(.bottom, 14)
+        .frame(width: 220) // Matched to MissionCard width
+        .background(
+            RoundedRectangle(cornerRadius: 20).fill(cardBackground)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20).stroke(cardEdge, lineWidth: 3)
+        )
     }
 }
 
@@ -98,10 +101,10 @@ private struct ToolMenuRow: View {
                                 isSelected
                                     ? tool.color : Color.white.opacity(0.7)
                             )
-                            .frame(width: 40, height: 40)
+                            .frame(width: 36, height: 36)
 
                         Image(systemName: tool.iconName)
-                            .font(.system(size: 20))
+                            .font(.system(size: 18))
                             .foregroundStyle(
                                 isSelected
                                     ? .white : Color(red: 0.35, green: 0.35, blue: 0.35)
