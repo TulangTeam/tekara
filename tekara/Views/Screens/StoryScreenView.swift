@@ -41,15 +41,10 @@ struct StoryScreenView: View {
         return content.stages[safeStageIndex]
     }
 
-    var currentStageIndex: Int {
-        safeStageIndex
-    }
-
     var currentDialogueItem: DialogueItem {
         let total = totalDialogues
         guard total > 0 else { return DialogueItem(speakerId: "", text: "") }
 
-        // Clamp into range so a stale or out-of-bounds index can't crash.
         let safeIndex = max(0, min(dialogueIndex, total - 1))
 
         var remaining = safeIndex
@@ -62,7 +57,6 @@ struct StoryScreenView: View {
             }
             remaining -= stage.dialogues.count
         }
-        // Unreachable given the clamp above, but kept as a defensive fallback.
         return DialogueItem(speakerId: "", text: "")
     }
 
@@ -100,23 +94,17 @@ struct StoryScreenView: View {
         }
     }
 
-    var buttonColor: Color {
-        if isLastDialogue {
-            return Color(red: 0.12, green: 0.69, blue: 0.18) // Green
-        } else {
-            return Color(red: 0.20, green: 0.44, blue: 0.76) // Blue
-        }
-    }
-
     var body: some View {
         GeometryReader { geometry in
             ZStack {
+                // Background Artwork
                 Image(currentBackgroundImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .opacity(bgOpacity)
 
+                // Top Back Button Layer
                 VStack {
                     HStack {
                         if isFirstDialogue {
@@ -131,6 +119,7 @@ struct StoryScreenView: View {
                     Spacer()
                 }
 
+                // Bottom Genshin Dialogue Overlay Layer
                 VStack {
                     Spacer()
 
@@ -150,7 +139,6 @@ struct StoryScreenView: View {
                         },
                         audioManager: audioManager
                     )
-                    .padding(.bottom,44)
                 }
             }
         }
