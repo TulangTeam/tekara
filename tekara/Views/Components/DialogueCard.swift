@@ -17,8 +17,11 @@ struct DialogueCard: View {
     var onCardTapped: (() -> Void)? = nil
     var audioManager: AudioManager?
     
-    // Dark semi-transparent gradient at the bottom so white text
-    // stays 100% readable over bright sand or light blue water.
+    // Typewriter state tracking
+    @State private var displayedText: String = ""
+    @State private var isTyping: Bool = false
+    
+    // Dark semi-transparent gradient at the bottom
     private let scrimGradient = LinearGradient(
         colors: [
             Color.black.opacity(0.0),
@@ -40,55 +43,40 @@ struct DialogueCard: View {
             
             VStack(alignment: .leading, spacing: 8) {
                 
-                Text(speaker.displayName.uppercased())
-                    .font(.custom("Baloo 2", size: 22).bold())
-                    .foregroundColor(speaker.tagColor)
-                    .shadow(color: .black.opacity(0.8), radius: 2, x: 0, y: 1)
-                
-                // Subtle glowing line under speaker name
-                Rectangle()
-                    .fill(
-                        LinearGradient(
-                            colors: [speaker.tagColor.opacity(0.9), Color.white.opacity(0.2), Color.clear],
-                            startPoint: .leading,
-                            endPoint: .trailing
+                // Only show speaker name & line if it's NOT the Narrator
+                if speaker.id != "narrator" {
+                    Text(speaker.displayName.uppercased())
+                        .font(.custom("Baloo 2", size: 22).bold())
+                        .foregroundColor(speaker.tagColor)
+                    
+                    // Glowing line under speaker name
+                    Rectangle()
+                        .fill(
+                            LinearGradient(
+                                colors: [speaker.tagColor.opacity(0.9), Color.white.opacity(0.2), Color.clear],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .frame(height: 2)
-                    .padding(.bottom, 6)
+                        .frame(height: 2)
+                        .padding(.bottom, 6)
+                }
                 
-                // 2. Dialogue Content
-                Text(dialogueText)
-                    .font(.custom("Baloo 2", size: 20).bold())
-                    .foregroundColor(.white)
-                    .lineSpacing(6)
-                    .multilineTextAlignment(.leading)
-                    .shadow(color: .black.opacity(0.9), radius: 3, x: 0, y: 2)
-                
-                // 3. Bottom Action Buttons
-//                HStack {
-//                    if onBackTapped != nil {
-//                        SquishCapsuleButton(
-//                            text: "Back",
-//                            top: buttonGray,
-//                            edge: buttonGrayEdge,
-//                            audioManager: audioManager,
-//                            action: { onBackTapped?() }
-//                        )
-//                    }
-//                    
-//                    Spacer()
-//                    
-//                    SquishCapsuleButton(
-//                        text: buttonText,
-//                        top: buttonGreen,
-//                        edge: buttonGreenEdge,
-//                        horizontalPadding: 36,
-//                        audioManager: audioManager,
-//                        action: onButtonTapped
-//                    )
-//                }
-//                .padding(.top, 12)
+                // 2. Dialogue Content with Typewriter & Height Reservation
+                ZStack(alignment: .topLeading) {
+                    // Hidden template text reserves full frame height to prevent layout jumps
+                    Text(dialogueText)
+                        .font(.custom("Baloo 2", size: 20).bold())
+                        .lineSpacing(6)
+                        .opacity(0)
+                    
+                    // Visible animated typewriter text
+                    Text(displayedText)
+                        .font(.custom("Baloo 2", size: 20).bold())
+                        .foregroundColor(.white)
+                        .lineSpacing(6)
+                        .multilineTextAlignment(.leading)
+                }
             }
             .padding(.horizontal, 50)
             .padding(.top, 40)
@@ -101,16 +89,39 @@ struct DialogueCard: View {
             .contentShape(Rectangle())
             .onTapGesture {
                 audioManager?.playSFX(named: "bubblesound.mp3")
-                onCardTapped?()
+                
+                if isTyping {
+                    // Tap 1: Instantly reveal full text if currently typing
+                    isTyping = false
+                    displayedText = dialogueText
+                } else {
+                    // Tap 2: Proceed to next dialogue once typing is finished
+                    onCardTapped?()
+                }
             }
         }
         .ignoresSafeArea(edges: .bottom)
+        // Automatically starts typing whenever dialogueText changes
+        .task(id: dialogueText) {
+            displayedText = ""
+            isTyping = true
+            
+            for char in dialogueText {
+                guard isTyping, !Task.isCancelled else { break }
+                displayedText.append(char)
+                // 25ms delay per character (~40 chars/sec)
+                try? await Task.sleep(nanoseconds: 25_000_000)
+            }
+            
+            if isTyping {
+                isTyping = false
+            }
+        }
     }
 }
 
 #Preview {
     ZStack {
-        // Sample background illustration
         Image("bgocean")
             .resizable()
             .scaledToFill()
@@ -118,8 +129,8 @@ struct DialogueCard: View {
         
         DialogueCard(
             title: "Prologue",
-            speaker: SpeakerRegistry.kai,
-            dialogueText: "Whoa, this beach is covered in trash! Let's clean it up together so the animals have a safe home again.",
+            speaker: SpeakerRegistry.narrator,
+            dialogueText: "One sunny morning, Kai visits the beach, hoping to enjoy the fresh sea breeze and the sound of the waves.",
             buttonText: "Next",
             onButtonTapped: {
 #if DEBUG

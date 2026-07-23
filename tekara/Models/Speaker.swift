@@ -20,21 +20,21 @@ enum SpeakerRegistry {
         id: "narrator",
         displayName: "Narrator",
         avatarImage: nil,
-        tagColor: Color(red: 0.55, green: 0.55, blue: 0.55)
+        tagColor: Color(hex: "B4B4B4")
     )
 
     static let kai = Speaker(
         id: "kai",
         displayName: "Kai",
         avatarImage: "avatar_kai",
-        tagColor: Color(red: 0.20, green: 0.44, blue: 0.76)
+        tagColor: Color(hex: "CEC576")
     )
 
     static let tori = Speaker(
         id: "tori",
         displayName: "Tori",
         avatarImage: "avatar_tori",
-        tagColor: Color(red: 0.36, green: 0.75, blue: 0.67)
+        tagColor: Color(hex: "ADDFA2")
     )
 
     private static let all: [String: Speaker] = [
