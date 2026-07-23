@@ -13,7 +13,7 @@ struct ToolInfoPopup: View {
     let onClose: () -> Void
 
     var body: some View {
-        PopupCard(title: tool.rawValue, headerColor: tool.color) {
+        PopupCard(title: tool.rawValue, headerColor: tool.color, showDimmedOverlay: false) {
             VStack(spacing: 16) {
                 // Tool Icon
                 ZStack {

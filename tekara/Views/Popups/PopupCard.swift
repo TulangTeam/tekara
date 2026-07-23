@@ -10,6 +10,7 @@ import SwiftUI
 struct PopupCard<Content: View>: View {
     let title: String
     var headerColor: Color = PopupStyle.themeBlue
+    var showDimmedOverlay: Bool = true
     @ViewBuilder let content: () -> Content
 
     @State private var popupScale: CGFloat = 0.85   // CHANGED — was 0
@@ -20,9 +21,11 @@ struct PopupCard<Content: View>: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.4 * bgOpacity)
-                .ignoresSafeArea()
-                .onTapGesture {}
+            if showDimmedOverlay {
+                Color.black.opacity(0.4 * bgOpacity)
+                    .ignoresSafeArea()
+                    .onTapGesture {}
+            }
 
             ZStack(alignment: .top) {
                 // FIXED — base lip is now a sized .background() on cardFace,

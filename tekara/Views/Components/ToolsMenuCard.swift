@@ -17,18 +17,20 @@ struct ToolsMenuCard: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            // 3D Base Lip & Face
-            cardFace
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(cardEdge)
-                        .offset(y: pressDepth)
-                )
-                .padding(.bottom, pressDepth)
+            // 3D Base Lip & Face — hidden when info popup is showing
+            if selectedToolForInfo == nil {
+                cardFace
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(cardEdge)
+                            .offset(y: pressDepth)
+                    )
+                    .padding(.bottom, pressDepth)
 
-            // Header Pill matching MissionCard
-            CardHeaderPill(text: "Tools", backgroundColor: PopupStyle.themeBlue)
-                .offset(y: -16)
+                // Header Pill matching MissionCard
+                CardHeaderPill(text: "Tools", backgroundColor: PopupStyle.themeBlue)
+                    .offset(y: -16)
+            }
 
             // Tool Info Popup Modal
             if let infoTool = selectedToolForInfo {
