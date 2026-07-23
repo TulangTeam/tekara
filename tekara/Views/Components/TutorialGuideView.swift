@@ -36,7 +36,7 @@ struct TutorialGuideView: View {
     @Bindable var manager: TrashInteractionManager
     var cameraYaw: Float = 0.0
 
-    // Adjust card background opacity here (0.0 = completely invisible, 1.0 = solid)
+    // Adjust card background opacity here (0.0 = completely transparent, 1.0 = solid)
     var cardOpacity: Double = 0.5
 
     @State private var arrowOffset: CGFloat = 0
@@ -84,11 +84,6 @@ struct TutorialGuideView: View {
 
     var body: some View {
         ZStack {
-            // Non-blocking screen dimming
-            Color.black.opacity(overlayOpacity)
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
-
             // Centered floating dialogue banner
             VStack {
                 Spacer()
@@ -116,17 +111,6 @@ struct TutorialGuideView: View {
         }
         .onAppear {
             startArrowAnimation()
-        }
-    }
-
-    private var overlayOpacity: Double {
-        switch manager.tutorialStep {
-        case .joystick, .cameraSwipe:
-            return 0.20
-        case .goToHut, .selectTool, .pickTrash, .depositBin, .cleanupRemaining:
-            return 0.10
-        case .done:
-            return 0
         }
     }
 
@@ -220,47 +204,8 @@ struct TutorialGuideView: View {
             }
 
         case .selectTool:
-            ZStack {
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(hex: "F59E0B"), lineWidth: 4)
-                            .frame(width: 195, height: 220)
-                            .scaleEffect(pulseScale)
-                            .opacity(2.0 - Double(pulseScale))
-                            .padding(.trailing, 20)
-                            .padding(.bottom, 160)
-                    }
-                }
-
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        HStack(spacing: 6) {
-                            Text("TAP GLOVES")
-                                .font(.custom("Baloo 2", size: 12))
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color(hex: "F59E0B"))
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 3)
-                                .background(Capsule().fill(.white))
-                                .shadow(color: .black.opacity(0.2), radius: 3)
-
-                            Image(systemName: "arrow.right.circle.fill")
-                                .font(.system(size: 40, weight: .bold))
-                                .foregroundStyle(Color(hex: "F59E0B"))
-                                .background(Circle().fill(.white).padding(2))
-                                .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
-                                .offset(x: -arrowOffset)
-                        }
-                        .padding(.trailing, 222)
-                        .padding(.bottom, 280)
-                    }
-                }
-            }
+            // Removed orange box highlight and tap prompt
+            EmptyView()
 
         case .pickTrash, .cleanupRemaining:
             let dir = trashDirection
@@ -343,8 +288,6 @@ struct TutorialGuideView: View {
 }
 
 // MARK: - Isolated Dialogue Card View
-/// Extracting this component prevents high-frequency 60fps movement updates
-/// from interrupting or cancelling the typewriter task mid-stream.
 private struct ToriDialogueCard: View {
     let title: String
     let dialogueText: String
@@ -450,7 +393,6 @@ private struct ToriDialogueCard: View {
                 try? await Task.sleep(nanoseconds: 18_000_000)
             }
 
-            // Fallback guarantee: Ensures full text displays if finished or interrupted
             displayedText = dialogueText
             isTyping = false
         }
