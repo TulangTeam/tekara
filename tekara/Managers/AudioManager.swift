@@ -137,12 +137,13 @@ class AudioManager {
 
     private var sfxPlayers: [String: AVAudioPlayer] = [:]
 
-    func playSFX(named filename: String) {
+    func playSFX(named filename: String, volume: Float = 0.5) {
         guard !isSFXMuted else { return }
 
         // Reuse existing player if available
         if let existingPlayer = sfxPlayers[filename] {
             existingPlayer.currentTime = 0
+            existingPlayer.volume = volume
             existingPlayer.play()
             return
         }
@@ -156,7 +157,7 @@ class AudioManager {
 
         do {
             let player = try AVAudioPlayer(contentsOf: url)
-            player.volume = 0.5
+            player.volume = volume
             player.prepareToPlay()
             player.play()
             sfxPlayers[filename] = player

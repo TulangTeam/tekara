@@ -512,6 +512,7 @@ struct Episode1GameplayView: View {
                     interactionManager.heldShellEntity = shellEntity
                     interactionManager.pickedShellCount += 1
                     interactionManager.nearbyShellEntity = nil
+                    AudioManager.shared.playSFX(named: "pickup.mp3", volume: 1.0)
                     HapticManager.playWarning()
                     withAnimation(Animation.standard) {
                         interactionManager.seaCreatureWarningType = .shell
@@ -550,6 +551,7 @@ struct Episode1GameplayView: View {
                     interactionManager.heldSeaStarEntity = seaStarEntity
                     interactionManager.pickedSeaStarCount += 1
                     interactionManager.nearbySeaStarEntity = nil
+                    AudioManager.shared.playSFX(named: "pickup.mp3", volume: 1.0)
                     HapticManager.playWarning()
                     withAnimation(Animation.standard) {
                         interactionManager.seaCreatureWarningType = .seaStar
@@ -664,6 +666,7 @@ struct Episode1GameplayView: View {
                     trashEntity.removeFromParent()
                     interactionManager.isHoldingTrash = true
                     interactionManager.nearbyTrashEntity = nil
+                    AudioManager.shared.playSFX(named: "pickup.mp3", volume: 1.0)
                 }) {
                     Image(systemName: "hand.raised.fill")
                         .font(
@@ -799,6 +802,7 @@ struct Episode1GameplayView: View {
             interactionManager.isHoldingTrash = false
             interactionManager.collectedTrashCount += 1
         }
+        AudioManager.shared.playSFX(named: "pickup.mp3", volume: 1.0)
         #if DEBUG
             print(
                 "Trash Deposited: \(interactionManager.collectedTrashCount)/\(interactionManager.totalTrashCount)"
