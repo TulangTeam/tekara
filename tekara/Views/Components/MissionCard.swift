@@ -4,88 +4,84 @@
 //
 //  Created by Shandika David Ardiansyah on 19/07/26.
 //
-
 import SwiftUI
-
-public enum MissionRowStatus {
-    case inProgress
-    case completed
-    case failed
-}
 
 struct MissionCard: View {
     @Bindable var manager: TrashInteractionManager
-    
+
     private let cardBackground = PopupStyle.cardBackground
-    private let themeBlue = PopupStyle.themeBlue
-    
+    private let cardEdge = PopupStyle.cardEdge   // CHANGED — reuses the kit's shared edge
+                                                   // token instead of a one-off gradient
+    private let pressDepth: CGFloat = 6           // NEW — static lip, matches episode/popup cards
+
     var body: some View {
-        VStack(spacing: 10) {
-            CardHeaderPill(text: "Missions")
-
-            VStack(alignment: .leading, spacing: 10) {
-                MissionRow(
-                    iconName: "trash.fill",
-                    iconColor: PopupStyle.themeBlue,
-                    text: "Clean Up Beach\n\(manager.collectedTrashCount)/\(manager.totalTrashCount) collected",
-                    isCompleted: manager.isMissionComplete
+        ZStack(alignment: .top) {
+            // FIXED — base lip sized to cardFace via .background(), same
+            // structural fix applied to every other card in the kit.
+            cardFace
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(cardEdge)
+                        .offset(y: pressDepth)
                 )
+                .padding(.bottom, pressDepth)
 
-                // 2. Use Gloves
-                MissionRow(
-                    iconName: "hand.raised.fill",
-                    iconColor: Color(hex: "F59E0B"),
-                    text: "Equip Hand Gloves\nfrom the Hut",
-                    isCompleted: manager.selectedTool == .gloves
-                )
-
-                // 3. Dispose to Bin
-                MissionRow(
-                    iconName: "trash.fill",
-                    iconColor: PopupStyle.themeGreen,
-                    text: "Dispose Trash\ninto the Bin",
-                    isCompleted: manager.collectedTrashCount > 0
-                )
-
-                // 4. Avoid Sea Star (Optional)
-                MissionRow(
-                    iconName: "star.fill",
-                    iconColor: Color(hex: "EC4899"),
-                    text: "Protect Sea Stars\n(Optional)",
-                    isCompleted: manager.pickedSeaStarCount == 0
-                )
-
-                // 5. Avoid Sea Shell (Optional)
-                MissionRow(
-                    iconName: "sparkles",
-                    iconColor: Color(hex: "8B5CF6"),
-                    text: "Preserve Shells\n(Optional)",
-                    isCompleted: manager.pickedShellCount == 0
-                )
-            }
-            .padding(.horizontal, 14)
-            .padding(.bottom, 12)
+            CardHeaderPill(text: "Missions", backgroundColor: PopupStyle.themeBlue)
+                .offset(y: -16)
         }
-        .frame(width: 210)
+    }
+
+    private var cardFace: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Spacer().frame(height: 6)   // clears the floating header pill
+
+            MissionRow(
+                iconName: "trash.fill",
+                badgeColor: PopupStyle.themeBlue,
+                title: "Collect 5 trash",
+                progressText: "\(manager.collectedTrashCount)/\(manager.totalTrashCount)",
+                isCompleted: manager.collectedTrashCount >= manager.totalTrashCount
+            )
+            MissionRow(
+                iconName: "hand.raised.fill",
+                badgeColor: Color(hex: "F59E0B"),
+                title: "Equip gloves",
+                progressText: nil,
+                isCompleted: manager.selectedTool == .gloves
+            )
+            MissionRow(
+                iconName: "trash.fill",
+                badgeColor: PopupStyle.themeGreen,
+                title: "Put trash in bin",
+                progressText: nil,
+                isCompleted: manager.collectedTrashCount > 0 && manager.selectedTool != .gloves
+            )
+            MissionRow(
+                iconName: "exclamationmark.triangle.fill",
+                badgeColor: Color(hex: "EC4899"),
+                title: "Don't pick sea stars",
+                progressText: nil,
+                isCompleted: manager.pickedSeaStarCount == 0,
+                alertIconName: "star.fill"
+            )
+            MissionRow(
+                iconName: "exclamationmark.triangle.fill",
+                badgeColor: Color(hex: "8B5CF6"),
+                title: "Don't pick shells",
+                progressText: nil,
+                isCompleted: manager.pickedShellCount == 0,
+                alertIconName: "sparkles"
+            )
+        }
+        .padding(.horizontal, 14)
+        .padding(.top, 16)
+        .padding(.bottom, 14)
+        .frame(width: 220)
         .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(cardBackground)
-                .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 5)
+            RoundedRectangle(cornerRadius: 20).fill(cardBackground)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(
-                    LinearGradient(
-                        colors: [
-                            PopupStyle.themeBlue.opacity(0.6),
-                            PopupStyle.cardEdge
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
-                    lineWidth: 2
-                )
+            RoundedRectangle(cornerRadius: 20).stroke(cardEdge, lineWidth: 3)
         )
     }
 }
-
