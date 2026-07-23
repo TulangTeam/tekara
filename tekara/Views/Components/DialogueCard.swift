@@ -99,13 +99,13 @@ struct DialogueCard: View {
                 scrimGradient
                     .ignoresSafeArea(edges: .bottom)
             )
+            .contentShape(Rectangle())
+            .onTapGesture {
+                audioManager?.playSFX(named: "bubblesound.mp3")
+                onCardTapped?()
+            }
         }
         .ignoresSafeArea(edges: .bottom)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            audioManager?.playSFX(named: "bubblesound.mp3")
-            onCardTapped?()
-        }
     }
 }
 
