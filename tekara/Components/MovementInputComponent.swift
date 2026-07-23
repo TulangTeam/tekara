@@ -118,7 +118,7 @@ public enum TutorialStep: Int, CaseIterable {
         case .selectTool: return "Tap on Hand Gloves in the Tools menu to equip them!"
         case .pickTrash: return "Walk near a piece of trash to pick it up!"
         case .depositBin: return "Bring the trash to the Bin and throw it in!"
-        case .cleanupRemaining: return "Great job! Clean up the remaining trash, but leave sea stars ⭐ and shells 🐚 alone!"
+        case .cleanupRemaining: return "Great job! Clean up the remaining trash, but leave sea stars and shells alone!"
         case .done: return "Awesome job! Let's clean up the beach!"
         }
     }

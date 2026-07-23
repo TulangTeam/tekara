@@ -36,9 +36,13 @@ struct TutorialGuideView: View {
     @Bindable var manager: TrashInteractionManager
     var cameraYaw: Float = 0.0
 
-    @State private var cardScale: CGFloat = 0
+    // Adjust card background opacity here (0.0 = completely invisible, 1.0 = solid)
+    var cardOpacity: Double = 0.5
+
     @State private var arrowOffset: CGFloat = 0
     @State private var pulseScale: CGFloat = 1.0
+
+    private let toriTagColor = Color(red: 0.36, green: 0.75, blue: 0.67)
 
     private func getDirection(targetPos: SIMD3<Float>?) -> DirectionGuide {
         guard let target = targetPos, let kaiPos = manager.kaiWorldPosition else {
@@ -48,9 +52,6 @@ struct TutorialGuideView: View {
         let dz = target.z - kaiPos.z
         let worldAngle = atan2(dx, -dz)
 
-        // Camera sits at local +Z offset, rotated by cameraYaw around Y.
-        // The player's screen-forward direction = -(worldAngle + cameraYaw).
-        // Positive result → target is to the right on screen.
         var relativeAngle = -(worldAngle + cameraYaw)
 
         while relativeAngle > .pi { relativeAngle -= 2 * .pi }
@@ -83,158 +84,58 @@ struct TutorialGuideView: View {
 
     var body: some View {
         ZStack {
+            // Non-blocking screen dimming
             Color.black.opacity(overlayOpacity)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
 
+            // Centered floating dialogue banner
             VStack {
                 Spacer()
 
-                toriDialogueCard
-                    .scaleEffect(cardScale)
-                    .padding(.bottom, 8)
-                    .allowsHitTesting(true)
-
-                stepIndicator
-                    .padding(.bottom, 16)
-                    .allowsHitTesting(false)
+                ToriDialogueCard(
+                    title: manager.tutorialStep.title,
+                    dialogueText: manager.tutorialStep.toriDialogue,
+                    toriTagColor: toriTagColor,
+                    cardOpacity: cardOpacity,
+                    isCleanupStep: manager.tutorialStep == .cleanupRemaining,
+                    onGotItTapped: {
+                        withAnimation {
+                            manager.tutorialStep = .done
+                            manager.hasCompletedTutorial = true
+                        }
+                    }
+                )
+                .padding(.bottom, 20)
+                .allowsHitTesting(true)
             }
 
+            // Directional HUD hints
             directionalHint
                 .allowsHitTesting(false)
         }
         .onAppear {
-            withAnimation(
-                .spring(response: 0.6, dampingFraction: 0.65).delay(0.5)
-            ) {
-                cardScale = 1
-            }
             startArrowAnimation()
-        }
-        .onChange(of: manager.tutorialStep) { _, _ in
-            cardScale = 0
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-                cardScale = 1
-            }
         }
     }
 
     private var overlayOpacity: Double {
         switch manager.tutorialStep {
         case .joystick, .cameraSwipe:
-            return 0.35
+            return 0.20
         case .goToHut, .selectTool, .pickTrash, .depositBin, .cleanupRemaining:
-            return 0.15
+            return 0.10
         case .done:
             return 0
         }
     }
 
-    private var toriDialogueCard: some View {
-        ZStack(alignment: .top) {
-            // Main White Dialogue Face
-            HStack(alignment: .center, spacing: 14) {
-                // Tori Avatar
-                ZStack {
-                    Circle()
-                        .fill(Color(red: 0.36, green: 0.75, blue: 0.67).opacity(0.2))
-                        .frame(width: 58, height: 58)
-
-                    if UIImage(named: "avatar_tori") != nil {
-                        Image("avatar_tori")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 58, height: 58)
-                            .clipShape(Circle())
-                    } else {
-                        Image(systemName: "turtle.fill")
-                            .font(.system(size: 28))
-                            .foregroundColor(Color(red: 0.36, green: 0.75, blue: 0.67))
-                    }
-                }
-                .overlay(
-                    Circle().stroke(Color(red: 0.36, green: 0.75, blue: 0.67), lineWidth: 3.5)
-                )
-
-                // Speech Content
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(manager.tutorialStep.title)
-                        .font(.custom("Baloo 2", size: 14))
-                        .fontWeight(.bold)
-                        .foregroundColor(PopupStyle.themeBlue)
-
-                    Text(manager.tutorialStep.toriDialogue)
-                        .font(.custom("Baloo 2", size: 15))
-                        .fontWeight(.bold)
-                        .foregroundColor(PopupStyle.textColor)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                }
-
-                Spacer(minLength: 0)
-
-                if manager.tutorialStep == .cleanupRemaining {
-                    Button(action: {
-                        withAnimation {
-                            manager.tutorialStep = .done
-                            manager.hasCompletedTutorial = true
-                        }
-                    }) {
-                        Text("Got it! 👍")
-                            .font(.custom("Baloo 2", size: 13))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Capsule().fill(Color(red: 0.12, green: 0.69, blue: 0.18)))
-                    }
-                }
-            }
-            .padding(.horizontal, 18)
-            .padding(.top, 22)
-            .padding(.bottom, 14)
-            .background(
-                RoundedRectangle(cornerRadius: 22)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 5)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 22)
-                    .strokeBorder(Color(red: 0.95, green: 0.87, blue: 0.68), lineWidth: 3.5)
-            )
-
-            // Tori Speaker Tag Pill
-            HStack(spacing: 5) {
-                Text("🐢")
-                    .font(.system(size: 13))
-                Text("Tori")
-                    .font(.custom("Baloo 2", size: 14))
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 4)
-            .background(
-                Capsule()
-                    .fill(Color(red: 0.36, green: 0.75, blue: 0.67))
-            )
-            .overlay(
-                Capsule()
-                    .strokeBorder(Color.white, lineWidth: 2)
-            )
-            .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
-            .offset(y: -13)
-        }
-        .frame(maxWidth: 420)
-        .padding(.horizontal, 20)
-    }
-
+    // MARK: - Directional Overlay Hints
     @ViewBuilder
     private var directionalHint: some View {
         switch manager.tutorialStep {
         case .joystick:
             ZStack {
-                // Pulsing highlight circle around joystick
                 VStack {
                     Spacer()
                     HStack {
@@ -249,7 +150,6 @@ struct TutorialGuideView: View {
                     }
                 }
 
-                // Big animated arrow directly above joystick
                 VStack {
                     Spacer()
                     HStack {
@@ -294,14 +194,11 @@ struct TutorialGuideView: View {
             let dir = hutDirection
             VStack {
                 HStack(spacing: 10) {
-                    Text("🏠")
-                        .font(.system(size: 24))
-
                     Image(systemName: dir.iconName)
                         .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(.white)
 
-                    Text("Hut: \(dir.labelText)")
+                    Text("Go to Hut")
                         .font(.custom("Baloo 2", size: 15))
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
@@ -324,7 +221,6 @@ struct TutorialGuideView: View {
 
         case .selectTool:
             ZStack {
-                // Pulsing highlight box around Tools menu card (width: 195, height: 220)
                 VStack {
                     Spacer()
                     HStack {
@@ -339,7 +235,6 @@ struct TutorialGuideView: View {
                     }
                 }
 
-                // Big animated arrow pointing RIGHT directly at the Gloves row (Y: 280)
                 VStack {
                     Spacer()
                     HStack {
@@ -371,14 +266,11 @@ struct TutorialGuideView: View {
             let dir = trashDirection
             VStack {
                 HStack(spacing: 10) {
-                    Text("🧹")
-                        .font(.system(size: 24))
-
                     Image(systemName: dir.iconName)
                         .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(.white)
 
-                    Text("Trash: \(dir.labelText)")
+                    Text("Find Trash")
                         .font(.custom("Baloo 2", size: 15))
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
@@ -403,14 +295,11 @@ struct TutorialGuideView: View {
             let dir = binDirection
             VStack {
                 HStack(spacing: 10) {
-                    Text("🗑️")
-                        .font(.system(size: 24))
-
                     Image(systemName: dir.iconName)
                         .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(.white)
 
-                    Text("Bin: \(dir.labelText)")
+                    Text("Go to Bin")
                         .font(.custom("Baloo 2", size: 15))
                         .fontWeight(.bold)
                         .foregroundStyle(.white)
@@ -436,27 +325,6 @@ struct TutorialGuideView: View {
         }
     }
 
-    private var stepIndicator: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<7, id: \.self) { index in
-                Circle()
-                    .fill(
-                        index <= manager.tutorialStep.rawValue
-                            ? PopupStyle.themeBlue
-                            : Color.white.opacity(0.4)
-                    )
-                    .frame(
-                        width: index == manager.tutorialStep.rawValue ? 10 : 7,
-                        height: index == manager.tutorialStep.rawValue ? 10 : 7
-                    )
-                    .animation(
-                        .spring(response: 0.3),
-                        value: manager.tutorialStep
-                    )
-            }
-        }
-    }
-
     private func startArrowAnimation() {
         withAnimation(
             .easeInOut(duration: 0.8)
@@ -470,6 +338,121 @@ struct TutorialGuideView: View {
                 .repeatForever(autoreverses: true)
         ) {
             pulseScale = 1.1
+        }
+    }
+}
+
+// MARK: - Isolated Dialogue Card View
+/// Extracting this component prevents high-frequency 60fps movement updates
+/// from interrupting or cancelling the typewriter task mid-stream.
+private struct ToriDialogueCard: View {
+    let title: String
+    let dialogueText: String
+    let toriTagColor: Color
+    let cardOpacity: Double
+    let isCleanupStep: Bool
+    let onGotItTapped: () -> Void
+
+    @State private var displayedText: String = ""
+    @State private var isTyping: Bool = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            
+            // 1. Speaker Identifier (TORI)
+            Text("TORI")
+                .font(.custom("Baloo 2", size: 18).bold())
+                .foregroundColor(toriTagColor)
+
+            // Glowing line under speaker name
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [toriTagColor.opacity(0.9), Color.white.opacity(0.2), Color.clear],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .frame(height: 2)
+                .padding(.bottom, 4)
+
+            // 2. Step Title & Dialogue Text
+            HStack(alignment: .bottom, spacing: 12) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title.uppercased())
+                        .font(.custom("Baloo 2", size: 12).bold())
+                        .foregroundColor(Color.white.opacity(0.6))
+
+                    // Height reservation template + Animated Typewriter Text
+                    ZStack(alignment: .topLeading) {
+                        Text(dialogueText)
+                            .font(.custom("Baloo 2", size: 16).bold())
+                            .lineSpacing(4)
+                            .opacity(0)
+
+                        Text(displayedText)
+                            .font(.custom("Baloo 2", size: 16).bold())
+                            .foregroundColor(.white)
+                            .lineSpacing(4)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+
+                Spacer(minLength: 0)
+
+                if isCleanupStep {
+                    Button(action: onGotItTapped) {
+                        Text("Got it!")
+                            .font(.custom("Baloo 2", size: 14).bold())
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(Color(red: 0.12, green: 0.69, blue: 0.18)))
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 22)
+        .padding(.vertical, 16)
+        .frame(maxWidth: 460)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.05, green: 0.12, blue: 0.20).opacity(cardOpacity),
+                            Color(red: 0.03, green: 0.08, blue: 0.15).opacity(cardOpacity + 0.05)
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .strokeBorder(Color.white.opacity(0.18), lineWidth: 1.5)
+                )
+                .shadow(color: .black.opacity(0.35), radius: 10, x: 0, y: 5)
+        )
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if isTyping {
+                isTyping = false
+                displayedText = dialogueText
+            }
+        }
+        .task(id: dialogueText) {
+            displayedText = ""
+            isTyping = true
+
+            for char in dialogueText {
+                guard isTyping, !Task.isCancelled else { break }
+                displayedText.append(char)
+                try? await Task.sleep(nanoseconds: 18_000_000)
+            }
+
+            // Fallback guarantee: Ensures full text displays if finished or interrupted
+            displayedText = dialogueText
+            isTyping = false
         }
     }
 }
