@@ -58,7 +58,7 @@ struct StoryScreenView: View {
                         }, audioManager: audioManager)
                         Spacer()
                     }
-                    .padding(.leading, 20)
+                    .padding(.leading, 36) 
                     .padding(.top, 50)
                     Spacer()
                 }

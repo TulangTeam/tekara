@@ -40,10 +40,9 @@ struct DialogueCard: View {
             
             VStack(alignment: .leading, spacing: 8) {
                 
-                // 1. Genshin-Style Speaker Name Identifier (No avatar needed)
                 Text(speaker.displayName.uppercased())
                     .font(.custom("Baloo 2", size: 22).bold())
-                    .foregroundColor(speaker.tagColor) // Uses speaker's accent color (e.g. Gold/Orange)
+                    .foregroundColor(speaker.tagColor)
                     .shadow(color: .black.opacity(0.8), radius: 2, x: 0, y: 1)
                 
                 // Subtle glowing line under speaker name
