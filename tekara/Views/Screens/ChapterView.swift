@@ -12,20 +12,20 @@ struct ChapterView: View {
     private let audioManager = AudioManager.shared
     @State private var bannerScale: CGFloat = 0
     @State private var bubbleOffset: CGFloat = 200
-
+    
     var body: some View {
         ZStack {
             Image("bgocean")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-//                .blur(radius: 4)
-
+            //                .blur(radius: 4)
+            
             MapSelect(onMapSelected: {
                 viewModel.navigateTo(.episodes)
             }, audioManager: audioManager)
-                .scaleEffect(0.87, anchor: UnitPoint.center)
-
+            .scaleEffect(0.87, anchor: UnitPoint.center)
+            
             VStack(spacing: 0) {
                 HStack {
                     BackButton(action: {
@@ -35,7 +35,7 @@ struct ChapterView: View {
                 }
                 .padding(.leading, 20)
                 .padding(.top, 50)
-
+                
                 SectionTitleBanner(
                     title: "OCEAN MAP",
                     leadingDecoration: "coral_red",
@@ -44,13 +44,13 @@ struct ChapterView: View {
                 .offset(y: -40)
                 .scaleEffect(bannerScale)
                 .frame(width: 400)
-
+                
                 Spacer()
-
-                Image("chapterbubble")
-                    .padding(.bottom, 30)
+                
+                ChapterHintBubble(message: "Finish all episodes to unlock the next map!")
                     .offset(y: bubbleOffset)
-
+                    .scaleEffect(1.05)
+                
             }
             .padding(.horizontal)
         }
@@ -61,7 +61,7 @@ struct ChapterView: View {
                 bannerScale = 1
             }
             withAnimation(.spring(response: 0.8, dampingFraction: 0.6, blendDuration: 0).delay(0.2)) {
-                bubbleOffset = 0
+                bubbleOffset = 35
             }
         }
     }

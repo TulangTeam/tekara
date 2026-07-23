@@ -51,8 +51,7 @@ struct EpisodesView: View {
 
                 Spacer()
 
-                Image("episodebubble")
-                    .padding(.bottom, 20)
+                ChapterHintBubble(message: "Complete the current episode to unlock the next one!")
                     .offset(y: bubbleOffset)
                     .scaleEffect(1.2)
 
