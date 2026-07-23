@@ -85,12 +85,12 @@ class AudioManager {
     }
 
     func pauseBackgroundMusic() {
-        backgroundMusicPlayer?.pause()
+        backgroundMusicPlayer?.volume = 0
     }
 
     func resumeBackgroundMusic() {
         if !isMusicMuted {
-            backgroundMusicPlayer?.play()
+            backgroundMusicPlayer?.volume = 0.5
         }
     }
 
@@ -100,6 +100,37 @@ class AudioManager {
 
     func toggleSFXMute() {
         isSFXMuted.toggle()
+    }
+
+    // MARK: - Dubbing
+
+    private var dubbingPlayer: AVAudioPlayer?
+
+    func stopDubbing() {
+        dubbingPlayer?.stop()
+        dubbingPlayer = nil
+    }
+
+    func playDubbing(index: Int) {
+        let filename = "page\(index + 1).wav"
+        guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else {
+            #if DEBUG
+            print("Dubbing file not found: \(filename)")
+            #endif
+            return
+        }
+
+        do {
+            dubbingPlayer?.stop()
+            dubbingPlayer = try AVAudioPlayer(contentsOf: url)
+            dubbingPlayer?.volume = 1.0
+            dubbingPlayer?.prepareToPlay()
+            dubbingPlayer?.play()
+        } catch {
+            #if DEBUG
+            print("Failed to play dubbing: \(error)")
+            #endif
+        }
     }
 
     // MARK: - Sound Effects

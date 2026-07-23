@@ -35,6 +35,7 @@ struct StoryScreenView: View {
                     title: storyViewModel.currentStageName,
                     speaker: SpeakerRegistry.speaker(for: storyViewModel.currentDialogueItem.speakerId),
                     dialogueText: storyViewModel.currentDialogueItem.text,
+                    dialogueIndex: storyViewModel.dialogueIndex,
                     buttonText: storyViewModel.buttonText,
                     onButtonTapped: {
                         storyViewModel.handleButtonTap { viewModel.navigateTo($0) }
@@ -67,7 +68,11 @@ struct StoryScreenView: View {
         }
         .ignoresSafeArea()
         .onAppear {
-            audioManager.playBackgroundMusic(named: "beachtrack.mp3")
+            audioManager.pauseBackgroundMusic()
+        }
+        .onDisappear {
+            audioManager.resumeBackgroundMusic()
+            audioManager.stopDubbing()
         }
     }
 }

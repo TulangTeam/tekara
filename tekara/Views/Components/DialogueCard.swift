@@ -11,6 +11,7 @@ struct DialogueCard: View {
     var title: String
     var speaker: Speaker
     var dialogueText: String
+    var dialogueIndex: Int
     var buttonText: String = "Next"
     var onButtonTapped: () -> Void
     var onBackTapped: (() -> Void)? = nil
@@ -101,18 +102,18 @@ struct DialogueCard: View {
             }
         }
         .ignoresSafeArea(edges: .bottom)
-        // Automatically starts typing whenever dialogueText changes
         .task(id: dialogueText) {
             displayedText = ""
             isTyping = true
-            
+            audioManager?.playDubbing(index: dialogueIndex)
+
             for char in dialogueText {
                 guard isTyping, !Task.isCancelled else { break }
                 displayedText.append(char)
                 // 25ms delay per character (~40 chars/sec)
                 try? await Task.sleep(nanoseconds: 25_000_000)
             }
-            
+
             if isTyping {
                 isTyping = false
             }
@@ -131,6 +132,7 @@ struct DialogueCard: View {
             title: "Prologue",
             speaker: SpeakerRegistry.narrator,
             dialogueText: "One sunny morning, Kai visits the beach, hoping to enjoy the fresh sea breeze and the sound of the waves.",
+            dialogueIndex: 0,
             buttonText: "Next",
             onButtonTapped: {
 #if DEBUG
