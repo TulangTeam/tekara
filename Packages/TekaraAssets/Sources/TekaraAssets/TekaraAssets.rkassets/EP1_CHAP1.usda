@@ -42,13 +42,13 @@ def Xform "Root"
                 bool inputs:hasPremultipliedAlpha
                 float inputs:metallic
                 float3 inputs:normal.connect = None
-                float inputs:opacity = 0.5
+                float inputs:opacity = 0.45
                 float inputs:opacityThreshold
                 float inputs:roughness = 0.05
                 float inputs:specular
                 token outputs:out
                 float2 ui:nodegraph:node:pos = (-34.316406, 74.67578)
-                int ui:nodegraph:node:stackingOrder = 159
+                int ui:nodegraph:node:stackingOrder = 162
             }
 
             def "Power"
@@ -143,7 +143,7 @@ def Xform "Root"
         active = true
     )
     {
-        reorder nameChildren = ["sharprocks", "trash_bottle_1", "trash_bottle", "stonedarkmesh", "lilpalmmesh", "kapalmesh", "main_chara", "bush_group", "palm_group", "seastar", "seastar_1", "seastar_2", "seastar_3", "seastar_4", "shell_1", "shell", "turtlemesh", "trash_soda_1", "boat", "trash_canna", "trash_glass_1", "trash_glass", "trash_soda", "bin_dump", "hut", "wall_titan", "sand_ground", "sand_ground_2", "water"]
+        reorder nameChildren = ["sharprocks", "seaweed_group", "stonedarkmesh", "lilpalmmesh", "kapalmesh", "main_chara", "bush_group", "palm_group", "seastar", "seastar_1", "seastar_2", "seastar_3", "seastar_4", "shell_1", "shell", "turtlemesh", "trash_soda_1", "boat", "trash_canna", "trash_glass_1", "trash_glass", "trash_soda", "bin_dump", "hut", "wall_titan", "sand_ground", "sand_ground_2", "water"]
         def Cube "sand_ground" (
             active = true
             prepend apiSchemas = ["MaterialBindingAPI"]
@@ -260,7 +260,7 @@ def Xform "Root"
         {
             quatf xformOp:orient = (0.70710677, -0.70710677, 0, 0)
             float3 xformOp:scale = (1, 1, 1)
-            float3 xformOp:translate = (-15.17208, 1.991017, -32.381016)
+            float3 xformOp:translate = (-15.17208, 2.309682, -32.381016)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
         }
 
@@ -3891,6 +3891,201 @@ def Xform "Root"
             float3 xformOp:translate = (11.467545, 1.536663, 10.114616)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
         }
+
+        def Xform "seaweed_group" (
+            active = true
+        )
+        {
+            def "seaweed" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-6.3329935e-7, 0.4414661, 24.585926)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_1" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (146.13608, 95.70563)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (0.62279373, 0.4414661, 24.585804)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_2" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (166.13608, 115.70563)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (1.1547688, 0.4414661, 24.585768)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_3" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (186.13608, 135.70563)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (1.5868664, 0.4414661, 24.585682)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_4" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (206.13608, 155.70563)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (2.2129645, 0.4414661, 24.585585)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_5" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (226.13608, 175.70563)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (2.8448968, 0.4414661, 24.585485)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_6" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (146.13608, 95.70563)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (-6.3329935e-7, 0.4414661, 24.585926)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_7" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (166.13608, 115.70563)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (0.62279373, 0.4414661, 24.585804)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_8" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (186.13608, 135.70563)
+                int ui:nodegraph:node:stackingOrder = 3
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (1.1547688, 0.4414661, 24.585768)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_9" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (206.13608, 155.70563)
+                int ui:nodegraph:node:stackingOrder = 4
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (1.5868664, 0.4414661, 24.585682)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_10" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (226.13608, 175.70563)
+                int ui:nodegraph:node:stackingOrder = 5
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (2.2129645, 0.4414661, 24.585585)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def "seaweed_11" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.7123885, 0, 0)
+                }
+                references = @Assets/seaweed.usdz@
+            )
+            {
+                float2 ui:nodegraph:node:pos = (246.13608, 195.70563)
+                int ui:nodegraph:node:stackingOrder = 6
+                quatf xformOp:orient = (0.70710677, -0.7071067, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (2.8448968, 0.4414661, 24.585485)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+        }
     }
 
     def "SkySphere" (
@@ -3919,7 +4114,7 @@ def Xform "Root"
         int ui:nodegraph:node:stackingOrder = 1
         quatf xformOp:orient = (0.6634138, -0.38302228, 0.55667037, 0.32139403)
         float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (39.573833, 41.76162, -3.084087)
+        float3 xformOp:translate = (36.34387, 43.577415, -6.05368)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "DirectionalLight"

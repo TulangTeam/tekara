@@ -7,12 +7,79 @@
 
 import SwiftUI
 
+private enum DirectionGuide {
+    case forward
+    case left
+    case right
+    case backward
+
+    var iconName: String {
+        switch self {
+        case .forward: return "arrow.up.circle.fill"
+        case .left: return "arrow.left.circle.fill"
+        case .right: return "arrow.right.circle.fill"
+        case .backward: return "arrow.down.circle.fill"
+        }
+    }
+
+    var labelText: String {
+        switch self {
+        case .forward: return "Ahead"
+        case .left: return "Turn Left"
+        case .right: return "Turn Right"
+        case .backward: return "Turn Around"
+        }
+    }
+}
+
 struct TutorialGuideView: View {
     @Bindable var manager: TrashInteractionManager
+    var cameraYaw: Float = 0.0
 
     @State private var cardScale: CGFloat = 0
     @State private var arrowOffset: CGFloat = 0
     @State private var pulseScale: CGFloat = 1.0
+
+    private func getDirection(targetPos: SIMD3<Float>?) -> DirectionGuide {
+        guard let target = targetPos, let kaiPos = manager.kaiWorldPosition else {
+            return .forward
+        }
+        let dx = target.x - kaiPos.x
+        let dz = target.z - kaiPos.z
+        let worldAngle = atan2(dx, -dz)
+
+        // Camera sits at local +Z offset, rotated by cameraYaw around Y.
+        // The player's screen-forward direction = -(worldAngle + cameraYaw).
+        // Positive result → target is to the right on screen.
+        var relativeAngle = -(worldAngle + cameraYaw)
+
+        while relativeAngle > .pi { relativeAngle -= 2 * .pi }
+        while relativeAngle < -.pi { relativeAngle += 2 * .pi }
+
+        if abs(relativeAngle) < 0.65 {
+            return .forward
+        } else if relativeAngle >= 0.65 && relativeAngle < 2.35 {
+            return .right
+        } else if relativeAngle <= -0.65 && relativeAngle > -2.35 {
+            return .left
+        } else {
+            return .backward
+        }
+    }
+
+    private var hutDirection: DirectionGuide {
+        let hutPos = manager.hutWorldPosition ?? SIMD3<Float>(8.0, 0.0, -4.0)
+        return getDirection(targetPos: hutPos)
+    }
+
+    private var trashDirection: DirectionGuide {
+        return getDirection(targetPos: manager.closestTrashWorldPosition)
+    }
+
+    private var binDirection: DirectionGuide {
+        let binPos = manager.binWorldPosition ?? SIMD3<Float>(-5.0, 0.0, 3.0)
+        return getDirection(targetPos: binPos)
+    }
 
     var body: some View {
         ZStack {
@@ -23,15 +90,18 @@ struct TutorialGuideView: View {
             VStack {
                 Spacer()
 
-                instructionCard
+                toriDialogueCard
                     .scaleEffect(cardScale)
                     .padding(.bottom, 8)
+                    .allowsHitTesting(true)
 
                 stepIndicator
                     .padding(.bottom, 16)
+                    .allowsHitTesting(false)
             }
 
             directionalHint
+                .allowsHitTesting(false)
         }
         .onAppear {
             withAnimation(
@@ -53,136 +123,157 @@ struct TutorialGuideView: View {
         switch manager.tutorialStep {
         case .joystick, .cameraSwipe:
             return 0.35
-        case .goToHut, .selectTool, .pickTrash, .depositBin:
+        case .goToHut, .selectTool, .pickTrash, .depositBin, .cleanupRemaining:
             return 0.15
         case .done:
             return 0
         }
     }
 
-    private var instructionCard: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 10) {
-                Image(systemName: manager.tutorialStep.iconName)
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundColor(.white)
-                    .frame(width: 44, height: 44)
-                    .background(
-                        Circle().fill(PopupStyle.themeBlue)
-                    )
-                    .overlay(
-                        Circle().stroke(Color.white, lineWidth: 2)
-                    )
-                    .scaleEffect(pulseScale)
+    private var toriDialogueCard: some View {
+        ZStack(alignment: .top) {
+            // Main White Dialogue Face
+            HStack(alignment: .center, spacing: 14) {
+                // Tori Avatar
+                ZStack {
+                    Circle()
+                        .fill(Color(red: 0.36, green: 0.75, blue: 0.67).opacity(0.2))
+                        .frame(width: 58, height: 58)
 
+                    if UIImage(named: "avatar_tori") != nil {
+                        Image("avatar_tori")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 58, height: 58)
+                            .clipShape(Circle())
+                    } else {
+                        Image(systemName: "turtle.fill")
+                            .font(.system(size: 28))
+                            .foregroundColor(Color(red: 0.36, green: 0.75, blue: 0.67))
+                    }
+                }
+                .overlay(
+                    Circle().stroke(Color(red: 0.36, green: 0.75, blue: 0.67), lineWidth: 3.5)
+                )
+
+                // Speech Content
                 VStack(alignment: .leading, spacing: 2) {
                     Text(manager.tutorialStep.title)
-                        .font(.custom("Baloo 2", size: 18))
+                        .font(.custom("Baloo 2", size: 14))
+                        .fontWeight(.bold)
+                        .foregroundColor(PopupStyle.themeBlue)
+
+                    Text(manager.tutorialStep.toriDialogue)
+                        .font(.custom("Baloo 2", size: 15))
                         .fontWeight(.bold)
                         .foregroundColor(PopupStyle.textColor)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
 
-                    Text(manager.tutorialStep.description)
-                        .font(.custom("Baloo 2", size: 13))
-                        .foregroundColor(PopupStyle.textColor.opacity(0.7))
+                Spacer(minLength: 0)
+
+                if manager.tutorialStep == .cleanupRemaining {
+                    Button(action: {
+                        withAnimation {
+                            manager.tutorialStep = .done
+                            manager.hasCompletedTutorial = true
+                        }
+                    }) {
+                        Text("Got it! 👍")
+                            .font(.custom("Baloo 2", size: 13))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Capsule().fill(Color(red: 0.12, green: 0.69, blue: 0.18)))
+                    }
                 }
             }
+            .padding(.horizontal, 18)
+            .padding(.top, 22)
+            .padding(.bottom, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 22)
+                    .fill(Color.white)
+                    .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 5)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 22)
+                    .strokeBorder(Color(red: 0.95, green: 0.87, blue: 0.68), lineWidth: 3.5)
+            )
 
-            contextualHint
+            // Tori Speaker Tag Pill
+            HStack(spacing: 5) {
+                Text("🐢")
+                    .font(.system(size: 13))
+                Text("Tori")
+                    .font(.custom("Baloo 2", size: 14))
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 4)
+            .background(
+                Capsule()
+                    .fill(Color(red: 0.36, green: 0.75, blue: 0.67))
+            )
+            .overlay(
+                Capsule()
+                    .strokeBorder(Color.white, lineWidth: 2)
+            )
+            .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
+            .offset(y: -13)
         }
+        .frame(maxWidth: 420)
         .padding(.horizontal, 20)
-        .padding(.vertical, 14)
-        .frame(maxWidth: 380)
-        .background(
-            RoundedRectangle(cornerRadius: 18)
-                .fill(PopupStyle.cardBackground)
-                .shadow(color: .black.opacity(0.25), radius: 12, x: 0, y: 6)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 18)
-                .strokeBorder(PopupStyle.themeBlue.opacity(0.4), lineWidth: 2)
-        )
-    }
-
-    @ViewBuilder
-    private var contextualHint: some View {
-        switch manager.tutorialStep {
-        case .joystick:
-            HStack(spacing: 6) {
-                Image(systemName: "arrow.left")
-                Image(systemName: "circle.fill")
-                    .font(.system(size: 6))
-                Text("Drag the joystick to move")
-                    .font(.custom("Baloo 2", size: 12))
-                    .foregroundColor(PopupStyle.textColor.opacity(0.6))
-            }
-            .foregroundColor(PopupStyle.themeBlue)
-
-        case .cameraSwipe:
-            HStack(spacing: 6) {
-                Image(systemName: "hand.draw")
-                Text("Swipe anywhere on screen")
-                    .font(.custom("Baloo 2", size: 12))
-                    .foregroundColor(PopupStyle.textColor.opacity(0.6))
-            }
-            .foregroundColor(PopupStyle.themeBlue)
-
-        case .goToHut:
-            HStack(spacing: 6) {
-                Image(systemName: "arrow.up.circle.fill")
-                    .foregroundColor(PopupStyle.themeGreen)
-                Text("Follow the arrow to the Hut")
-                    .font(.custom("Baloo 2", size: 12))
-                    .foregroundColor(PopupStyle.textColor.opacity(0.6))
-            }
-
-        case .selectTool:
-            HStack(spacing: 6) {
-                Image(systemName: "hand.tap.fill")
-                    .foregroundColor(Color(hex: "F59E0B"))
-                Text("Tap Hand Gloves in the Tools menu")
-                    .font(.custom("Baloo 2", size: 12))
-                    .foregroundColor(PopupStyle.textColor.opacity(0.6))
-            }
-
-        case .pickTrash:
-            HStack(spacing: 6) {
-                Image(systemName: "hand.raised.fill")
-                    .foregroundColor(PopupStyle.themeBlue)
-                Text("Walk near trash, then tap pickup")
-                    .font(.custom("Baloo 2", size: 12))
-                    .foregroundColor(PopupStyle.textColor.opacity(0.6))
-            }
-
-        case .depositBin:
-            HStack(spacing: 6) {
-                Image(systemName: "arrow.down.to.line.compact")
-                    .foregroundColor(PopupStyle.themeGreen)
-                Text("Walk to the Bin and dispose it")
-                    .font(.custom("Baloo 2", size: 12))
-                    .foregroundColor(PopupStyle.textColor.opacity(0.6))
-            }
-
-        case .done:
-            EmptyView()
-        }
     }
 
     @ViewBuilder
     private var directionalHint: some View {
         switch manager.tutorialStep {
         case .joystick:
-            VStack {
-                Spacer()
-                HStack {
-                    VStack(spacing: 4) {
-                        Image(systemName: "arrow.down")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(PopupStyle.themeBlue)
-                            .offset(y: arrowOffset)
-                    }
-                    .padding(.leading, 95)
-                    .padding(.bottom, 180)
+            ZStack {
+                // Pulsing highlight circle around joystick
+                VStack {
                     Spacer()
+                    HStack {
+                        Circle()
+                            .stroke(PopupStyle.themeBlue, lineWidth: 4)
+                            .frame(width: 180, height: 180)
+                            .scaleEffect(pulseScale)
+                            .opacity(2.0 - Double(pulseScale))
+                            .padding(.leading, 40)
+                            .padding(.bottom, 40)
+                        Spacer()
+                    }
+                }
+
+                // Big animated arrow directly above joystick
+                VStack {
+                    Spacer()
+                    HStack {
+                        VStack(spacing: 2) {
+                            Image(systemName: "arrow.down.circle.fill")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundStyle(PopupStyle.themeBlue)
+                                .background(Circle().fill(.white).padding(2))
+                                .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                .offset(y: arrowOffset)
+
+                            Text("JOYSTICK")
+                                .font(.custom("Baloo 2", size: 12))
+                                .fontWeight(.bold)
+                                .foregroundStyle(PopupStyle.themeBlue)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 3)
+                                .background(Capsule().fill(.white))
+                                .shadow(color: .black.opacity(0.2), radius: 3)
+                        }
+                        .padding(.leading, 105)
+                        .padding(.bottom, 225)
+                        Spacer()
+                    }
                 }
             }
 
@@ -193,60 +284,151 @@ struct TutorialGuideView: View {
                     .foregroundStyle(.white.opacity(0.6))
                     .offset(x: arrowOffset * 3)
 
-                Text("Swipe")
+                Text("Swipe Screen")
                     .font(.custom("Baloo 2", size: 16))
                     .fontWeight(.bold)
                     .foregroundStyle(.white.opacity(0.7))
             }
 
         case .goToHut:
+            let dir = hutDirection
             VStack {
-                HStack {
-                    Spacer()
-                    VStack(spacing: 4) {
-                        Text("🏠")
-                            .font(.system(size: 32))
+                HStack(spacing: 10) {
+                    Text("🏠")
+                        .font(.system(size: 24))
 
-                        Image(systemName: "arrow.up")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(PopupStyle.themeGreen)
-                            .offset(y: -arrowOffset)
+                    Image(systemName: dir.iconName)
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.white)
 
-                        Text("Hut")
-                            .font(.custom("Baloo 2", size: 14))
-                            .fontWeight(.bold)
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 4)
-                            .background(
-                                Capsule().fill(PopupStyle.themeGreen)
-                            )
-                    }
-                    Spacer()
+                    Text("Hut: \(dir.labelText)")
+                        .font(.custom("Baloo 2", size: 15))
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
                 }
-                .padding(.top, 40)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(
+                    Capsule()
+                        .fill(PopupStyle.themeGreen)
+                        .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+                )
+                .overlay(
+                    Capsule()
+                        .strokeBorder(Color.white, lineWidth: 2.5)
+                )
+                .padding(.top, 50)
+
                 Spacer()
             }
 
         case .selectTool:
-            VStack {
-                Spacer()
-                HStack {
+            ZStack {
+                // Pulsing highlight box around Tools menu card (width: 195, height: 220)
+                VStack {
                     Spacer()
-                    VStack(spacing: 4) {
-                        Image(systemName: "arrow.right")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(Color(hex: "F59E0B"))
-                            .offset(x: arrowOffset)
-
-                        Text("Tools")
-                            .font(.custom("Baloo 2", size: 12))
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color(hex: "F59E0B"))
+                    HStack {
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color(hex: "F59E0B"), lineWidth: 4)
+                            .frame(width: 195, height: 220)
+                            .scaleEffect(pulseScale)
+                            .opacity(2.0 - Double(pulseScale))
+                            .padding(.trailing, 20)
+                            .padding(.bottom, 160)
                     }
-                    .padding(.trailing, 200)
-                    .padding(.bottom, 200)
                 }
+
+                // Big animated arrow pointing RIGHT directly at the Gloves row (Y: 280)
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        HStack(spacing: 6) {
+                            Text("TAP GLOVES")
+                                .font(.custom("Baloo 2", size: 12))
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color(hex: "F59E0B"))
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 3)
+                                .background(Capsule().fill(.white))
+                                .shadow(color: .black.opacity(0.2), radius: 3)
+
+                            Image(systemName: "arrow.right.circle.fill")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundStyle(Color(hex: "F59E0B"))
+                                .background(Circle().fill(.white).padding(2))
+                                .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                .offset(x: -arrowOffset)
+                        }
+                        .padding(.trailing, 222)
+                        .padding(.bottom, 280)
+                    }
+                }
+            }
+
+        case .pickTrash, .cleanupRemaining:
+            let dir = trashDirection
+            VStack {
+                HStack(spacing: 10) {
+                    Text("🧹")
+                        .font(.system(size: 24))
+
+                    Image(systemName: dir.iconName)
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.white)
+
+                    Text("Trash: \(dir.labelText)")
+                        .font(.custom("Baloo 2", size: 15))
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(
+                    Capsule()
+                        .fill(PopupStyle.themeBlue)
+                        .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+                )
+                .overlay(
+                    Capsule()
+                        .strokeBorder(Color.white, lineWidth: 2.5)
+                )
+                .padding(.top, 50)
+
+                Spacer()
+            }
+
+        case .depositBin:
+            let dir = binDirection
+            VStack {
+                HStack(spacing: 10) {
+                    Text("🗑️")
+                        .font(.system(size: 24))
+
+                    Image(systemName: dir.iconName)
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.white)
+
+                    Text("Bin: \(dir.labelText)")
+                        .font(.custom("Baloo 2", size: 15))
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(
+                    Capsule()
+                        .fill(PopupStyle.themeGreen)
+                        .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+                )
+                .overlay(
+                    Capsule()
+                        .strokeBorder(Color.white, lineWidth: 2.5)
+                )
+                .padding(.top, 50)
+
+                Spacer()
             }
 
         default:
@@ -256,7 +438,7 @@ struct TutorialGuideView: View {
 
     private var stepIndicator: some View {
         HStack(spacing: 6) {
-            ForEach(0..<6, id: \.self) { index in
+            ForEach(0..<7, id: \.self) { index in
                 Circle()
                     .fill(
                         index <= manager.tutorialStep.rawValue

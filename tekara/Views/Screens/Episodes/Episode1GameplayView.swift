@@ -57,8 +57,8 @@ struct Episode1GameplayView: View {
     @State private var showExitConfirmation = false
     @State private var hasTriggeredMissionComplete = false
 
-    // Camera rotation state
-    @State private var cameraYaw: Float = 0.0
+    // Camera rotation state (defaults to Float.pi so camera sits behind Kai looking forward)
+    @State private var cameraYaw: Float = .pi
     @State private var lastDragTranslationWidth: CGFloat = 0.0
     @State private var joystickUsedForTutorial = false
     @State private var cameraSwipedForTutorial = false
@@ -120,9 +120,18 @@ struct Episode1GameplayView: View {
                 && interactionManager.tutorialStep != .done
                 && interactionManager.missionPhase == .none
             {
-                TutorialGuideView(manager: interactionManager)
-                    .allowsHitTesting(false)
+                TutorialGuideView(manager: interactionManager, cameraYaw: cameraYaw)
                     .transition(.opacity)
+            }
+
+            // LAYER 4.5: Sea Creature Warning Popup from Tori
+            if let warningType = interactionManager.seaCreatureWarningType {
+                VStack {
+                    Spacer()
+                    SeaCreatureWarningPopup(manager: interactionManager, type: warningType)
+                        .padding(.bottom, 30)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
 
             // LAYER 5: Mission Complete Popups (Ocean Fact → Fact Video → Congratulations)
@@ -252,6 +261,10 @@ struct Episode1GameplayView: View {
         }
         .onChange(of: interactionManager.collectedTrashCount) { _, count in
             if count > 0 && interactionManager.tutorialStep == .depositBin {
+                withAnimation(Animation.standard) {
+                    interactionManager.tutorialStep = .cleanupRemaining
+                }
+            } else if count >= interactionManager.totalTrashCount && interactionManager.tutorialStep == .cleanupRemaining {
                 withAnimation(Animation.standard) {
                     interactionManager.tutorialStep = .done
                     interactionManager.hasCompletedTutorial = true
@@ -495,9 +508,14 @@ struct Episode1GameplayView: View {
         VStack(spacing: 12) {
             if let shellEntity = interactionManager.nearbyShellEntity {
                 Button(action: {
-                    shellEntity.removeFromParent()
+                    shellEntity.isEnabled = false
+                    interactionManager.heldShellEntity = shellEntity
                     interactionManager.pickedShellCount += 1
                     interactionManager.nearbyShellEntity = nil
+                    HapticManager.playWarning()
+                    withAnimation(Animation.standard) {
+                        interactionManager.seaCreatureWarningType = .shell
+                    }
                 }) {
                     Image(systemName: "sparkles")
                         .font(
@@ -511,16 +529,31 @@ struct Episode1GameplayView: View {
                             width: Layout.actionButtonSize,
                             height: Layout.actionButtonSize
                         )
-                        .glassEffect(.clear, in: .circle)
+                        .background(
+                            Circle().fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "8B5CF6"), Color(hex: "6D28D9")],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                        )
+                        .overlay(Circle().stroke(Color.white, lineWidth: 3.5))
+                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .transition(.scale.combined(with: .opacity))
 
             } else if let seaStarEntity = interactionManager.nearbySeaStarEntity {
                 Button(action: {
-                    seaStarEntity.removeFromParent()
+                    seaStarEntity.isEnabled = false
+                    interactionManager.heldSeaStarEntity = seaStarEntity
                     interactionManager.pickedSeaStarCount += 1
                     interactionManager.nearbySeaStarEntity = nil
+                    HapticManager.playWarning()
+                    withAnimation(Animation.standard) {
+                        interactionManager.seaCreatureWarningType = .seaStar
+                    }
                 }) {
                     Image(systemName: "star.fill")
                         .font(
@@ -529,12 +562,96 @@ struct Episode1GameplayView: View {
                                 weight: .bold
                             )
                         )
-                        .foregroundStyle(Color(hex: "F59E0B"))
+                        .foregroundStyle(.white)
                         .frame(
                             width: Layout.actionButtonSize,
                             height: Layout.actionButtonSize
                         )
-                        .glassEffect(.clear, in: .circle)
+                        .background(
+                            Circle().fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "F59E0B"), Color(hex: "D97706")],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                        )
+                        .overlay(Circle().stroke(Color.white, lineWidth: 3.5))
+                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+                }
+                .buttonStyle(ScaleButtonStyle())
+                .transition(.scale.combined(with: .opacity))
+
+            } else if interactionManager.pickedSeaStarCount > 0,
+                      let heldStar = interactionManager.heldSeaStarEntity
+            {
+                Button(action: {
+                    if let kaiPos = interactionManager.kaiWorldPosition {
+                        heldStar.setPosition(kaiPos + SIMD3<Float>(0.4, 0, 0.4), relativeTo: nil)
+                    }
+                    heldStar.isEnabled = true
+                    interactionManager.pickedSeaStarCount = max(0, interactionManager.pickedSeaStarCount - 1)
+                    interactionManager.heldSeaStarEntity = nil
+                }) {
+                    VStack(spacing: 2) {
+                        Image(systemName: "arrow.down")
+                            .font(.system(size: 20, weight: .bold))
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 26, weight: .bold))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(
+                        width: Layout.actionButtonSize,
+                        height: Layout.actionButtonSize
+                    )
+                    .background(
+                        Circle().fill(
+                            LinearGradient(
+                                colors: [Color(hex: "F59E0B"), Color(hex: "D97706")],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    )
+                    .overlay(Circle().stroke(Color.white, lineWidth: 3.5))
+                    .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+                }
+                .buttonStyle(ScaleButtonStyle())
+                .transition(.scale.combined(with: .opacity))
+
+            } else if interactionManager.pickedShellCount > 0,
+                      let heldShell = interactionManager.heldShellEntity
+            {
+                Button(action: {
+                    if let kaiPos = interactionManager.kaiWorldPosition {
+                        heldShell.setPosition(kaiPos + SIMD3<Float>(0.4, 0, 0.4), relativeTo: nil)
+                    }
+                    heldShell.isEnabled = true
+                    interactionManager.pickedShellCount = max(0, interactionManager.pickedShellCount - 1)
+                    interactionManager.heldShellEntity = nil
+                }) {
+                    VStack(spacing: 2) {
+                        Image(systemName: "arrow.down")
+                            .font(.system(size: 20, weight: .bold))
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 26, weight: .bold))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(
+                        width: Layout.actionButtonSize,
+                        height: Layout.actionButtonSize
+                    )
+                    .background(
+                        Circle().fill(
+                            LinearGradient(
+                                colors: [Color(hex: "8B5CF6"), Color(hex: "6D28D9")],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    )
+                    .overlay(Circle().stroke(Color.white, lineWidth: 3.5))
+                    .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .transition(.scale.combined(with: .opacity))
@@ -560,7 +677,17 @@ struct Episode1GameplayView: View {
                             width: Layout.actionButtonSize,
                             height: Layout.actionButtonSize
                         )
-                        .glassEffect(.clear, in: .circle)
+                        .background(
+                            Circle().fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "0284C7"), Color(hex: "0369A1")],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                        )
+                        .overlay(Circle().stroke(Color.white, lineWidth: 3.5))
+                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .transition(.scale.combined(with: .opacity))
@@ -569,7 +696,7 @@ struct Episode1GameplayView: View {
                 && interactionManager.isHoldingTrash
             {
                 Button(action: depositTrash) {
-                    Image(systemName: "arrow.down.to.line.compact")
+                    Image(systemName: "trash.fill")
                         .font(
                             .system(
                                 size: Layout.actionButtonFontSize,
@@ -581,7 +708,17 @@ struct Episode1GameplayView: View {
                             width: Layout.actionButtonSize,
                             height: Layout.actionButtonSize
                         )
-                        .glassEffect(.clear, in: .circle)
+                        .background(
+                            Circle().fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "16A34A"), Color(hex: "15803D")],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                        )
+                        .overlay(Circle().stroke(Color.white, lineWidth: 3.5))
+                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .transition(.scale.combined(with: .opacity))
