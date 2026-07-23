@@ -2,7 +2,7 @@
 //  MissionCard.swift
 //  tekara
 //
-//  Created by Tekara Team on 19/07/26.
+//  Created by Shandika David Ardiansyah on 19/07/26.
 //
 
 import SwiftUI
@@ -13,7 +13,6 @@ public enum MissionRowStatus {
     case failed
 }
 
-/// Card misi yang menampilkan progress pengumpulan sampah dan misi opsional di pulau
 struct MissionCard: View {
     @Bindable var manager: TrashInteractionManager
     
@@ -28,7 +27,7 @@ struct MissionCard: View {
                 MissionRow(
                     iconName: "trash.fill",
                     iconColor: PopupStyle.themeBlue,
-                    text: "Collect \(manager.totalTrashCount) trash\n\(manager.collectedTrashCount)/\(manager.totalTrashCount)",
+                    text: "Clean Up Beach\n\(manager.collectedTrashCount)/\(manager.totalTrashCount) collected",
                     isCompleted: manager.isMissionComplete
                 )
 
@@ -36,15 +35,15 @@ struct MissionCard: View {
                 MissionRow(
                     iconName: "hand.raised.fill",
                     iconColor: Color(hex: "F59E0B"),
-                    text: "Use hand gloves\nto pick up trash",
+                    text: "Equip Hand Gloves\nfrom the Hut",
                     isCompleted: manager.selectedTool == .gloves
                 )
 
                 // 3. Dispose to Bin
                 MissionRow(
-                    iconName: "arrow.down.to.line.compact",
+                    iconName: "trash.fill",
                     iconColor: PopupStyle.themeGreen,
-                    text: "Dispose trash\nin the bin",
+                    text: "Dispose Trash\ninto the Bin",
                     isCompleted: manager.collectedTrashCount > 0
                 )
 
@@ -52,7 +51,7 @@ struct MissionCard: View {
                 MissionRow(
                     iconName: "star.fill",
                     iconColor: Color(hex: "EC4899"),
-                    text: "Avoid picking\nsea star (Optional)",
+                    text: "Protect Sea Stars\n(Optional)",
                     isCompleted: manager.pickedSeaStarCount == 0
                 )
 
@@ -60,7 +59,7 @@ struct MissionCard: View {
                 MissionRow(
                     iconName: "sparkles",
                     iconColor: Color(hex: "8B5CF6"),
-                    text: "Avoid picking\nsea shell (Optional)",
+                    text: "Preserve Shells\n(Optional)",
                     isCompleted: manager.pickedShellCount == 0
                 )
             }
@@ -71,13 +70,20 @@ struct MissionCard: View {
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(cardBackground)
-                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+                .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 5)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20)
                 .strokeBorder(
-                    PopupStyle.cardEdge,
-                    lineWidth: 1.5
+                    LinearGradient(
+                        colors: [
+                            PopupStyle.themeBlue.opacity(0.6),
+                            PopupStyle.cardEdge
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 2
                 )
         )
     }

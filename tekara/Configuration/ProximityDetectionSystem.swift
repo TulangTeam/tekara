@@ -34,6 +34,10 @@ public class ProximityDetectionSystem: RealityKit.System {
             var closestTrash: Entity? = nil
             var closestShell: Entity? = nil
             var closestSeaStar: Entity? = nil
+            var hutWorldPos: SIMD3<Float>? = nil
+            var binWorldPos: SIMD3<Float>? = nil
+            var minTrashDistance: Float = .greatestFiniteMagnitude
+            var closestTrashWorldPos: SIMD3<Float>? = nil
             var nearDeposit = false
             var nearHut = false
             var trashCount = 0
@@ -46,6 +50,10 @@ public class ProximityDetectionSystem: RealityKit.System {
 
                     if lowerName.contains("trash") {
                         trashCount += 1
+                        if distance < minTrashDistance {
+                            minTrashDistance = distance
+                            closestTrashWorldPos = entityPos
+                        }
                         if distance < Radius.trash {
                             closestTrash = entity
                         }
@@ -66,13 +74,20 @@ public class ProximityDetectionSystem: RealityKit.System {
                         }
                     }
 
-                    if lowerName.contains("hut") {
+                    if lowerName == "hut" || lowerName == "bighut" || lowerName == "house" {
+                        hutWorldPos = entityPos
+                        if distance < Radius.hut {
+                            nearHut = true
+                        }
+                    } else if lowerName.contains("hut") && hutWorldPos == nil {
+                        hutWorldPos = entityPos
                         if distance < Radius.hut {
                             nearHut = true
                         }
                     }
 
                     if lowerName.contains("bin") || lowerName.contains("dump") {
+                        binWorldPos = entityPos
                         if distance < Radius.bin {
                             nearDeposit = true
                         }
@@ -80,12 +95,13 @@ public class ProximityDetectionSystem: RealityKit.System {
                 }
             }
 
-            if !nearDeposit {
+            if binWorldPos == nil {
                 if let rootEntity = kai.anchor ?? cameraAnchor?.parent {
                     if let binEntity = rootEntity.findEntity(named: "bin_dump")
                         ?? rootEntity.findEntity(named: "bin")
                     {
                         let binPos = binEntity.position(relativeTo: nil)
+                        binWorldPos = binPos
                         let distanceToBin = simd_distance(kaiWorldPos, binPos)
 
                         if distanceToBin < Radius.bin {
@@ -95,10 +111,11 @@ public class ProximityDetectionSystem: RealityKit.System {
                 }
             }
 
-            if !nearHut {
+            if hutWorldPos == nil {
                 if let rootEntity = kai.anchor ?? cameraAnchor?.parent {
-                    if let hutEntity = rootEntity.findEntity(named: "hut") {
+                    if let hutEntity = rootEntity.findEntity(named: "hut") ?? rootEntity.findEntity(named: "bighut") {
                         let hutPos = hutEntity.position(relativeTo: nil)
+                        hutWorldPos = hutPos
                         let distanceToHut = simd_distance(kaiWorldPos, hutPos)
                         if distanceToHut < Radius.hut {
                             nearHut = true
@@ -122,6 +139,10 @@ public class ProximityDetectionSystem: RealityKit.System {
                 || manager.isNearDepositZone != nearDeposit
                 || manager.isNearHut != nearHut
                 || manager.totalTrashCount != totalTrashCount
+                || manager.kaiWorldPosition != kaiWorldPos
+                || manager.hutWorldPosition != hutWorldPos
+                || manager.binWorldPosition != binWorldPos
+                || manager.closestTrashWorldPosition != closestTrashWorldPos
 
             if didChange {
                 Task { @MainActor in
@@ -131,6 +152,10 @@ public class ProximityDetectionSystem: RealityKit.System {
                     manager.isNearDepositZone = nearDeposit
                     manager.isNearHut = nearHut
                     manager.totalTrashCount = totalTrashCount
+                    manager.kaiWorldPosition = kaiWorldPos
+                    manager.hutWorldPosition = hutWorldPos
+                    manager.binWorldPosition = binWorldPos
+                    manager.closestTrashWorldPosition = closestTrashWorldPos
                 }
             }
         }
