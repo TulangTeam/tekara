@@ -1,0 +1,39 @@
+name: tekara
+options:
+  bundleIdPrefix: com.dimasdaffa 
+  deploymentTarget:
+    iOS: "26.0"          
+  developmentLanguage: en
+
+targets:
+  tekara:
+    type: application
+    platform: iOS
+    sources:
+      - path: tekara
+    info:
+      path: tekara/Info.plist
+      properties:
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dimasdaffa.tekara
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "5.0"
+    dependencies:
+      - package: TekaraAssets
+      - package: ThumbStickView
+      - package: ControllerInput
+      - package: WASDInput
+
+packages:
+  TekaraAssets:
+    path: Packages/TekaraAssets
+  ThumbStickView:
+    path: Packages/ThumbStickView
+  ControllerInput:
+    path: Packages/ControllerInput
+  WASDInput:
+    path: Packages/WASDInput

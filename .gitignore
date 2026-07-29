@@ -67,6 +67,5 @@ fastlane/test_output
 *.mobileprovision
 .env
 .env.*
-tekara.xcodeproj/project.xcworkspace/xcuserdata/dimasdaffa.xcuserdatad/UserInterfaceState.xcuserstate
-tekara.xcodeproj/project.xcworkspace/xcuserdata/dimasdaffa.xcuserdatad/UserInterfaceState.xcuserstate
-tekara.xcodeproj/project.pbxproj
+*.xcodeproj/
+*.xcworkspace/
