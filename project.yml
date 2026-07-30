@@ -11,10 +11,16 @@ targets:
     platform: iOS
     sources:
       - path: tekara
+        excludes:
+          - "Resources/Fonts/*.ttf"
+          - "Resources/Fonts/*.otf"
+      - path: tekara/Resources/Fonts/Baloo2-VariableFont_wght.ttf
+        buildPhase: resources
     info:
       path: tekara/Info.plist
       properties:
         UILaunchScreen: {}
+        # UIAppFonts intentionally omitted — font is loaded programmatically via CTFontManagerRegisterFontsForURL
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dimasdaffa.tekara
@@ -27,6 +33,7 @@ targets:
       - package: ThumbStickView
       - package: ControllerInput
       - package: WASDInput
+      - package: DebugSwift
 
 packages:
   TekaraAssets:
@@ -37,3 +44,6 @@ packages:
     path: Packages/ControllerInput
   WASDInput:
     path: Packages/WASDInput
+  DebugSwift:
+    url: https://github.com/DebugSwift/DebugSwift.git
+    from: "1.0.0" 
